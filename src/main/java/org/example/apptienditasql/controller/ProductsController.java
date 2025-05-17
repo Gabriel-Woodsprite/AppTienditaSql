@@ -24,8 +24,8 @@ public class ProductsController {
 		return dao.readAll();
 	}
 
-	public void updateProduct(String barcode, Product product) throws Exception {
-		dao.update(barcode, product);
+	public void updateProduct(Product product) throws Exception {
+		dao.update(product);
 	}
 
 	public void deleteProduct(String barcode) throws Exception {

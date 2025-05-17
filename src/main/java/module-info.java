@@ -1,6 +1,7 @@
 module org.example.apptienditasql {
 	requires javafx.controls;
 	requires javafx.fxml;
+	requires java.sql;
 
 	exports org.example.apptienditasql.controller;
 	opens org.example.apptienditasql.controller to javafx.fxml;

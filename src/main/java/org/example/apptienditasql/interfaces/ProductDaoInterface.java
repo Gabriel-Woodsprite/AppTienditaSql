@@ -1,15 +1,17 @@
 package org.example.apptienditasql.interfaces;
 
+import org.example.apptienditasql.model.Product;
+
 import java.util.List;
 
 public interface ProductDaoInterface {
-	void create(org.example.apptienditasql.model.Product product) throws Exception;
+	void create(Product product);
 
-	org.example.apptienditasql.model.Product read(String barcode) throws Exception;
+	Product read(String barcode);
 
-	List<org.example.apptienditasql.model.Product> readAll() throws Exception;
+	List<Product> readAll();
 
-	void update(String barcode, org.example.apptienditasql.model.Product updatedProduct) throws Exception;
+	void update(Product updatedProduct);
 
-	void delete(String barcode) throws Exception;
+	void delete(String barcode);
 }

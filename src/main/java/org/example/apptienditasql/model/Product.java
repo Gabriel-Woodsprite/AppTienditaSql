@@ -1,27 +1,34 @@
 package org.example.apptienditasql.model;
 
+import java.util.Date;
+
 public class Product {
 	private String barcode;
 	private String name;
 	private String brand;
 	private String category;
 	private String content;
-	private String presentacion;
 	private String measurementUnit;
-	private boolean active;
+	private String minStock;
+	private String maxStock;
+	private String presentation;
 	private String description;
-	private String price;
+	private boolean avilable;
 	private String image;
+	private Date registerDate;
+	private String productLocation;
+	private Date expiryDate;
 
 	public Product(String barcode) {
 		this.barcode = barcode;
 	}
-	public Product() {}
+
+	public Product() {
+	}
 
 	///////////////////
 	//////GETTERS//////
 	///////////////////
-
 	public String getBarcode() {
 		return barcode;
 	}
@@ -42,34 +49,49 @@ public class Product {
 		return content;
 	}
 
-	public String getPresentacion() {
-		return presentacion;
-	}
-
 	public String getMeasurementUnit() {
 		return measurementUnit;
 	}
 
-	public boolean isActive() {
-		return active;
+	public String getMinStock() {
+		return minStock;
+	}
+
+	public String getMaxStock() {
+		return maxStock;
+	}
+
+	public String getPresentation() {
+		return presentation;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
-	public String getPrice() {
-		return price;
+	public boolean isAvilable() {
+		return avilable;
 	}
 
 	public String getImage() {
 		return image;
 	}
 
+	public Date getRegisterDate() {
+		return registerDate;
+	}
+
+	public String getProductLocation() {
+		return productLocation;
+	}
+
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+
 	///////////////////
 	//////SETTERS//////
 	///////////////////
-
 	public void setBarcode(String barcode) {
 		this.barcode = barcode;
 	}
@@ -90,33 +112,50 @@ public class Product {
 		this.content = content;
 	}
 
-	public void setPresentacion(String presentacion) {
-		this.presentacion = presentacion;
-	}
-
 	public void setMeasurementUnit(String measurementUnit) {
 		this.measurementUnit = measurementUnit;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setMinStock(String minStock) {
+		this.minStock = minStock;
+	}
+
+	public void setMaxStock(String maxStock) {
+		this.maxStock = maxStock;
+	}
+
+	public void setPresentation(String presentation) {
+		this.presentation = presentation;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public void setPrice(String price) {
-		this.price = price;
+	public void setAvilable(boolean avilable) {
+		this.avilable = avilable;
 	}
 
 	public void setImage(String image) {
 		this.image = image;
 	}
 
+	public void setRegisterDate(Date registerDate) {
+		this.registerDate = registerDate;
+	}
+
+	public void setProductLocation(String productLocation) {
+		this.productLocation = productLocation;
+	}
+
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
 	///////////////////
 	//////OVERRIDES////
 	///////////////////
+
 	@Override
 	public String toString() {
 		return "Product{" +
@@ -125,22 +164,28 @@ public class Product {
 				", brand='" + brand + '\'' +
 				", category='" + category + '\'' +
 				", content='" + content + '\'' +
-				", presentacion='" + presentacion + '\'' +
 				", measurementUnit='" + measurementUnit + '\'' +
-				", active=" + active +
+				", minStock='" + minStock + '\'' +
+				", maxStock='" + maxStock + '\'' +
+				", presentation='" + presentation + '\'' +
 				", description='" + description + '\'' +
-				", price='" + price + '\'' +
+				", avilable=" + avilable +
 				", image='" + image + '\'' +
+				", registerDate=" + registerDate +
+				", productLocation='" + productLocation + '\'' +
+				", expiryDate=" + expiryDate +
 				'}';
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj) return false;
+		if (this == obj) return false;
 
-		if(obj instanceof Product product) {
+		if (obj instanceof Product product) {
 			return product.getBarcode().equals(this.getBarcode());
 		}
 		return false;
 	}
 }
+
+

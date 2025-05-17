@@ -10,7 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.model.Product;
+import org.example.apptienditasql.utils.DatabaseConnection;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class MainViewController {
@@ -18,8 +20,11 @@ public class MainViewController {
 	@FXML
 	public ListView productsListView;
 
-	ProductsDao productsDao = new ProductsDao();
+	ProductsDao productsDao = new ProductsDao(DatabaseConnection.getConnection());
 	ObservableList<HBox> interactiveElements = FXCollections.observableArrayList();
+
+	public MainViewController() throws SQLException {
+	}
 
 
 	@FXML
