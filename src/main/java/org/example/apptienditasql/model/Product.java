@@ -1,5 +1,6 @@
 package org.example.apptienditasql.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Product {
@@ -15,15 +16,33 @@ public class Product {
 	private String description;
 	private boolean avilable;
 	private String image;
-	private Date registerDate;
+	private LocalDate registerDate;
 	private String productLocation;
-	private Date expiryDate;
+	private LocalDate expiryDate;
 
 	public Product(String barcode) {
 		this.barcode = barcode;
 	}
 
 	public Product() {
+	}
+
+	public Product(String barcode, String name, String brand, String category, String content, String measurementUnit, String minStock, String maxStock, String presentation, String description, boolean avilable, String image, LocalDate registerDate, String productLocation, LocalDate expiryDate) {
+		this.barcode = barcode;
+		this.name = name;
+		this.brand = brand;
+		this.category = category;
+		this.content = content;
+		this.measurementUnit = measurementUnit;
+		this.minStock = minStock;
+		this.maxStock = maxStock;
+		this.presentation = presentation;
+		this.description = description;
+		this.avilable = avilable;
+		this.image = image;
+		this.registerDate = registerDate;
+		this.productLocation = productLocation;
+		this.expiryDate = expiryDate;
 	}
 
 	///////////////////
@@ -77,7 +96,7 @@ public class Product {
 		return image;
 	}
 
-	public Date getRegisterDate() {
+	public LocalDate getRegisterDate() {
 		return registerDate;
 	}
 
@@ -85,7 +104,7 @@ public class Product {
 		return productLocation;
 	}
 
-	public Date getExpiryDate() {
+	public LocalDate getExpiryDate() {
 		return expiryDate;
 	}
 
@@ -140,7 +159,7 @@ public class Product {
 		this.image = image;
 	}
 
-	public void setRegisterDate(Date registerDate) {
+	public void setRegisterDate(LocalDate registerDate) {
 		this.registerDate = registerDate;
 	}
 
@@ -148,7 +167,7 @@ public class Product {
 		this.productLocation = productLocation;
 	}
 
-	public void setExpiryDate(Date expiryDate) {
+	public void setExpiryDate(LocalDate expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 
