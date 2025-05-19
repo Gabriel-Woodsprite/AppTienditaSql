@@ -49,7 +49,7 @@
                                     <Pane prefHeight="426.0" prefWidth="759.0" styleClass="border_maker" stylesheets="@css/Style.css">
                                        <children>
                                           <Button layoutX="224.0" layoutY="357.0" mnemonicParsing="false" styleClass="border_maker" stylesheets="@css/Style.css" text="edit" />
-                                          <Button layoutX="160.0" layoutY="357.0" mnemonicParsing="false" styleClass="border_maker" stylesheets="@css/Style.css" text="add" />
+                                          <Button fx:id="addProductButton" layoutX="160.0" layoutY="357.0" mnemonicParsing="false" styleClass="border_maker" stylesheets="@css/Style.css" text="add" />
                                           <Button layoutX="75.0" layoutY="357.0" mnemonicParsing="false" styleClass="border_maker" stylesheets="@css/Style.css" text="remove" />
                                        </children>
                                     </Pane>

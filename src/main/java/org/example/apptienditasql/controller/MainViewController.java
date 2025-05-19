@@ -3,14 +3,18 @@ package org.example.apptienditasql.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.model.Product;
 import org.example.apptienditasql.utils.DatabaseConnection;
+import org.example.apptienditasql.view.MainView;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -20,8 +24,12 @@ public class MainViewController {
 	@FXML
 	public ListView productsListView;
 
+	@FXML
+	public Button addProductButton;
+
 	ProductsDao productsDao = new ProductsDao(DatabaseConnection.getConnection());
 	ObservableList<HBox> interactiveElements = FXCollections.observableArrayList();
+
 
 	public MainViewController() throws SQLException {
 	}
@@ -62,8 +70,32 @@ public class MainViewController {
 		insertProductList();
 	}
 
+
+
+	private void addProductButton() throws Exception {
+
+		/*___FXML___*/
+		FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("add-products.fxml"));
+
+		Stage newStage = new Stage();
+
+		Scene scene = new Scene(fxmlLoader.load(), 600, 864);
+		newStage.setScene(scene);
+		newStage.setTitle("Añadir Producto");
+		newStage.setResizable(false);
+		newStage.show();
+
+	}
+
 	@FXML
 	public void initialize() throws Exception {
+		addProductButton.setOnAction(e -> {
+            try {
+                addProductButton();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 		insertProductList();
 	}
 }
