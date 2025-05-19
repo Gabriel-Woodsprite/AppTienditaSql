@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
@@ -11,52 +12,52 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="864.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.CreateViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="864.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.CreateViewController">
    <children>
-      <Label layoutY="14.0" prefHeight="50.0" prefWidth="600.0" text="Añadir Nuevo Porducto" />
+      <Label layoutY="14.0" prefHeight="50.0" prefWidth="600.0" text="Añadir Nuevo Porducto" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" />
       <Pane layoutY="64.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="Codigo" />
             <TextField layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" />
          </children>
       </Pane>
-      <Pane layoutY="125.0" prefHeight="50.0" prefWidth="600.0">
+      <Pane layoutX="600.0" layoutY="64.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="Nombre" />
             <TextField layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" />
          </children>
       </Pane>
-      <Pane layoutY="189.0" prefHeight="50.0" prefWidth="600.0">
+      <Pane layoutY="114.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="Marca" />
             <TextField layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" />
          </children>
       </Pane>
-      <Pane layoutY="261.0" prefHeight="100.0" prefWidth="600.0">
+      <Pane layoutX="600.0" layoutY="114.0" prefHeight="100.0" prefWidth="600.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="Descripcin" />
-            <TextArea layoutX="68.0" prefHeight="93.0" prefWidth="532.0" />
+            <TextArea layoutX="68.0" prefHeight="89.0" prefWidth="532.0" />
          </children>
       </Pane>
-      <Pane layoutY="368.0" prefHeight="50.0" prefWidth="600.0">
+      <Pane layoutY="164.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="CONTENIDO" />
             <TextField layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" />
          </children>
       </Pane>
-      <Pane layoutY="542.0" prefHeight="50.0" prefWidth="600.0">
+      <Pane layoutX="944.0" layoutY="214.0" prefHeight="50.0" prefWidth="133.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="dispodible" />
             <RadioButton layoutX="84.0" layoutY="16.0" mnemonicParsing="false" />
          </children>
       </Pane>
-      <Pane layoutY="492.0" prefHeight="50.0" prefWidth="600.0">
+      <Pane layoutY="214.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="url" />
             <TextField layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" />
          </children>
       </Pane>
-      <Pane layoutY="605.0" prefHeight="50.0" prefWidth="600.0">
+      <Pane layoutX="1.0" layoutY="344.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="categoria" />
             <SplitMenuButton layoutX="69.0" layoutY="13.0" mnemonicParsing="false" text="1">
@@ -67,7 +68,7 @@
             </SplitMenuButton>
          </children>
       </Pane>
-      <Pane layoutY="674.0" prefHeight="50.0" prefWidth="600.0">
+      <Pane layoutX="600.0" layoutY="344.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="unidad de medida" />
             <SplitMenuButton layoutX="124.0" layoutY="12.0" mnemonicParsing="false" text="1">
@@ -78,7 +79,7 @@
             </SplitMenuButton>
          </children>
       </Pane>
-      <Pane layoutY="735.0" prefHeight="50.0" prefWidth="600.0">
+      <Pane layoutY="407.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Label layoutX="6.0" layoutY="16.0" text="presentacion" />
             <SplitMenuButton layoutX="124.0" layoutY="12.0" mnemonicParsing="false" text="1">
@@ -91,5 +92,40 @@
       </Pane>
       <Button layoutX="40.0" layoutY="800.0" mnemonicParsing="false" text="Guardar" />
       <Button layoutX="127.0" layoutY="800.0" mnemonicParsing="false" text="limpiar" />
+      <Pane layoutX="772.0" layoutY="214.0" prefHeight="50.0" prefWidth="172.0">
+         <children>
+            <Label layoutX="6.0" layoutY="16.0" text="Stick Minimo" />
+            <TextField layoutX="81.0" layoutY="12.0" prefHeight="25.0" prefWidth="71.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="600.0" layoutY="214.0" prefHeight="50.0" prefWidth="172.0">
+         <children>
+            <Label layoutX="6.0" layoutY="16.0" text="Stick Maximo" />
+            <TextField layoutX="81.0" layoutY="12.0" prefHeight="25.0" prefWidth="71.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="7.0" layoutY="278.0" prefHeight="50.0" prefWidth="294.0">
+         <children>
+            <Label layoutX="6.0" layoutY="16.0" text="fecha de registro" />
+            <DatePicker layoutX="104.0" layoutY="13.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="309.0" layoutY="278.0" prefHeight="50.0" prefWidth="336.0">
+         <children>
+            <Label layoutX="6.0" layoutY="16.0" text="fecha de caducidad" />
+            <DatePicker layoutX="134.0" layoutY="12.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="594.0" layoutY="416.0" prefHeight="50.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="6.0" layoutY="16.0" text="ubicacion del producto" />
+            <SplitMenuButton layoutX="148.0" layoutY="12.0" mnemonicParsing="false" text="1">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="2" />
+                  <MenuItem mnemonicParsing="false" text="3" />
+               </items>
+            </SplitMenuButton>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

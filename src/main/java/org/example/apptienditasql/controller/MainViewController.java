@@ -79,7 +79,7 @@ public class MainViewController {
 
 		Stage newStage = new Stage();
 
-		Scene scene = new Scene(fxmlLoader.load(), 600, 864);
+		Scene scene = new Scene(fxmlLoader.load(), 1200, 864);
 		newStage.setScene(scene);
 		newStage.setTitle("Añadir Producto");
 		newStage.setResizable(false);
