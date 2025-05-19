@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.model.Product;
@@ -20,6 +21,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MainViewController {
+	@FXML
+	private VBox vBox;
 
 	@FXML
 	public ListView productsListView;
@@ -36,7 +39,7 @@ public class MainViewController {
 
 
 	@FXML
-	private void insertProductList() throws Exception {
+	public void insertProductList() throws Exception {
 		List<Product> productsList = productsDao.readAll();
 
 		productsListView.getItems().clear();
@@ -71,15 +74,16 @@ public class MainViewController {
 	}
 
 
-
 	private void addProductButton() throws Exception {
 
 		/*___FXML___*/
 		FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("add-products.fxml"));
-
+		Scene scene = new Scene(fxmlLoader.load(), 1200, 864);
 		Stage newStage = new Stage();
 
-		Scene scene = new Scene(fxmlLoader.load(), 1200, 864);
+		CreateViewController controller = fxmlLoader.getController();
+		controller.setMainViewController(this);
+
 		newStage.setScene(scene);
 		newStage.setTitle("Añadir Producto");
 		newStage.setResizable(false);
@@ -90,12 +94,14 @@ public class MainViewController {
 	@FXML
 	public void initialize() throws Exception {
 		addProductButton.setOnAction(e -> {
-            try {
-                addProductButton();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+			try {
+				addProductButton();
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			}
+		});
+
+
 		insertProductList();
 	}
 }
