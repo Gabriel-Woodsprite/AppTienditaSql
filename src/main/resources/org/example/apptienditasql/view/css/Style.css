@@ -1,6 +1,15 @@
 .root {
     /* COLORS: -------------------------------------------------------------------------------- */
-    /*-fx-background: #ca4e44;*/
+    -fx-primary-color: #19162b;
+
+    -fx-acent-color: #ffb581;
+    -fx-cream-color: #fce9c0;
+
+    -fx-grey-color: #f1f1f3;
+    -fx-white-color: #ffffff;
+
+    -fx-gradient: linear-gradient(to top left, #000000, #141925);
+    -fx-gradientII: linear-gradient(to top right, #000000, #141925);
     /* FONTS: --------------------------------------------------------------------------------- */
     /* : -------------------------------------------------------------------------------------- */
 }
@@ -12,18 +21,18 @@
 }
 
 .border_maker {
-    -fx-border-color: #ca4e44;
+    -fx-border-color: cyan;
 
 }
 
 .border_maker_blue {
-    -fx-border-color: #74c7ec;
+  /*  -fx-border-color: #74c7ec;*/
 
 }
 
 .catalogo  {
 
-    -fx-background-color: #406a69;
+    -fx-background-color: -fx-white-color;
 }
 
     /* : ----------------------------------------------------------------------------- */
@@ -33,4 +42,15 @@
 }
 
 .input-field {
+}
+
+.header {
+    -fx-border-width: 2px;
+
+    -fx-border-color: red;
+
+    -fx-background-color: -fx-primary-color;
+
+   /* -fx-background-radius: 0px 0px 60px 60px;*/
+    -fx-border-radius: 0px 0px 60px 60px;
 }
