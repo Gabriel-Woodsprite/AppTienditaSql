@@ -1,14 +1,13 @@
 package org.example.apptienditasql.controller;
 
-import com.sun.tools.javac.Main;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.model.Product;
 import org.example.apptienditasql.utils.DatabaseConnection;
-import org.example.apptienditasql.utils.UserMessage;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -16,25 +15,58 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.example.apptienditasql.utils.UserMessage.message;
-
 public class CreateViewController {
+	///////////////
+	//////DAO//////
+	///////////////
+	private ProductsDao productsDao = null;
+
+
+	///////////////////////////////
+	//////REFERENCE VARIABLES//////
+	///////////////////////////////
 	private MainViewController mainViewController;
-	ProductsDao productsDao = null;
-	public SplitMenuButton categoria;
+	private List<String> editableProductList = MainViewController.editableProductList;
+
+	public void setMainViewController(MainViewController mainViewController) {
+		this.mainViewController = mainViewController;
+	}
+
+	/////////////////////////
+	//////FXML ELEMENTS//////
+	/////////////////////////
 	@FXML
 	private Button saveButton;
 	@FXML
 	private Pane rootPane;
 
+	/////////////////////////
+	//////FXML ELEMENTS//////
+	/////////////////////////
+	@FXML
+	private void closeButtonAction(){
+		Stage stage  = (Stage) saveButton.getScene().getWindow();
+		stage.close();
+	}
+
 	@FXML
 	public <T> void initialize() throws SQLException {
+		System.out.println(editableProductList);
 		productsDao = new ProductsDao(DatabaseConnection.getConnection());
+
+		if (!editableProductList.isEmpty()) {
+			insertValues(rootPane.lookupAll(".input-field"));
+		}
+
+
 		saveButton.setOnAction(event -> {
-			System.out.println("hola?");
-			Set<Node> inputs = rootPane.lookupAll(".input-field");
 			List<T> inputValues = new ArrayList<>();
-			for (Node node : inputs) {
+
+			/////////////////////
+			//////NODE LOOP//////
+			/////////////////////
+			int i = 0;
+			for (Node node : rootPane.lookupAll(".input-field")) {
 				if (node instanceof TextField tf) {
 					System.out.println("TextField: " + tf.getText());
 					inputValues.add((T) tf.getText());
@@ -52,9 +84,12 @@ public class CreateViewController {
 					inputValues.add((T) dp.getValue());
 				}
 			}
-			inputValues.forEach(System.out::println);
 
+			////////////////////////////////
+			//////UPDATE MAINVIEW LIST//////
+			////////////////////////////////
 			objectParse(inputValues);
+			closeButtonAction();
 		});
 	}
 
@@ -75,17 +110,35 @@ public class CreateViewController {
 		product.setRegisterDate((LocalDate) inputValues.get(12));
 		product.setExpiryDate((LocalDate) inputValues.get(13));
 		product.setProductLocation((String) inputValues.get(14));
-		try{
-		productsDao.create(product);
-			if(mainViewController != null) {
+		try {
+			productsDao.create(product);
+			if (mainViewController != null) {
 				mainViewController.insertProductList();
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
-	public void setMainViewController(MainViewController mainViewController) {
-		this.mainViewController = mainViewController;
+
+	private void insertValues(Set<Node> nodes) {
+		int i = 0;
+		for (Node node : nodes) {
+			if (node instanceof TextField tf) {
+				tf.setText(editableProductList.get(i));
+			} else if (node instanceof RadioButton rb) {
+				System.out.println("Bulian?" + Boolean.parseBoolean(editableProductList.get(i)));
+				System.out.println("Bulian?" + editableProductList.get(i));
+				rb.setSelected(Boolean.parseBoolean(editableProductList.get(i)));
+			} else if (node instanceof SplitMenuButton sp) {
+				sp.setText(editableProductList.get(i));
+			} else if (node instanceof TextArea ta) {
+				ta.setText(editableProductList.get(i));
+			} else if (node instanceof DatePicker dp) {
+				dp.setValue(LocalDate.parse(editableProductList.get(i)));
+			}
+			i++;
+		}
+		editableProductList.clear();
 	}
 }

@@ -13,7 +13,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="apptienditadb@localhost [2]" uuid="dbab4a01-4347-40d4-88d0-32486ef2788b">
+    <data-source source="LOCAL" name="Gabolocalhost" uuid="dc49df6f-b5ef-4edd-b16e-b10a40262879">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

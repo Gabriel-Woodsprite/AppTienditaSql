@@ -18,7 +18,10 @@ import org.example.apptienditasql.utils.DatabaseConnection;
 import org.example.apptienditasql.view.MainView;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.example.apptienditasql.utils.ProductData.parseProduct;
 
 public class MainViewController {
 	@FXML
@@ -30,6 +33,8 @@ public class MainViewController {
 	@FXML
 	public Button addProductButton;
 
+	public static List<String> editableProductList = new ArrayList<>();
+
 	ProductsDao productsDao = new ProductsDao(DatabaseConnection.getConnection());
 	ObservableList<HBox> interactiveElements = FXCollections.observableArrayList();
 
@@ -37,7 +42,9 @@ public class MainViewController {
 	public MainViewController() throws SQLException {
 	}
 
-
+	public List<String> getEditableProductList() {
+		return editableProductList;
+	}
 	@FXML
 	public void insertProductList() throws Exception {
 		List<Product> productsList = productsDao.readAll();
@@ -50,10 +57,17 @@ public class MainViewController {
 			Button eliminar = new Button("Eliminar");
 			eliminar.setId(product.getBarcode());
 
-//			editar.setOnAction(e -> {})
 			eliminar.setOnAction(e -> {
 				try {
 					removeProductButton(product.getBarcode());
+				} catch (Exception ex) {
+					throw new RuntimeException(ex);
+				}
+			});
+			editar.setOnAction(e -> {
+				try {
+					editableProductList =  parseProduct(productsDao.read(product.getBarcode()));
+					addProductButton("Editar Producto");
 				} catch (Exception ex) {
 					throw new RuntimeException(ex);
 				}
@@ -74,33 +88,30 @@ public class MainViewController {
 	}
 
 
-	private void addProductButton() throws Exception {
-
+	private void addProductButton(String title) throws Exception {
 		/*___FXML___*/
 		FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("add-products.fxml"));
+
 		Scene scene = new Scene(fxmlLoader.load(), 1200, 864);
 		Stage newStage = new Stage();
 
 		CreateViewController controller = fxmlLoader.getController();
 		controller.setMainViewController(this);
-
 		newStage.setScene(scene);
-		newStage.setTitle("Añadir Producto");
+		newStage.setTitle(title);
 		newStage.setResizable(false);
 		newStage.show();
-
 	}
 
 	@FXML
 	public void initialize() throws Exception {
 		addProductButton.setOnAction(e -> {
 			try {
-				addProductButton();
+				addProductButton("Añadir Producto");
 			} catch (Exception ex) {
 				throw new RuntimeException(ex);
 			}
 		});
-
 
 		insertProductList();
 	}
