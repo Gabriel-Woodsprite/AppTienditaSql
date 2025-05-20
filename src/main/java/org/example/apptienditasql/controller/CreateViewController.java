@@ -9,11 +9,22 @@ import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.model.Product;
 import org.example.apptienditasql.utils.DatabaseConnection;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+
+import static org.example.apptienditasql.utils.UserMessage.message;
+import static org.example.apptienditasql.utils.fileChooserCreator.createFileChooser;
 
 public class CreateViewController {
 	///////////////
@@ -21,12 +32,14 @@ public class CreateViewController {
 	///////////////
 	private ProductsDao productsDao = null;
 
+	private File imageFile = null;
+
 
 	///////////////////////////////
 	//////REFERENCE VARIABLES//////
 	///////////////////////////////
 	private MainViewController mainViewController;
-	private List<String> editableProductList = MainViewController.editableProductList;
+	private final List<String> editableProductList = MainViewController.editableProductList;
 
 	public void setMainViewController(MainViewController mainViewController) {
 		this.mainViewController = mainViewController;
@@ -39,13 +52,17 @@ public class CreateViewController {
 	private Button saveButton;
 	@FXML
 	private Pane rootPane;
-
-	/////////////////////////
-	//////FXML ELEMENTS//////
-	/////////////////////////
 	@FXML
-	private void closeButtonAction(){
-		Stage stage  = (Stage) saveButton.getScene().getWindow();
+	private Button chooseFileButton;
+	@FXML
+	private Label imgName;
+
+	////////////////////////
+	//////ClOSE WINDOW//////
+	////////////////////////
+	@FXML
+	private void closeButtonAction() {
+		Stage stage = (Stage) saveButton.getScene().getWindow();
 		stage.close();
 	}
 
@@ -59,13 +76,23 @@ public class CreateViewController {
 		}
 
 
+		////////////////////////////
+		//////ESCOGER IMAGENES//////
+		////////////////////////////
+		chooseFileButton.setOnAction(e -> {
+			imageFile = createFileChooser().showOpenDialog(null);
+			imgName.setText(imageFile.getName());
+		});
+
+		///////////////////////////
+		//////GUARDAR CAMBIOS//////
+		///////////////////////////
 		saveButton.setOnAction(event -> {
 			List<T> inputValues = new ArrayList<>();
 
 			/////////////////////
 			//////NODE LOOP//////
 			/////////////////////
-			int i = 0;
 			for (Node node : rootPane.lookupAll(".input-field")) {
 				if (node instanceof TextField tf) {
 					System.out.println("TextField: " + tf.getText());
@@ -83,6 +110,23 @@ public class CreateViewController {
 					System.out.println("Date: " + dp.getValue());
 					inputValues.add((T) dp.getValue());
 				}
+
+				if (node instanceof Label label && label.getId().equals("imgName")) {
+					try {
+						String extension = "";
+						String originalName = imageFile.getName();
+						int i = originalName.lastIndexOf('.');
+						if (i > 0) {
+							extension = originalName.substring(i).toLowerCase();
+						}
+						String newName = UUID.randomUUID().toString().substring(0, 8) + extension;
+						inputValues.add((T) newName);
+						Path destination = Path.of("src/main/resources/org/example/apptienditasql/view/imgDirectory", newName);
+						Files.copy(imageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+					} catch (IOException ex) {
+						throw new RuntimeException(ex);
+					}
+				}
 			}
 
 			////////////////////////////////
@@ -93,7 +137,11 @@ public class CreateViewController {
 		});
 	}
 
+	////////////////////////////////
+	//////FROM INPUT TO OBJECT//////
+	////////////////////////////////
 	private <T> void objectParse(List<T> inputValues) {
+		System.out.println("objectParse: " + inputValues);
 		Product product = new Product();
 		product.setBarcode((String) inputValues.get(0));
 		product.setName((String) inputValues.get(1));
@@ -110,6 +158,7 @@ public class CreateViewController {
 		product.setRegisterDate((LocalDate) inputValues.get(12));
 		product.setExpiryDate((LocalDate) inputValues.get(13));
 		product.setProductLocation((String) inputValues.get(14));
+
 		try {
 			productsDao.create(product);
 			if (mainViewController != null) {
@@ -121,6 +170,9 @@ public class CreateViewController {
 
 	}
 
+	/////////////////////////////
+	//////UPDATE FIELD FILL//////
+	/////////////////////////////
 	private void insertValues(Set<Node> nodes) {
 		int i = 0;
 		for (Node node : nodes) {
