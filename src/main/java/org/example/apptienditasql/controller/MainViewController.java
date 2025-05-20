@@ -4,10 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -17,9 +20,13 @@ import org.example.apptienditasql.model.Product;
 import org.example.apptienditasql.utils.DatabaseConnection;
 import org.example.apptienditasql.view.MainView;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.example.apptienditasql.utils.ProductData.parseProduct;
 
@@ -32,6 +39,8 @@ public class MainViewController {
 
 	@FXML
 	public Button addProductButton;
+	@FXML
+	public Pane imagePane;
 
 	public static List<String> editableProductList = new ArrayList<>();
 
@@ -45,6 +54,7 @@ public class MainViewController {
 	public List<String> getEditableProductList() {
 		return editableProductList;
 	}
+
 	@FXML
 	public void insertProductList() throws Exception {
 		List<Product> productsList = productsDao.readAll();
@@ -52,13 +62,16 @@ public class MainViewController {
 		productsListView.getItems().clear();
 		for (Product product : productsList) {
 			HBox hbox = new HBox();
-			String productDetails = product.getBarcode() + " | " + product.getName();
+			String barCodeString = product.getBarcode();
+			String nameString = product.getName();
 			Button editar = new Button("Editar");
 			Button eliminar = new Button("Eliminar");
 			eliminar.setId(product.getBarcode());
 
 			eliminar.setOnAction(e -> {
 				try {
+					File img = new File("src/main/resources/org/example/apptienditasql/view/imgDirectory/" + product.getImage());
+					Files.delete(img.toPath());
 					removeProductButton(product.getBarcode());
 				} catch (Exception ex) {
 					throw new RuntimeException(ex);
@@ -66,7 +79,7 @@ public class MainViewController {
 			});
 			editar.setOnAction(e -> {
 				try {
-					editableProductList =  parseProduct(productsDao.read(product.getBarcode()));
+					editableProductList = parseProduct(productsDao.read(product.getBarcode()));
 					addProductButton("Editar Producto");
 				} catch (Exception ex) {
 					throw new RuntimeException(ex);
@@ -74,12 +87,27 @@ public class MainViewController {
 			});
 
 			hbox.setSpacing(30);
-			hbox.getChildren().addAll(new Pane(new Label(productDetails)), new Pane(editar), new Pane(eliminar));
+			hbox.getChildren().addAll(new Pane(new Label(barCodeString)), new Pane(new Label(nameString)), new Pane(editar), new Pane(eliminar));
 
 			interactiveElements.add(hbox);
 		}
 
 		productsListView.setItems(interactiveElements);
+
+		interactiveElements.forEach(e -> e.setOnMouseClicked(mouseEvent -> {
+			imagePane.getChildren().clear();
+			Pane pane = (Pane) e.getChildren().getFirst();
+			Label label = (Label) pane.getChildren().getFirst();
+			String barCodeString = label.getText();
+			Product product = productsDao.read(barCodeString);
+			String imgName = product.getImage();
+			System.out.println(imgName);
+
+			Image producImage = new Image(Objects.requireNonNull(MainView.class.getResourceAsStream("imgDirectory/" + imgName)));
+			ImageView producImageView = new ImageView(producImage);
+			imagePane.getChildren().add(producImageView);
+		}));
+
 	}
 
 	private void removeProductButton(String barcode) throws Exception {
