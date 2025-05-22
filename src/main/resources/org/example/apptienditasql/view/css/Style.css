@@ -1,5 +1,7 @@
 .root {
     /* COLORS: -------------------------------------------------------------------------------- */
+    -fx-violet-color: #191629;
+
     /*-fx-background: #ca4e44;*/
     /* FONTS: --------------------------------------------------------------------------------- */
     /* : -------------------------------------------------------------------------------------- */
@@ -23,7 +25,7 @@
 
 .catalogo  {
 
-    -fx-background-color: #406a69;
+    -fx-background-color: #ffffff;
 }
 
     /* : ----------------------------------------------------------------------------- */
@@ -35,7 +37,32 @@
 .input-field {
 }
 
-.header {
+.header {/*
     -fx-border-width: 1px;
-    -fx-border-color: #000000;
+    -fx-border-color: red;*/
+    -fx-background-color: -fx-violet-color;
+    -fx-border-radius: 0px 0px 0px 20px;
+    -fx-backgroundround-radius: 0px 0px 0px 20px;
+}
+
+.img {/*
+    -fx-border-width: 1px;
+    -fx-border-color: blue;*/
+}
+
+.left, .right {/*
+    -fx-border-width: 1px;
+    -fx-border-color: red;*/
+}
+
+.btn_container {
+    /*-fx-border-width: 2px;
+    -fx-border-color: -fx-violet-color;*/
+}
+
+.decoration {
+    -fx-background-image: url("../icons/decoration.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }

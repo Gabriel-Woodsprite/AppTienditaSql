@@ -38,22 +38,26 @@
                         <HBox prefHeight="80.0" prefWidth="1500.0" styleClass="header" stylesheets="@css/Style.css" />
                         <HBox layoutY="80.0" prefHeight="691.0" prefWidth="1500.0" stylesheets="@css/Style.css">
                            <children>
-                              <ScrollPane prefHeight="720.0" prefWidth="760.0" stylesheets="@css/Style.css">
+                              <ScrollPane prefHeight="720.0" prefWidth="760.0" styleClass="left" stylesheets="@css/Style.css">
                                  <content>
                                     <ListView fx:id="productsListView" prefHeight="720.0" prefWidth="756.0" />
                                  </content>
                               </ScrollPane>
-                              <Pane prefHeight="720.0" prefWidth="760.0" stylesheets="@css/Style.css">
+                              <Pane prefHeight="720.0" prefWidth="760.0" styleClass="right" stylesheets="@css/Style.css">
                                  <children>
-                                    <Pane prefHeight="510.0" prefWidth="759.0" stylesheets="@css/Style.css">
+                                    <Pane layoutX="50.0" layoutY="183.0" prefHeight="448.0" prefWidth="620.0" styleClass="btn_container" stylesheets="@css/Style.css">
                                        <children>
                                           <Button layoutX="224.0" layoutY="357.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="edit" />
                                           <Button fx:id="addProductButton" layoutX="160.0" layoutY="357.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="add" />
                                           <Button layoutX="75.0" layoutY="357.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="remove" />
+                                          <Pane fx:id="imagePane" layoutX="66.0" layoutY="78.0" prefHeight="178.0" prefWidth="489.0" styleClass="img" stylesheets="@css/Style.css" />
                                        </children>
                                     </Pane>
-                                    <Pane fx:id="imagePane" layoutX="-2.0" layoutY="513.0" prefHeight="210.0" prefWidth="753.0" stylesheets="@css/Style.css" />
+                                    <Pane layoutX="564.0" prefHeight="184.0" prefWidth="186.0" styleClass="decoration" stylesheets="@css/Style.css" />
                                  </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
                               </Pane>
                            </children>
                         </HBox>
