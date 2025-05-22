@@ -1,16 +1,15 @@
 package org.example.apptienditasql.controller;
 
+import org.example.apptienditasql.dao.ProductsDao;
+import org.example.apptienditasql.model.Product;
+import org.example.apptienditasql.utils.DatabaseConnection;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.example.apptienditasql.dao.ProductsDao;
-import org.example.apptienditasql.model.Product;
-import org.example.apptienditasql.utils.DatabaseConnection;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.example.apptienditasql.utils.UserMessage.message;
 import static org.example.apptienditasql.utils.fileChooserCreator.createFileChooser;
 
 public class CreateViewController {

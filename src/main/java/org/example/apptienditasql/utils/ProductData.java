@@ -1,16 +1,11 @@
 package org.example.apptienditasql.utils;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.layout.HBox;
-import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductData {
-	private static final ObservableList<HBox> products = FXCollections.observableArrayList();
 
 	public static List<String> parseProduct(Product product) {
 		List<String> productInfo = new ArrayList<>();
@@ -30,8 +25,5 @@ public class ProductData {
 		productInfo.add(product.getExpiryDate().toString());
 		productInfo.add(product.getProductLocation());
 		return productInfo;
-	}
-	public static void setProducts(ObservableList<HBox> products) {
-
 	}
 }

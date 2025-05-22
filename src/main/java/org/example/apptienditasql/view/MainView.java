@@ -18,6 +18,8 @@ public class MainView extends Application {
 
         System.out.println("stage = " + stage);
 
+
+
         /*___FXML___*/
         FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("main-view.fxml"));
 

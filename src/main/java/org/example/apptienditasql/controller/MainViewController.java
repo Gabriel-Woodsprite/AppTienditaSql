@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.model.Product;
@@ -22,7 +20,6 @@ import org.example.apptienditasql.view.MainView;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +28,9 @@ import java.util.Objects;
 import static org.example.apptienditasql.utils.ProductData.parseProduct;
 
 public class MainViewController {
-	@FXML
-	private VBox vBox;
 
 	@FXML
-	public ListView productsListView;
+	public ListView<HBox> productsListView;
 
 	@FXML
 	public Button addProductButton;
@@ -51,12 +46,9 @@ public class MainViewController {
 	public MainViewController() throws SQLException {
 	}
 
-	public List<String> getEditableProductList() {
-		return editableProductList;
-	}
 
 	@FXML
-	public void insertProductList() throws Exception {
+	public void insertProductList() {
 		List<Product> productsList = productsDao.readAll();
 
 		productsListView.getItems().clear();
@@ -68,7 +60,7 @@ public class MainViewController {
 			Button eliminar = new Button("Eliminar");
 			eliminar.setId(product.getBarcode());
 
-			eliminar.setOnAction(e -> {
+			eliminar.setOnAction(_ -> {
 				try {
 					File img = new File("src/main/resources/org/example/apptienditasql/view/imgDirectory/" + product.getImage());
 					Files.delete(img.toPath());
@@ -77,7 +69,7 @@ public class MainViewController {
 					throw new RuntimeException(ex);
 				}
 			});
-			editar.setOnAction(e -> {
+			editar.setOnAction(_ -> {
 				try {
 					editableProductList = parseProduct(productsDao.read(product.getBarcode()));
 					addProductButton("Editar Producto");
@@ -94,7 +86,7 @@ public class MainViewController {
 
 		productsListView.setItems(interactiveElements);
 
-		interactiveElements.forEach(e -> e.setOnMouseClicked(mouseEvent -> {
+		interactiveElements.forEach(e -> e.setOnMouseClicked(_ -> {
 			imagePane.getChildren().clear();
 			Pane pane = (Pane) e.getChildren().getFirst();
 			Label label = (Label) pane.getChildren().getFirst();
@@ -110,7 +102,7 @@ public class MainViewController {
 
 	}
 
-	private void removeProductButton(String barcode) throws Exception {
+	private void removeProductButton(String barcode){
 		productsDao.delete(barcode);
 		insertProductList();
 	}
@@ -132,8 +124,8 @@ public class MainViewController {
 	}
 
 	@FXML
-	public void initialize() throws Exception {
-		addProductButton.setOnAction(e -> {
+	public void initialize() {
+		addProductButton.setOnAction(_ -> {
 			try {
 				addProductButton("Añadir Producto");
 			} catch (Exception ex) {

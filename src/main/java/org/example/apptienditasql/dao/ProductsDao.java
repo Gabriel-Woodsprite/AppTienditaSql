@@ -4,7 +4,6 @@ import org.example.apptienditasql.interfaces.*;
 import org.example.apptienditasql.model.Product;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,13 @@ public class ProductsDao implements ProductDaoInterface {
 	@Override
 	public Product read(String barcode) {
 		Product product = null;
-		String sql = "SELECT * FROM Catalogue WHERE barcode = ?";
+		String sql = "SELECT * FROM catalogue\n" +
+				"    INNER JOIN apptienditadb.category c\n" +
+				"        ON catalogue.Category_idCategory = c.idCategory\n" +
+				"    INNER JOIN apptienditadb.measurementunit mu\n" +
+				"        ON catalogue.MeasurementUnit_idMeasurementUnit = mu.idMeasurementUnit\n" +
+				"    INNER JOIN apptienditadb.presentation p\n" +
+				"        ON catalogue.Presentation_idPresentation = p.idPresentation WHERE barcode = ?";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, barcode);
 			ResultSet rs = ps.executeQuery();
@@ -47,12 +52,12 @@ public class ProductsDao implements ProductDaoInterface {
 				product.setBrand(rs.getString("brand"));
 				product.setCategory(rs.getString("category"));
 				product.setContent(rs.getString("content"));
-				product.setMeasurementUnit(rs.getString("measurementUnit"));
+				product.setMeasurementUnit(rs.getString("unit"));
 				product.setMinStock(rs.getString("minStock"));
 				product.setMaxStock(rs.getString("maxStock"));
 				product.setPresentation(rs.getString("presentation"));
 				product.setDescription(rs.getString("description"));
-				product.setAvilable(rs.getBoolean("avilable"));
+				product.setAvilable(rs.getBoolean("available"));
 				product.setImage(rs.getString("img"));
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
 				product.setProductLocation(rs.getString("productLocation"));
