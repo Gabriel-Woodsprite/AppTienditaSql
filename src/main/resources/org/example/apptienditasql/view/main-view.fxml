@@ -35,8 +35,8 @@
                         <String fx:value="catalogo" />
                      </styleClass>
                      <children>
-                        <HBox prefHeight="80.0" prefWidth="1500.0" stylesheets="@css/Style.css" />
-                        <HBox layoutY="41.0" prefHeight="720.0" prefWidth="1486.0" stylesheets="@css/Style.css">
+                        <HBox prefHeight="80.0" prefWidth="1500.0" styleClass="header" stylesheets="@css/Style.css" />
+                        <HBox layoutY="80.0" prefHeight="691.0" prefWidth="1500.0" stylesheets="@css/Style.css">
                            <children>
                               <ScrollPane prefHeight="720.0" prefWidth="760.0" stylesheets="@css/Style.css">
                                  <content>
