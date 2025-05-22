@@ -22,7 +22,7 @@ public class MainView extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("main-view.fxml"));
 
         /*___WINDOW___*/
-        Scene scene = new Scene(fxmlLoader.load(), 1536, 864);
+        Scene scene = new Scene(fxmlLoader.load(), 1500, 800);
         stage.setTitle("Gabo's Store");
         stage.setScene(scene);
         stage.setResizable(false);
