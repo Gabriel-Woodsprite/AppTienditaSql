@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="vBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="864.0" prefWidth="1536.0" spacing="20.0" styleClass="main" stylesheets="@css/Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.MainViewController">
+<VBox fx:id="vBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" spacing="20.0" styleClass="main" stylesheets="@css/Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.MainViewController">
    <children>
-      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="864.0" prefWidth="1536.0" styleClass="myTabPane" stylesheets="@css/Tabs.css" tabClosingPolicy="UNAVAILABLE">
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" styleClass="myTabPane" stylesheets="@css/Tabs.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab styleClass="tabCatalogo" text="Catalogo ">
                 <graphic>
@@ -27,33 +27,32 @@
                     </ImageView>
                 </graphic>
                <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="864.0" prefWidth="1536.0" stylesheets="@css/Style.css">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" stylesheets="@css/Style.css">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                      <styleClass>
                         <String fx:value="catalogo" />
-                        <String fx:value="border_maker" />
                      </styleClass>
                      <children>
-                        <HBox prefHeight="40.0" prefWidth="1535.0" styleClass="border_maker" stylesheets="@css/Style.css" />
-                        <HBox layoutX="1.0" layoutY="41.0" prefHeight="780.0" prefWidth="1520.0" styleClass="border_maker" stylesheets="@css/Style.css">
+                        <HBox prefHeight="80.0" prefWidth="1500.0" stylesheets="@css/Style.css" />
+                        <HBox layoutY="41.0" prefHeight="720.0" prefWidth="1486.0" stylesheets="@css/Style.css">
                            <children>
-                              <ScrollPane prefHeight="200.0" prefWidth="760.0" styleClass="border_maker_blue" stylesheets="@css/Style.css">
+                              <ScrollPane prefHeight="720.0" prefWidth="760.0" stylesheets="@css/Style.css">
                                  <content>
-                                    <ListView prefHeight="759.0" prefWidth="756.0" fx:id="productsListView"/>
+                                    <ListView fx:id="productsListView" prefHeight="720.0" prefWidth="756.0" />
                                  </content>
                               </ScrollPane>
-                              <Pane prefHeight="200.0" prefWidth="760.0" styleClass="border_maker" stylesheets="@css/Style.css">
+                              <Pane prefHeight="720.0" prefWidth="760.0" stylesheets="@css/Style.css">
                                  <children>
-                                    <Pane prefHeight="426.0" prefWidth="759.0" styleClass="border_maker" stylesheets="@css/Style.css">
+                                    <Pane prefHeight="510.0" prefWidth="759.0" stylesheets="@css/Style.css">
                                        <children>
-                                          <Button layoutX="224.0" layoutY="357.0" mnemonicParsing="false" styleClass="border_maker" stylesheets="@css/Style.css" text="edit" />
-                                          <Button fx:id="addProductButton" layoutX="160.0" layoutY="357.0" mnemonicParsing="false" styleClass="border_maker" stylesheets="@css/Style.css" text="add" />
-                                          <Button layoutX="75.0" layoutY="357.0" mnemonicParsing="false" styleClass="border_maker" stylesheets="@css/Style.css" text="remove" />
+                                          <Button layoutX="224.0" layoutY="357.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="edit" />
+                                          <Button fx:id="addProductButton" layoutX="160.0" layoutY="357.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="add" />
+                                          <Button layoutX="75.0" layoutY="357.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="remove" />
                                        </children>
                                     </Pane>
-                                    <Pane fx:id="imagePane" layoutX="4.0" layoutY="428.0" prefHeight="345.0" prefWidth="753.0" styleClass="border_maker_blue" stylesheets="@css/Style.css" />
+                                    <Pane fx:id="imagePane" layoutX="-2.0" layoutY="513.0" prefHeight="210.0" prefWidth="753.0" stylesheets="@css/Style.css" />
                                  </children>
                               </Pane>
                            </children>
@@ -61,11 +60,118 @@
                      </children></AnchorPane>
                </content>
             </Tab>
-          <Tab text="Nose">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1080.0" prefWidth="1920.0" />
-            </content>
-          </Tab>
+            <Tab styleClass="tabCatalogo" text="Venta">
+               <graphic>
+                  <ImageView fx:id="iconoInicio1" fitHeight="19" fitWidth="19">
+                     <image>
+                        <Image url="@icons/Catalogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" stylesheets="@css/Style.css">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab styleClass="tabCatalogo" text="Inventario">
+               <graphic>
+                  <ImageView fx:id="iconoInicio11" fitHeight="19" fitWidth="19">
+                     <image>
+                        <Image url="@icons/Catalogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" stylesheets="@css/Style.css">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab styleClass="tabCatalogo" text="Clientes">
+               <graphic>
+                  <ImageView fx:id="iconoInicio12" fitHeight="19" fitWidth="19">
+                     <image>
+                        <Image url="@icons/Catalogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" stylesheets="@css/Style.css">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab styleClass="tabCatalogo" text="Proveedores">
+               <graphic>
+                  <ImageView fx:id="iconoInicio13" fitHeight="19" fitWidth="19">
+                     <image>
+                        <Image url="@icons/Catalogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" stylesheets="@css/Style.css">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab styleClass="tabCatalogo" text="Reportes">
+               <graphic>
+                  <ImageView fx:id="iconoInicio14" fitHeight="19" fitWidth="19">
+                     <image>
+                        <Image url="@icons/Catalogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" stylesheets="@css/Style.css">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab styleClass="tabCatalogo" text="Configuración">
+               <graphic>
+                  <ImageView fx:id="iconoInicio15" fitHeight="19" fitWidth="19">
+                     <image>
+                        <Image url="@icons/Catalogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" stylesheets="@css/Style.css">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab styleClass="tabCatalogo" text="Help">
+               <graphic>
+                  <ImageView fx:id="iconoInicio16" fitHeight="19" fitWidth="19">
+                     <image>
+                        <Image url="@icons/Catalogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" stylesheets="@css/Style.css">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </AnchorPane>
+               </content>
+            </Tab>
 
         </tabs>
       </TabPane>
