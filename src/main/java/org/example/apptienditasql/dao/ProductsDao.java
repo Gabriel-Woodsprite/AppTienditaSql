@@ -71,6 +71,49 @@ public class ProductsDao implements ProductDaoInterface {
 		return product;
 	}
 
+	public List<String> readCategories() {
+		List<String> categories = new ArrayList<>();
+		String sql = "SELECT * FROM category";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				System.out.println("resultSet: " + rs.getString("category"));
+				categories.add(rs.getString("category"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return categories;
+	}
+
+	public List<String> readUnits() {
+		List<String> units = new ArrayList<>();
+		String sql = "SELECT * FROM measurementunit";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				units.add(rs.getString("unit"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return units;
+	}
+
+	public List<String> redPresentations() {
+		List<String> presentations = new ArrayList<>();
+		String sql = "SELECT * FROM presentation";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				presentations.add(rs.getString("presentation"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return presentations;
+	}
+
 	///////////////////
 	//////READ ALL/////
 	///////////////////

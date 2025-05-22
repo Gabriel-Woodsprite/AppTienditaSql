@@ -49,11 +49,17 @@ public class CreateViewController {
 	@FXML
 	private Button saveButton;
 	@FXML
-	private Pane rootPane;
-	@FXML
 	private Button chooseFileButton;
 	@FXML
+	private Pane rootPane;
+	@FXML
 	private Label imgName;
+	@FXML
+	private ChoiceBox<String> categoryCB;
+	@FXML
+	private ChoiceBox<String> unitCB;
+	@FXML
+	private ChoiceBox<String> presentationCB;
 
 	////////////////////////
 	//////ClOSE WINDOW//////
@@ -66,13 +72,18 @@ public class CreateViewController {
 
 	@FXML
 	public <T> void initialize() throws SQLException {
-		System.out.println(editableProductList);
 		productsDao = new ProductsDao(DatabaseConnection.getConnection());
 
 		if (!editableProductList.isEmpty()) {
 			insertValues(rootPane.lookupAll(".input-field"));
 		}
 
+		//////////////////////////////
+		//////INSERTAR CHOICEBOX//////
+		//////////////////////////////
+		categoryCB.getItems().addAll(productsDao.readCategories());
+		unitCB.getItems().addAll(productsDao.readUnits());
+		presentationCB.getItems().addAll(productsDao.redPresentations());
 
 		////////////////////////////
 		//////ESCOGER IMAGENES//////
@@ -85,7 +96,7 @@ public class CreateViewController {
 		///////////////////////////
 		//////GUARDAR CAMBIOS//////
 		///////////////////////////
-		saveButton.setOnAction(event -> {
+		saveButton.setOnAction(_ -> {
 			List<T> inputValues = new ArrayList<>();
 
 			/////////////////////
@@ -93,19 +104,14 @@ public class CreateViewController {
 			/////////////////////
 			for (Node node : rootPane.lookupAll(".input-field")) {
 				if (node instanceof TextField tf) {
-					System.out.println("TextField: " + tf.getText());
 					inputValues.add((T) tf.getText());
 				} else if (node instanceof RadioButton rb) {
-					System.out.println("RadioButton: " + rb.isSelected());
 					inputValues.add((T) rb.selectedProperty().getValue());
 				} else if (node instanceof SplitMenuButton sp) {
-					System.out.println("SplitMenuButton: " + sp.getId() + sp.getText());
 					inputValues.add((T) sp.getText());
 				} else if (node instanceof TextArea ta) {
-					System.out.println("TextArea: " + ta.getText());
 					inputValues.add((T) ta.getText());
 				} else if (node instanceof DatePicker dp) {
-					System.out.println("Date: " + dp.getValue());
 					inputValues.add((T) dp.getValue());
 				}
 
@@ -173,12 +179,12 @@ public class CreateViewController {
 	/////////////////////////////
 	private void insertValues(Set<Node> nodes) {
 		int i = 0;
+		System.out.println("editableProductList: " + editableProductList);
 		for (Node node : nodes) {
+			System.out.println(node);
 			if (node instanceof TextField tf) {
 				tf.setText(editableProductList.get(i));
 			} else if (node instanceof RadioButton rb) {
-				System.out.println("Bulian?" + Boolean.parseBoolean(editableProductList.get(i)));
-				System.out.println("Bulian?" + editableProductList.get(i));
 				rb.setSelected(Boolean.parseBoolean(editableProductList.get(i)));
 			} else if (node instanceof SplitMenuButton sp) {
 				sp.setText(editableProductList.get(i));
