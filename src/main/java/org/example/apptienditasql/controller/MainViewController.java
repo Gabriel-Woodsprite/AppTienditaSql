@@ -97,6 +97,15 @@ public class MainViewController {
 
 			Image producImage = new Image(Objects.requireNonNull(MainView.class.getResourceAsStream("imgDirectory/" + imgName)));
 			ImageView producImageView = new ImageView(producImage);
+			producImageView.getStyleClass().add("img");
+			producImageView.setFitWidth(200);
+			producImageView.setFitHeight(200);
+			producImageView.setPreserveRatio(true);
+			producImageView.setSmooth(true);
+
+			producImageView.setLayoutX((imagePane.getWidth() - producImageView.getFitWidth()) / 2);
+			producImageView.setLayoutY((imagePane.getHeight() - producImageView.getFitHeight()) / 2);
+
 			imagePane.getChildren().add(producImageView);
 		}));
 

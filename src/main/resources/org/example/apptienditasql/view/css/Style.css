@@ -1,27 +1,35 @@
 .root {
     /* COLORS: -------------------------------------------------------------------------------- */
     -fx-violet-color: #191629;
-
+    -fx-cream-color: #ffe8c2;
+    -fx-orange-color: #ffb582;
+    -fx-white-color: #ffffff;
+    -fx-grey-color: #b7b7b7
     /*-fx-background: #ca4e44;*/
     /* FONTS: --------------------------------------------------------------------------------- */
     /* : -------------------------------------------------------------------------------------- */
 }
 
+@font-face {
+    font-family: "Libre Barcode 39", system-ui;
+    src: url('/org/example/apptienditasql/view/fonts/LibreBarcode39-Regular.ttf');
+}
+
+
+.cool_bar_code{
+    -fx-font-family: "Libre Barcode 39 Regular";
+    -fx-font-size: 38px;
+    -fx-padding: 10px;
+    -fx-text-fill: white;
+    -fx-border-color: -fx-grey-color;
+    -fx-border-radius: 0px 20px 0px 0px;
+    -fx-background-radius: 0px 20px 0px 0px;
+    -fx-border-width: 1px 1px 1px 0px;
+
+}
 
     /* UTILITIES: ----------------------------------------------------------------------------- */
-.border_maker_blue, .border_maker {
-    -fx-border-width: 1px;
-}
 
-.border_maker {
-    -fx-border-color: #ca4e44;
-
-}
-
-.border_maker_blue {
-    -fx-border-color: #74c7ec;
-
-}
 
 .catalogo  {
 
@@ -37,18 +45,24 @@
 .input-field {
 }
 
-.header {/*
-    -fx-border-width: 1px;
-    -fx-border-color: red;*/
+.header {
     -fx-background-color: -fx-violet-color;
     -fx-border-radius: 0px 0px 0px 20px;
-    -fx-backgroundround-radius: 0px 0px 0px 20px;
+    -fx-background-radius: 0px 0px 0px 20px;
 }
 
-.img {/*
-    -fx-border-width: 1px;
-    -fx-border-color: blue;*/
+.img_container, .information {
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-violet-color;
+    -fx-border-radius: 20px;
 }
+
+.information {
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-background-color: -fx-violet-color;
+}
+
 
 .left, .right {/*
     -fx-border-width: 1px;
@@ -58,6 +72,108 @@
 .btn_container {
     /*-fx-border-width: 2px;
     -fx-border-color: -fx-violet-color;*/
+}
+
+.tag_name {
+    -fx-text-fill: -fx-violet-color;
+    -fx-font-weight: bold;
+    -fx-background-color: none;
+}
+
+.tag_data {
+    -fx-text-fill: -fx-white-color;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-border-color: -fx-grey-color;
+    -fx-border-radius: 20px 0px 0px 0px;
+    -fx-background-radius: 20px 0px 0px 0px;
+    -fx-padding: 10px;
+    -fx-border-width: 1px 0px 1px 1px;
+}
+
+.tag_left {
+    -fx-text-fill: -fx-white-color;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-border-color: -fx-grey-color;
+    -fx-border-width: 0px 0px 1px 1px;
+    -fx-padding: 10px;
+}
+
+.tag_left_bottom {
+    -fx-text-fill: -fx-white-color;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-border-color: -fx-grey-color;
+    -fx-border-width: 0px 0px 1px 1px;
+    -fx-padding: 10px;
+    -fx-background-radius: 0px 0px 0px 20px;
+    -fx-border-radius: 0px 0px 0px 20px;
+}
+
+.panel_bottom {
+    -fx-text-fill: -fx-white-color;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-border-color: -fx-grey-color;
+    -fx-border-width: 0px 1px 1px 1px;
+    -fx-padding: 10px;
+    -fx-background-radius: 0px 0px 20px 20px;
+    -fx-border-radius: 0px 0px 20px 20px;
+}
+
+
+
+.tag_right {
+    -fx-text-fill: -fx-white-color;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-border-color: -fx-grey-color;
+    -fx-border-width: 0px 1px 1px 0px;
+    -fx-padding: 10px;
+}
+
+.name_label {
+    -fx-padding: 10px;
+    -fx-background-color: -fx-orange-color;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+
+    -fx-text-fill: -fx-white-color;
+    -fx-font-weight: bold;
+
+}
+
+.description_panel {
+    -fx-padding: 10px;
+    -fx-background-color: -fx-cream-color;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+
+    -fx-text-fill: -fx-white-color;
+}
+
+.description_label {
+    -fx-text-fill: -fx-violet-color;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-padding: 30px;
+}
+
+.description_area {
+    -fx-border-width: 0px 1px 1px 1px;
+    -fx-padding: 10px;
+    -fx-background-color: -fx-cream-color;
+    -fx-background-radius: 0px 0px 20px 20px;
+    /*-fx-border-radius: 0px 0px 20px 20px;*/
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif
+}
+
+.description_area .content {
+    -fx-background-color: -fx-cream-color; /* Fondo interno */
+    -fx-background-insets: 0;
+    -fx-padding: 10px;
 }
 
 .decoration {

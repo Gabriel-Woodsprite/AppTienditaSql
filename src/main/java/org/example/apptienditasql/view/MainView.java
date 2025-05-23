@@ -3,6 +3,7 @@ package org.example.apptienditasql.view;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -22,6 +23,11 @@ public class MainView extends Application {
 
         /*___FXML___*/
         FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("main-view.fxml"));
+        Font.loadFont(getClass().getResource("/org/example/apptienditasql/view/fonts/LibreBarcode39-Regular.ttf").toExternalForm(), 10);
+
+
+        Font.getFamilies().forEach(System.out::println);
+
 
         /*___WINDOW___*/
         Scene scene = new Scene(fxmlLoader.load(), 1500, 800);
