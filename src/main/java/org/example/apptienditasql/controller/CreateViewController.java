@@ -145,7 +145,6 @@ public class CreateViewController {
 	//////FROM INPUT TO OBJECT//////
 	////////////////////////////////
 	private <T> void objectParse(List<T> inputValues) {
-		System.out.println("objectParse: " + inputValues);
 		Product product = new Product();
 		product.setBarcode((String) inputValues.get(0));
 		product.setName((String) inputValues.get(1));
@@ -179,9 +178,7 @@ public class CreateViewController {
 	/////////////////////////////
 	private void insertValues(Set<Node> nodes) {
 		int i = 0;
-		System.out.println("editableProductList: " + editableProductList);
 		for (Node node : nodes) {
-			System.out.println(node);
 			if (node instanceof TextField tf) {
 				tf.setText(editableProductList.get(i));
 			} else if (node instanceof RadioButton rb) {
