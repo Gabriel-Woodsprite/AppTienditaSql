@@ -49,11 +49,10 @@
                               </ScrollPane>
                               <Pane prefHeight="720.0" prefWidth="760.0" styleClass="right" stylesheets="@css/Style.css">
                                  <children>
-                                    <Pane layoutX="20.0" layoutY="612.0" prefHeight="78.0" prefWidth="341.0" styleClass="btn_container" stylesheets="@css/Style.css">
+                                    <Pane layoutX="30.0" layoutY="599.0" prefHeight="78.0" prefWidth="620.0" styleClass="btn_container" stylesheets="@css/Style.css">
                                        <children>
-                                          <Button layoutX="268.0" layoutY="38.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="edit" />
-                                          <Button fx:id="addProductButton" layoutX="169.0" layoutY="29.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="add" />
-                                          <Button layoutX="54.0" layoutY="34.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="remove" />
+                                          <Button fx:id="addProductButton" layoutX="64.0" layoutY="29.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="Añadir Producto" />
+                                          <Pane layoutX="6.0" layoutY="14.0" prefHeight="50.0" prefWidth="50.0" styleClass="add_icon" />
                                        </children>
                                     </Pane>
                                     <Pane layoutX="564.0" prefHeight="184.0" prefWidth="186.0" styleClass="decoration" stylesheets="@css/Style.css" />
