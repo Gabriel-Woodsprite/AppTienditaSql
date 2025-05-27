@@ -4,10 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -24,29 +23,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import static org.example.apptienditasql.utils.ProductData.parseProduct;
 
 public class MainViewController {
+	///////////////
+	//////DAO//////
+	///////////////
+	ProductsDao productsDao = new ProductsDao(DatabaseConnection.getConnection());
+	ObservableList<HBox> interactiveElements = FXCollections.observableArrayList();
 
+	/////////////////////////
+	//////FXML ELEMENTS//////
+	/////////////////////////
 	@FXML
 	public ListView<HBox> productsListView;
-
 	@FXML
 	public Button addProductButton;
 	@FXML
 	public Pane imagePane;
+	@FXML
+	public Pane imagePane1;
+	@FXML
+	public CheckBox availableCheckbox;
+	@FXML
+	public TextArea descriptionTextArea;
 
+	///////////////////////////////
+	//////REFERENCE VARIABLES//////
+	///////////////////////////////
 	public static List<String> editableProductList = new ArrayList<>();
-
-	ProductsDao productsDao = new ProductsDao(DatabaseConnection.getConnection());
-	ObservableList<HBox> interactiveElements = FXCollections.observableArrayList();
-
 
 	public MainViewController() throws SQLException {
 	}
 
 
+	////////////////////////////////////////////
+	//////FUNCIONALIDAD LISTA DE PRODUCTOS//////
+	////////////////////////////////////////////
 	@FXML
 	public void insertProductList() {
 		List<Product> productsList = productsDao.readAll();
@@ -60,19 +75,22 @@ public class MainViewController {
 			Button eliminar = new Button("Eliminar");
 			eliminar.setId(product.getBarcode());
 
+			/// BOTÓN ELIMINAR
 			eliminar.setOnAction(_ -> {
 				try {
 					File img = new File("src/main/resources/org/example/apptienditasql/view/imgDirectory/" + product.getImage());
 					Files.delete(img.toPath());
-					removeProductButton(product.getBarcode());
+					removeProductAction(product.getBarcode());
 				} catch (Exception ex) {
 					throw new RuntimeException(ex);
 				}
 			});
+
+			/// BOTÓN EDITAR
 			editar.setOnAction(_ -> {
 				try {
 					editableProductList = parseProduct(productsDao.read(product.getBarcode()));
-					addProductButton("Editar Producto");
+					addProductAction("Editar Producto");
 				} catch (Exception ex) {
 					throw new RuntimeException(ex);
 				}
@@ -86,15 +104,49 @@ public class MainViewController {
 
 		productsListView.setItems(interactiveElements);
 
+	}
+
+	//////////////////////////////////////
+	//////FUCIONALIDAD PANEL DERECHO//////
+	//////////////////////////////////////
+	@FXML
+	private void infoCardAction(){
 		interactiveElements.forEach(e -> e.setOnMouseClicked(_ -> {
-			imagePane.getChildren().clear();
+			/////////////////////////////////
+			//////VALORES INICIALIZADOS//////
+			/////////////////////////////////
 			Pane pane = (Pane) e.getChildren().getFirst();
 			Label label = (Label) pane.getChildren().getFirst();
 			String barCodeString = label.getText();
 			Product product = productsDao.read(barCodeString);
 			String imgName = product.getImage();
-			System.out.println(imgName);
 
+			//////////////////////////////////////////
+			//////ACTUALIZAR CARD DE INFORMACIÓN//////
+			//////////////////////////////////////////
+			Set<Node> descriptionLabels = imagePane1.lookupAll(".descriptionLabels");
+			List<String> descriptions = new ArrayList<>();
+			descriptions.add(barCodeString);
+			descriptions.add(product.getBrand());
+			descriptions.add(product.getContent());
+			descriptions.add(product.getMaxStock());
+			descriptions.add(product.getMinStock());
+			descriptions.add(product.getExpiryDate().toString());
+			descriptions.add(product.getName());
+
+			int[] i = new int[1];
+			descriptionLabels.forEach(labelNode -> {
+				((Label) labelNode).setText(descriptions.get(i[0]));
+				i[0]++;
+			});
+			availableCheckbox.setSelected(product.isAvilable());
+			descriptionTextArea.setText(product.getDescription());
+
+
+			//////////////////////////////////////
+			//////ACTUALIZAR IMAGEN DEL CARD//////
+			//////////////////////////////////////
+			imagePane.getChildren().clear();
 			Image producImage = new Image(Objects.requireNonNull(MainView.class.getResourceAsStream("imgDirectory/" + imgName)));
 			ImageView producImageView = new ImageView(producImage);
 			producImageView.getStyleClass().add("img");
@@ -108,16 +160,20 @@ public class MainViewController {
 
 			imagePane.getChildren().add(producImageView);
 		}));
-
 	}
 
-	private void removeProductButton(String barcode){
+	////////////////////////////////////
+	//////ACCIÓN ELIMINAR PRODUCTO//////
+	////////////////////////////////////
+	private void removeProductAction(String barcode) {
 		productsDao.delete(barcode);
 		insertProductList();
 	}
 
-
-	private void addProductButton(String title) throws Exception {
+	//////////////////////////////////
+	//////ACCIÓN AÑADIR PRODUCTO//////
+	//////////////////////////////////
+	private void addProductAction(String title) throws Exception {
 		/*___FXML___*/
 		FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("add-products.fxml"));
 
@@ -136,12 +192,13 @@ public class MainViewController {
 	public void initialize() {
 		addProductButton.setOnAction(_ -> {
 			try {
-				addProductButton("Añadir Producto");
+				addProductAction("Añadir Producto");
 			} catch (Exception ex) {
 				throw new RuntimeException(ex);
 			}
 		});
 
 		insertProductList();
+		infoCardAction();
 	}
 }

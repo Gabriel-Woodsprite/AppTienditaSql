@@ -183,6 +183,9 @@
     -fx-background-position: center;
 }
 
+.descriptionLabels {
+}
+
 .add_icon {
     -fx-background-image: url("../icons/decoration.png");
     -fx-background-size: cover;
