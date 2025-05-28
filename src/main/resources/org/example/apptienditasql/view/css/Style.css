@@ -185,3 +185,10 @@
 
 .descriptionLabels {
 }
+
+.add_icon {
+    -fx-background-image: url("../icons/decoration.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
