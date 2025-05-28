@@ -44,7 +44,7 @@ public class MainViewController {
 	@FXML
 	public Pane imagePane;
 	@FXML
-	public Pane imagePane1;
+	public Pane rightPane;
 	@FXML
 	public CheckBox availableCheckbox;
 	@FXML
@@ -124,7 +124,7 @@ public class MainViewController {
 			//////////////////////////////////////////
 			//////ACTUALIZAR CARD DE INFORMACIÓN//////
 			//////////////////////////////////////////
-			Set<Node> descriptionLabels = imagePane1.lookupAll(".descriptionLabels");
+			Set<Node> descriptionLabels = rightPane.lookupAll(".descriptionLabels");
 			List<String> descriptions = new ArrayList<>();
 			descriptions.add(barCodeString);
 			descriptions.add(product.getBrand());

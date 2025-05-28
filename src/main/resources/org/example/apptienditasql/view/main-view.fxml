@@ -47,7 +47,7 @@
                                     <ListView fx:id="productsListView" prefHeight="720.0" prefWidth="756.0" />
                                  </content>
                               </ScrollPane>
-                              <Pane prefHeight="720.0" prefWidth="760.0" styleClass="right" stylesheets="@css/Style.css">
+                              <Pane fx:id="rightPane" prefHeight="720.0" prefWidth="760.0" styleClass="right" stylesheets="@css/Style.css">
                                  <children>
                                     <Pane layoutX="20.0" layoutY="612.0" prefHeight="78.0" prefWidth="341.0" styleClass="btn_container" stylesheets="@css/Style.css">
                                        <children>
