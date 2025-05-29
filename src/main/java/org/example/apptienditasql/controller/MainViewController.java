@@ -68,11 +68,23 @@ public class MainViewController {
 
 		productsListView.getItems().clear();
 		for (Product product : productsList) {
+
+
 			HBox hbox = new HBox();
 			String barCodeString = product.getBarcode();
 			String nameString = product.getName();
-			Button editar = new Button("Editar");
-			Button eliminar = new Button("Eliminar");
+			Button editar = new Button("");
+			Button eliminar = new Button("");
+
+			
+
+			editar.getStyleClass().add("edit_button");
+			editar.setPrefSize(25, 25);
+			editar.setMinSize(25, 25);
+
+			eliminar.getStyleClass().add("delete_button");
+			eliminar.setPrefSize(25, 25);
+			eliminar.setMinSize(25,25);
 			eliminar.setId(product.getBarcode());
 
 			/// BOTÓN ELIMINAR

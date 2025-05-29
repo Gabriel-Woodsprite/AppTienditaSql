@@ -187,8 +187,40 @@
 }
 
 .add_icon {
-    -fx-background-image: url("../icons/decoration.png");
+    -fx-background-image: url("../icons/add.png");
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
+}
+
+.add_button {
+    -fx-border-color: -fx-violet-color;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-text-fill: -fx-violet-color;
+    -fx-background-color: -fx-white-color;
+}
+
+.add_button:hover {
+    -fx-border-color: -fx-white-color;
+    -fx-text-fill: -fx-white-color;
+    -fx-background-color: -fx-violet-color;
+}
+
+.delete_button, .edit_button {
+    -fx-pref-width: 10px;
+    -fx-pref-height: 10px;
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: -fx-white-color;
+}
+
+.delete_button {
+    -fx-background-image: url("../icons/delete.png");
+}
+
+.edit_button {
+    -fx-background-image: url("../icons/edit.png");
 }

@@ -51,8 +51,8 @@
                                  <children>
                                     <Pane layoutX="30.0" layoutY="599.0" prefHeight="78.0" prefWidth="620.0" styleClass="btn_container" stylesheets="@css/Style.css">
                                        <children>
-                                          <Button fx:id="addProductButton" layoutX="64.0" layoutY="29.0" mnemonicParsing="false" stylesheets="@css/Style.css" text="Añadir Producto" />
-                                          <Pane layoutX="6.0" layoutY="14.0" prefHeight="50.0" prefWidth="50.0" styleClass="add_icon" />
+                                          <Button fx:id="addProductButton" layoutX="10.0" layoutY="28.0" mnemonicParsing="false" styleClass="add_button" stylesheets="@css/Style.css" text="Añadir Producto" />
+                                          <Pane layoutX="120.0" layoutY="17.0" prefHeight="50.0" prefWidth="50.0" styleClass="add_icon" />
                                        </children>
                                     </Pane>
                                     <Pane layoutX="564.0" prefHeight="184.0" prefWidth="186.0" styleClass="decoration" stylesheets="@css/Style.css" />
@@ -65,13 +65,13 @@
                                              </font></Label>
                                           <Label prefHeight="78.0" prefWidth="80.0" styleClass="tag_data" text="Código:" />
                                           <Label layoutY="78.0" prefHeight="43.0" prefWidth="70.0" styleClass="tag_left" text="Marca:" />
-                                          <Label layoutX="70.0" layoutY="78.0" prefHeight="43.0" prefWidth="110.0" styleClass="tag_right,descriptionLabels"  />
+                                          <Label layoutX="70.0" layoutY="78.0" prefHeight="43.0" prefWidth="110.0" styleClass="tag_right,descriptionLabels" />
                                           <Label layoutX="180.0" layoutY="78.0" prefHeight="43.0" prefWidth="100.0" styleClass="tag_left" text="Contenido:" />
-                                          <Label layoutX="280.0" layoutY="78.0" prefHeight="43.0" prefWidth="75.0" styleClass="tag_right,descriptionLabels"  />
+                                          <Label layoutX="280.0" layoutY="78.0" prefHeight="43.0" prefWidth="75.0" styleClass="tag_right,descriptionLabels" />
                                           <Label layoutY="121.0" prefHeight="43.0" prefWidth="110.0" styleClass="tag_left" text="Max-Stock:" />
-                                          <Label layoutX="110.0" layoutY="121.0" prefHeight="43.0" prefWidth="70.0" styleClass="tag_right,descriptionLabels"  />
+                                          <Label layoutX="110.0" layoutY="121.0" prefHeight="43.0" prefWidth="70.0" styleClass="tag_right,descriptionLabels" />
                                           <Label layoutX="180.0" layoutY="121.0" prefHeight="43.0" prefWidth="100.0" styleClass="tag_left" text="Min-Stock" />
-                                          <Label layoutX="280.0" layoutY="121.0" prefHeight="43.0" prefWidth="75.0" styleClass="tag_right,descriptionLabels"  />
+                                          <Label layoutX="280.0" layoutY="121.0" prefHeight="43.0" prefWidth="75.0" styleClass="tag_right,descriptionLabels" />
                                           <Label layoutY="164.0" prefHeight="43.0" prefWidth="170.0" styleClass="tag_left" text="Fecha De Caducidad:" />
                                           <Label layoutX="170.0" layoutY="164.0" prefHeight="43.0" prefWidth="185.0" styleClass="tag_right,descriptionLabels" />
                                           <Pane layoutY="207.0" prefHeight="43.0" prefWidth="355.0" styleClass="panel_bottom">
