@@ -53,7 +53,7 @@ public class MainViewController {
 	///////////////////////////////
 	//////REFERENCE VARIABLES//////
 	///////////////////////////////
-	public static List<String> editableProductList = new ArrayList<>();
+	public Product selectedProduct;
 
 	public MainViewController() throws SQLException {
 	}
@@ -89,7 +89,7 @@ public class MainViewController {
 			/// BOTÓN EDITAR
 			editar.setOnAction(_ -> {
 				try {
-					editableProductList = parseProduct(productsDao.read(product.getBarcode()));
+					selectedProduct = productsDao.read(product.getBarcode());
 					addProductAction("Editar Producto");
 				} catch (Exception ex) {
 					throw new RuntimeException(ex);
@@ -103,7 +103,7 @@ public class MainViewController {
 		}
 
 		productsListView.setItems(interactiveElements);
-
+		infoCardAction();
 	}
 
 	//////////////////////////////////////
@@ -182,6 +182,7 @@ public class MainViewController {
 
 		CreateViewController controller = fxmlLoader.getController();
 		controller.setMainViewController(this);
+		controller.setEditableProduct(selectedProduct);
 		newStage.setScene(scene);
 		newStage.setTitle(title);
 		newStage.setResizable(false);

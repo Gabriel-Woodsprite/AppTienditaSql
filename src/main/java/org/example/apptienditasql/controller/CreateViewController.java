@@ -29,18 +29,24 @@ public class CreateViewController {
 	//////DAO//////
 	///////////////
 	private ProductsDao productsDao = null;
-
 	private File imageFile = null;
-
 
 	///////////////////////////////
 	//////REFERENCE VARIABLES//////
 	///////////////////////////////
 	private MainViewController mainViewController;
-	private final List<String> editableProductList = MainViewController.editableProductList;
+	private Product editableProduct = null;
 
 	public void setMainViewController(MainViewController mainViewController) {
 		this.mainViewController = mainViewController;
+	}
+
+	public void setEditableProduct(Product product) {
+		this.editableProduct = product;
+
+		if (editableProduct != null) {
+			insertProductValues(rootPane.lookupAll(".input-field"));
+		}
 	}
 
 	/////////////////////////
@@ -53,7 +59,7 @@ public class CreateViewController {
 	@FXML
 	private Pane rootPane;
 	@FXML
-	private Label imgName;
+	private Label imgLabel;
 	@FXML
 	private ChoiceBox<String> categoryCB;
 	@FXML
@@ -70,75 +76,82 @@ public class CreateViewController {
 		stage.close();
 	}
 
-	@FXML
-	public <T> void initialize() throws SQLException {
-		productsDao = new ProductsDao(DatabaseConnection.getConnection());
-
-		if (!editableProductList.isEmpty()) {
-			insertValues(rootPane.lookupAll(".input-field"));
-		}
-
-		//////////////////////////////
-		//////INSERTAR CHOICEBOX//////
-		//////////////////////////////
+	////////////////////////////
+	//////CHOICEBOX VALUES//////
+	///////////////////////////
+	private void choiceBoxValues() {
 		categoryCB.getItems().addAll(productsDao.readCategories());
 		unitCB.getItems().addAll(productsDao.readUnits());
 		presentationCB.getItems().addAll(productsDao.redPresentations());
+	}
 
-		////////////////////////////
-		//////ESCOGER IMAGENES//////
-		////////////////////////////
-		chooseFileButton.setOnAction(e -> {
+	private void imageChooseAction() {
+		System.out.println("imagefile? " + imageFile);
+		chooseFileButton.setOnAction(_ -> {
 			imageFile = createFileChooser().showOpenDialog(null);
-			imgName.setText(imageFile.getName());
+			imgLabel.setText(imageFile.getName());
 		});
+	}
 
-		///////////////////////////
-		//////GUARDAR CAMBIOS//////
-		///////////////////////////
-		saveButton.setOnAction(_ -> {
-			List<T> inputValues = new ArrayList<>();
+	private <T> void storeChanges() throws IOException {
+		List<T> inputValues = new ArrayList<>();
 
-			/////////////////////
-			//////NODE LOOP//////
-			/////////////////////
-			for (Node node : rootPane.lookupAll(".input-field")) {
-				if (node instanceof TextField tf) {
-					inputValues.add((T) tf.getText());
-				} else if (node instanceof RadioButton rb) {
-					inputValues.add((T) rb.selectedProperty().getValue());
-				} else if (node instanceof SplitMenuButton sp) {
-					inputValues.add((T) sp.getText());
-				} else if (node instanceof TextArea ta) {
-					inputValues.add((T) ta.getText());
-				} else if (node instanceof DatePicker dp) {
-					inputValues.add((T) dp.getValue());
-				}
 
-				if (node instanceof Label label && label.getId().equals("imgName")) {
-					try {
-						String extension = "";
-						String originalName = imageFile.getName();
-						int i = originalName.lastIndexOf('.');
-						if (i > 0) {
-							extension = originalName.substring(i).toLowerCase();
-						}
-						String newName = UUID.randomUUID().toString().substring(0, 8) + extension;
-						inputValues.add((T) newName);
-						Path destination = Path.of("src/main/resources/org/example/apptienditasql/view/imgDirectory", newName);
-						Files.copy(imageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
-					} catch (IOException ex) {
-						throw new RuntimeException(ex);
-					}
-				}
+		String imageNameToUse = null;
+		boolean shouldDeleteOldImage = false;
+		String oldImageName = editableProduct != null ? editableProduct.getImage() : null;
+		/////////////////////
+		//////NODE LOOP//////
+		/////////////////////
+		for (Node node : rootPane.lookupAll(".input-field")) {
+			if (node instanceof TextField tf) {
+				inputValues.add((T) tf.getText());
+			} else if (node instanceof RadioButton rb) {
+				inputValues.add((T) rb.selectedProperty().getValue());
+			} else if (node instanceof ChoiceBox cb) {
+				inputValues.add((T) cb.getValue());
+			} else if (node instanceof TextArea ta) {
+				inputValues.add((T) ta.getText());
+			} else if (node instanceof DatePicker dp) {
+				inputValues.add((T) dp.getValue());
 			}
 
-			////////////////////////////////
-			//////UPDATE MAINVIEW LIST//////
-			////////////////////////////////
-			objectParse(inputValues);
-			closeButtonAction();
-		});
+			if (node instanceof Label label && label.getId().equals("imgLabel")) {
+				if (editableProduct != null) {
+					// Editing mode
+					if (imageFile != null) {
+						// New file selected → generate new name and mark old image for deletion
+						String extension = "";
+						int i = imageFile.getName().lastIndexOf('.');
+						if (i > 0) {
+							extension = imageFile.getName().substring(i).toLowerCase();
+						}
+						imageNameToUse = UUID.randomUUID().toString().substring(0, 8) + extension;
+						shouldDeleteOldImage = true;
+					} else {
+						// No new file selected → keep old name
+						imageNameToUse = oldImageName;
+					}
+				} else {
+					// Creation mode
+					if (imageFile != null) {
+						String extension = "";
+						int i = imageFile.getName().lastIndexOf('.');
+						if (i > 0) {
+							extension = imageFile.getName().substring(i).toLowerCase();
+						}
+						imageNameToUse = UUID.randomUUID().toString().substring(0, 8) + extension;
+					}
+				}
+				inputValues.add((T) imageNameToUse);
+			}
+		}
+
+		////////////////////////////////
+		//////UPDATE MAINVIEW LIST//////
+		////////////////////////////////
+		objectParse(inputValues);
+		closeButtonAction();
 	}
 
 	////////////////////////////////
@@ -160,38 +173,125 @@ public class CreateViewController {
 		product.setMaxStock((String) inputValues.get(11));
 		product.setRegisterDate((LocalDate) inputValues.get(12));
 		product.setExpiryDate((LocalDate) inputValues.get(13));
-		product.setProductLocation((String) inputValues.get(14));
+//		product.setProductLocation((String) inputValues.get(14));
+		product.setProductLocation("Estante 1");
 
-		try {
-			productsDao.create(product);
-			if (mainViewController != null) {
-				mainViewController.insertProductList();
+
+		if (editableProduct != null) {
+			productsDao.update(product);
+			if (editableProduct != null) {
+				productsDao.update(product);
+				if (imageFile != null) {
+					// Save new image
+					setImage(product.getImage());
+
+					// Delete old image
+					deleteOldImage(editableProduct.getImage());
+				}
+			} else {
+				productsDao.create(product);
+				if (imageFile != null) {
+					setImage(product.getImage());
+				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else {
+			productsDao.create(product);
+			setImage(inputValues.get(6).toString());
 		}
 
+		if (mainViewController != null) {
+			mainViewController.insertProductList();
+		}
+
+	}
+
+	private void deleteOldImage(String imageName) {
+		if (imageName == null || imageName.isEmpty()) return;
+		Path oldImagePath = Path.of("src/main/resources/org/example/apptienditasql/view/imgDirectory", imageName);
+		try {
+			Files.deleteIfExists(oldImagePath);
+		} catch (IOException e) {
+			System.err.println("Failed to delete old image: " + imageName);
+			e.printStackTrace();
+		}
+	}
+
+	private void setImage(String imgName) {
+		Path destination = Path.of("src/main/resources/org/example/apptienditasql/view/imgDirectory", imgName);
+		try {
+			Files.copy(imageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/////////////////////////////
 	//////UPDATE FIELD FILL//////
 	/////////////////////////////
-	private void insertValues(Set<Node> nodes) {
-		int i = 0;
+	private void insertProductValues(Set<Node> nodes) {
+		if (editableProduct == null) return;
+
+		System.out.println("editableProduct: " + editableProduct);
 		for (Node node : nodes) {
 			if (node instanceof TextField tf) {
-				tf.setText(editableProductList.get(i));
-			} else if (node instanceof RadioButton rb) {
-				rb.setSelected(Boolean.parseBoolean(editableProductList.get(i)));
-			} else if (node instanceof SplitMenuButton sp) {
-				sp.setText(editableProductList.get(i));
+				switch (tf.getId()) {
+					case "barcodeField" -> tf.setText(editableProduct.getBarcode());
+					case "nameField" -> tf.setText(editableProduct.getName());
+					case "brandField" -> tf.setText(editableProduct.getBrand());
+					case "contentField" -> tf.setText(editableProduct.getContent());
+					case "minStockField" -> tf.setText(editableProduct.getMinStock());
+					case "maxStockField" -> tf.setText(editableProduct.getMaxStock());
+				}
 			} else if (node instanceof TextArea ta) {
-				ta.setText(editableProductList.get(i));
+				if ("descriptionArea".equals(ta.getId())) {
+					ta.setText(editableProduct.getDescription());
+				}
+			} else if (node instanceof RadioButton rb) {
+				if ("availableRadio".equals(rb.getId())) {
+					rb.setSelected(editableProduct.isAvilable());
+				}
+			} else if (node instanceof ChoiceBox cb) {
+				switch (cb.getId()) {
+					case "categoryCB" -> cb.setValue(editableProduct.getCategory());
+					case "unitCB" -> cb.setValue(editableProduct.getMeasurementUnit());
+					case "presentationCB" -> cb.setValue(editableProduct.getPresentation());
+				}
 			} else if (node instanceof DatePicker dp) {
-				dp.setValue(LocalDate.parse(editableProductList.get(i)));
+				switch (dp.getId()) {
+					case "registerDatePicker" -> dp.setValue(editableProduct.getRegisterDate());
+					case "expiryDatePicker" -> dp.setValue(editableProduct.getExpiryDate());
+				}
+			} else if (node instanceof Label l && "imgLabel".equals(l.getId())) {
+				l.setText(editableProduct.getImage());
 			}
-			i++;
 		}
-		editableProductList.clear();
+	}
+
+
+	@FXML
+	public void initialize() throws SQLException {
+
+		productsDao = new ProductsDao(DatabaseConnection.getConnection());
+
+		//////////////////////////////
+		//////INSERTAR CHOICEBOX//////
+		//////////////////////////////
+		choiceBoxValues();
+
+		////////////////////////////
+		//////ESCOGER IMAGENES//////
+		////////////////////////////
+		imageChooseAction();
+
+		///////////////////////////
+		//////GUARDAR CAMBIOS//////
+		///////////////////////////
+		saveButton.setOnAction(_ -> {
+			try {
+				storeChanges();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		});
 	}
 }

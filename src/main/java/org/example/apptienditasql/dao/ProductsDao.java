@@ -19,8 +19,8 @@ public class ProductsDao implements ProductDaoInterface {
 	//////////////////
 	@Override
 	public void create(Product product) {
-		String sql = "INSERT INTO Catalogue(barcode,name,brand,category,content,measurementUnit,minStock,maxStock,presentation,description,avilable,img,registerDate,productLocation,expiryDate)" +
-				"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO Catalogue(barcode,name,brand,content,minStock,maxStock,description,available,img,registerDate,productLocation,expiryDate,Category_idCategory,Presentation_idPresentation,MeasurementUnit_idMeasurementUnit)" +
+				"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			attributesSet(product, ps);
 			ps.executeUpdate();
@@ -77,7 +77,6 @@ public class ProductsDao implements ProductDaoInterface {
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				System.out.println("resultSet: " + rs.getString("category"));
 				categories.add(rs.getString("category"));
 			}
 		} catch (SQLException e) {
@@ -138,7 +137,7 @@ public class ProductsDao implements ProductDaoInterface {
 	///////////////////
 	@Override
 	public void update(Product updatedProduct) {
-		String sql = "UPDATE Catalogue SET barCode = ?, name = ?, brand = ?, category = ?, content = ?, measurementUnit = ?, minStock = ?, maxStock = ?, presentation = ?, description = ?, avilable = ?, img = ?, registerDate = ?, productLocation = ?, expiryDate = ? WHERE barcode = ?";
+		String sql = "UPDATE Catalogue SET barCode = ?, name = ?, brand = ?, content = ?, minStock = ?, maxStock = ?, description = ?, available = ?, img = ?, registerDate = ?, productLocation = ?, expiryDate = ?, Category_idCategory = ?, Presentation_idPresentation = ?, MeasurementUnit_idMeasurementUnit = ? WHERE barcode = ?";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			attributesSet(updatedProduct, ps);
 			ps.setString(16, updatedProduct.getBarcode());
@@ -168,19 +167,35 @@ public class ProductsDao implements ProductDaoInterface {
 		ps.setString(1, product.getBarcode());
 		ps.setString(2, product.getName());
 		ps.setString(3, product.getBrand());
-		ps.setString(4, product.getCategory());
-		ps.setString(5, product.getContent());
-		ps.setString(6, product.getMeasurementUnit());
-		ps.setString(7, product.getMinStock());
-		ps.setString(8, product.getMaxStock());
-		ps.setString(9, product.getPresentation());
-		ps.setString(10, product.getDescription());
-		ps.setBoolean(11, product.isAvilable());
-		ps.setString(12, product.getImage());
-		System.out.println(product.getRegisterDate());
-		System.out.println(product.getExpiryDate());
-		ps.setDate(13, Date.valueOf(product.getRegisterDate()));
-		ps.setString(14, product.getProductLocation());
-		ps.setDate(15, Date.valueOf(product.getExpiryDate()));
+		ps.setString(4, product.getContent());
+		ps.setString(5, product.getMinStock());
+		ps.setString(6, product.getMaxStock());
+		ps.setString(7, product.getDescription());
+		ps.setBoolean(8, product.isAvilable());
+		ps.setString(9, product.getImage());
+		ps.setDate(10, Date.valueOf(product.getRegisterDate()));
+		ps.setString(11, product.getProductLocation());
+		ps.setDate(12, Date.valueOf(product.getExpiryDate()));
+
+		System.out.println("CATEGORÍA: " + getIdByName("category", "idCategory", "category", product.getCategory()));
+		System.out.println("PRESENTACION" + getIdByName("presentation", "idPresentation", "presentation", product.getPresentation()));
+		System.out.println("MEASUREMENTUNIT" + getIdByName("measurementUnit", "idMeasurementUnit", "unit", product.getMeasurementUnit()));
+		ps.setInt(13, getIdByName("category", "idCategory", "category", product.getCategory()));
+		ps.setInt(14, getIdByName("presentation", "idPresentation", "presentation", product.getPresentation()));
+		ps.setInt(15, getIdByName("measurementUnit", "idMeasurementUnit", "unit", product.getMeasurementUnit()));
+	}
+
+	private int getIdByName(String table, String idColumn, String nameColumn, String nameValue) {
+		String sql = "SELECT " + idColumn + " FROM " + table + " WHERE " + nameColumn + " = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, nameValue);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt(idColumn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }

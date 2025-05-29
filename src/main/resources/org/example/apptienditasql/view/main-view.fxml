@@ -81,7 +81,7 @@
                                           </Pane>
                                        </children>
                                     </Pane>
-                                    <Label layoutX="115.0" layoutY="50.0" prefHeight="42.0" prefWidth="539.0" styleClass="name_label,descriptionLabels" text="a" />
+                                    <Label layoutX="115.0" layoutY="50.0" prefHeight="42.0" prefWidth="539.0" styleClass="name_label,descriptionLabels" />
                                     <Label layoutX="30.0" layoutY="50.0" prefHeight="42.0" prefWidth="94.0" styleClass="tag_name" text="PRODUCTO:" />
                                     <Pane fx:id="imagePane2" layoutX="30.0" layoutY="371.0" prefHeight="206.0" prefWidth="620.0" styleClass="description_panel" stylesheets="@css/Style.css">
                                        <children>

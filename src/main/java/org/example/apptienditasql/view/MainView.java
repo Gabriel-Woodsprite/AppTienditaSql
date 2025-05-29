@@ -26,8 +26,7 @@ public class MainView extends Application {
         Font.loadFont(getClass().getResource("/org/example/apptienditasql/view/fonts/LibreBarcode39-Regular.ttf").toExternalForm(), 10);
 
 
-        Font.getFamilies().forEach(System.out::println);
-
+//        Font.getFamilies().forEach(System.out::println);
 
         /*___WINDOW___*/
         Scene scene = new Scene(fxmlLoader.load(), 1500, 800);

@@ -16,44 +16,44 @@
         <Pane layoutY="64.0" prefHeight="50.0" prefWidth="600.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="Codigo" />
-                <TextField layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field" />
+                <TextField fx:id="barcodeField" layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutX="600.0" layoutY="64.0" prefHeight="50.0" prefWidth="600.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="Nombre" />
-                <TextField layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field" />
+                <TextField fx:id="nameField" layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutY="114.0" prefHeight="50.0" prefWidth="600.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="Marca" />
-                <TextField layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field" />
+                <TextField fx:id="brandField" layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutX="600.0" layoutY="114.0" prefHeight="100.0" prefWidth="600.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="Descripcin" />
-                <TextArea layoutX="68.0" prefHeight="89.0" prefWidth="532.0" styleClass="input-field" />
+                <TextArea fx:id="descriptionArea" layoutX="68.0" prefHeight="89.0" prefWidth="532.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutY="164.0" prefHeight="50.0" prefWidth="600.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="CONTENIDO" />
-                <TextField layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field" />
+                <TextField fx:id="contentField" layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutX="944.0" layoutY="214.0" prefHeight="50.0" prefWidth="133.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="dispodible" />
-                <RadioButton layoutX="84.0" layoutY="16.0" mnemonicParsing="false" styleClass="input-field" />
+                <RadioButton fx:id="availableRadio" layoutX="84.0" layoutY="16.0" mnemonicParsing="false" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutY="214.0" prefHeight="50.0" prefWidth="600.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="Imagen" />
                 <Button fx:id="chooseFileButton" layoutX="70.0" layoutY="12.0" mnemonicParsing="false" text="Abrir Img" />
-                <Label fx:id="imgName" layoutX="150.0" layoutY="16.0" styleClass="input-field" />
+                <Label fx:id="imgLabel" layoutX="150.0" layoutY="16.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutX="1.0" layoutY="344.0" prefHeight="50.0" prefWidth="600.0">
@@ -79,25 +79,25 @@
         <Pane layoutX="772.0" layoutY="214.0" prefHeight="50.0" prefWidth="172.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="Stock Minimo" />
-                <TextField layoutX="81.0" layoutY="12.0" prefHeight="25.0" prefWidth="71.0" styleClass="input-field" />
+                <TextField fx:id="minStockField" layoutX="81.0" layoutY="12.0" prefHeight="25.0" prefWidth="71.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutX="600.0" layoutY="214.0" prefHeight="50.0" prefWidth="172.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="Stock Maximo" />
-                <TextField layoutX="81.0" layoutY="12.0" prefHeight="25.0" prefWidth="71.0" styleClass="input-field" />
+                <TextField fx:id="maxStockField" layoutX="81.0" layoutY="12.0" prefHeight="25.0" prefWidth="71.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutX="7.0" layoutY="278.0" prefHeight="50.0" prefWidth="294.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="fecha de registro" />
-                <DatePicker layoutX="104.0" layoutY="13.0" styleClass="input-field" />
+                <DatePicker fx:id="registerDatePicker" layoutX="104.0" layoutY="13.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutX="309.0" layoutY="278.0" prefHeight="50.0" prefWidth="336.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="fecha de caducidad" />
-                <DatePicker layoutX="134.0" layoutY="12.0" styleClass="input-field" />
+                <DatePicker fx:id="expiryDatePicker" layoutX="134.0" layoutY="12.0" styleClass="input-field" />
             </children>
         </Pane>
         <Pane layoutX="594.0" layoutY="416.0" prefHeight="50.0" prefWidth="600.0">
