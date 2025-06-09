@@ -189,7 +189,7 @@ public class MainViewController {
 		/*___FXML___*/
 		FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("add-products.fxml"));
 
-		Scene scene = new Scene(fxmlLoader.load(), 1200, 864);
+		Scene scene = new Scene(fxmlLoader.load()/*, 1200, 864*/);
 		Stage newStage = new Stage();
 
 		CreateViewController controller = fxmlLoader.getController();
