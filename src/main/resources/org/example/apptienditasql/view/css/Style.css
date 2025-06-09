@@ -1,10 +1,11 @@
 .root {
     /* COLORS: -------------------------------------------------------------------------------- */
     -fx-violet-color: #191629;
-    -fx-cream-color: #ffe8c2;
-    -fx-orange-color: #ffb582;
+    -fx-ligthv-color: #413b6b;
+    -fx-darkblue-color: #5c65c0;
     -fx-white-color: #ffffff;
     -fx-grey-color: #b7b7b7
+
     /*-fx-background: #ca4e44;*/
     /* FONTS: --------------------------------------------------------------------------------- */
     /* : -------------------------------------------------------------------------------------- */
@@ -135,7 +136,7 @@
 
 .name_label {
     -fx-padding: 10px;
-    -fx-background-color: -fx-orange-color;
+    -fx-background-color: #9b9bbb;
     -fx-border-radius: 50px;
     -fx-background-radius: 50px;
 
@@ -146,7 +147,7 @@
 
 .description_panel {
     -fx-padding: 10px;
-    -fx-background-color: -fx-cream-color;
+    -fx-background-color: #9b9bbb;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
 
@@ -154,7 +155,7 @@
 }
 
 .description_label {
-    -fx-text-fill: -fx-violet-color;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 15px;
     -fx-padding: 30px;
@@ -163,15 +164,15 @@
 .description_area {
     -fx-border-width: 0px 1px 1px 1px;
     -fx-padding: 10px;
-    -fx-background-color: -fx-cream-color;
+    -fx-background-color: #9b9bbb;
     -fx-background-radius: 0px 0px 20px 20px;
-    /*-fx-border-radius: 0px 0px 20px 20px;*/
+    -fx-border-radius: 0px 0px 20px 20px;
     -fx-font-size: 14px;
     -fx-font-family: "Segoe UI", sans-serif
 }
 
 .description_area .content {
-    -fx-background-color: -fx-cream-color; /* Fondo interno */
+    -fx-background-color: -fx-ligthv-color; /* Fondo interno */
     -fx-background-insets: 0;
     -fx-padding: 10px;
 }
@@ -223,4 +224,86 @@
 
 .edit_button {
     -fx-background-image: url("../icons/edit.png");
+}
+/*------------------------------------------------------------------------------*/
+
+
+/* Estilo base del ListView */
+.mi-lista {
+    -fx-background-color: -fx-white-color;
+    -fx-border-color: -fx-darkblue-color;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+/* Celdas normales */
+.mi-lista .list-cell {
+    -fx-padding: 10px 12px;
+    -fx-background-color:-fx-white-color;
+    -fx-border-color: -fx-ligthv-color;
+    -fx-border-width: 0 0 1px 0;
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-violet-color;
+}
+
+/* Celdas impares para efecto zebra */
+.mi-lista .list-cell:odd {
+    -fx-background-color: derive(-fx-violet-color, -3%);
+}
+
+/* Celda seleccionada */
+.mi-lista .list-cell:filled:selected,
+.mi-lista .list-cell:filled:selected:focused {
+    -fx-background-color: -fx-violet-color;
+    -fx-text-fill: -fx-white-color;
+    -fx-font-weight: bold;
+}
+
+/* Efecto hover */
+.mi-lista .list-cell:filled:hover {
+    -fx-background-color: derive(-fx-darkblue-color, 40%);
+    -fx-cursor: hand;
+}
+
+/* Barra de desplazamiento */
+.mi-lista .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 0 2px 0 0;
+}
+
+.mi-lista .scroll-bar:vertical .thumb {
+    -fx-background-color: -fx-darkblue-color;
+    -fx-background-radius: 4px;
+}
+
+.mi-lista .scroll-bar:vertical .track {
+    -fx-background-color: derive(-fx-ligthv-color, -10%);
+    -fx-background-radius: 0;
+}
+
+/* Flechas de la barra de desplazamiento */
+.mi-lista .scroll-bar .increment-button,
+.mi-lista .scroll-bar .decrement-button {
+    -fx-background-color: -fx-ligthv-color;
+    -fx-padding: 2px;
+}
+
+.mi-lista .scroll-bar .increment-arrow,
+.mi-lista .scroll-bar .decrement-arrow {
+    -fx-background-color: -fx-darkblue-color;
+}
+
+/* Celda vacía */
+.mi-lista .list-cell:empty {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Estilo para el foco */
+.mi-lista:focused .list-cell:filled:focused:selected {
+    -fx-background-color: -fx-darkblue-color;
+    -fx-text-fill: -fx-violet-color;
 }
