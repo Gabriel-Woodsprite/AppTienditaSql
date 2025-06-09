@@ -16,7 +16,7 @@
         <Pane layoutY="64.0" prefHeight="50.0" prefWidth="600.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="Codigo" />
-                <TextField fx:id="barcodeField" layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field" />
+                <TextField fx:id="barcodeField" layoutX="70.0" layoutY="12.0" prefHeight="25.0" prefWidth="520.0" styleClass="input-field"/>
             </children>
         </Pane>
         <Pane layoutX="600.0" layoutY="64.0" prefHeight="50.0" prefWidth="600.0">
@@ -103,7 +103,7 @@
         <Pane layoutX="594.0" layoutY="416.0" prefHeight="50.0" prefWidth="600.0">
             <children>
                 <Label layoutX="6.0" layoutY="16.0" text="ubicacion del producto" />
-            <ChoiceBox layoutX="150.0" layoutY="13.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="locationCB" layoutX="150.0" layoutY="13.0" prefWidth="150.0" styleClass="input-field" />
             </children>
         </Pane>
     </children>

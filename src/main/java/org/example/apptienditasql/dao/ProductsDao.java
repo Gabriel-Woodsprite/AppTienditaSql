@@ -19,7 +19,7 @@ public class ProductsDao implements ProductDaoInterface {
 	//////////////////
 	@Override
 	public void create(Product product) {
-		String sql = "INSERT INTO Catalogue(barcode,name,brand,content,minStock,maxStock,description,available,img,registerDate,productLocation,expiryDate,Category_idCategory,Presentation_idPresentation,MeasurementUnit_idMeasurementUnit)" +
+		String sql = "INSERT INTO Catalogue(barcode,name,brand,content,minStock,maxStock,description,available,img,registerDate,expiryDate,Category_idCategory,Presentation_idPresentation,MeasurementUnit_idMeasurementUnit,Location_idLocation)" +
 				"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			attributesSet(product, ps);
@@ -35,13 +35,16 @@ public class ProductsDao implements ProductDaoInterface {
 	@Override
 	public Product read(String barcode) {
 		Product product = null;
-		String sql = "SELECT * FROM catalogue\n" +
-				"    INNER JOIN apptienditadb.category c\n" +
-				"        ON catalogue.Category_idCategory = c.idCategory\n" +
-				"    INNER JOIN apptienditadb.measurementunit mu\n" +
-				"        ON catalogue.MeasurementUnit_idMeasurementUnit = mu.idMeasurementUnit\n" +
-				"    INNER JOIN apptienditadb.presentation p\n" +
-				"        ON catalogue.Presentation_idPresentation = p.idPresentation WHERE barcode = ?";
+		String sql = """
+				SELECT * FROM catalogue
+				    INNER JOIN apptienditadb.category c
+				        ON catalogue.Category_idCategory = c.idCategory
+				    INNER JOIN apptienditadb.measurementunit mu
+				        ON catalogue.MeasurementUnit_idMeasurementUnit = mu.idMeasurementUnit
+				    INNER JOIN apptienditadb.presentation p
+				        ON catalogue.Presentation_idPresentation = p.idPresentation
+					 INNER JOIN apptienditadb.location l
+				        ON catalogue.Location_idLocation = l.idLocation WHERE barcode = ?""";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, barcode);
 			ResultSet rs = ps.executeQuery();
@@ -60,9 +63,8 @@ public class ProductsDao implements ProductDaoInterface {
 				product.setAvilable(rs.getBoolean("available"));
 				product.setImage(rs.getString("img"));
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
-				product.setProductLocation(rs.getString("productLocation"));
+				product.setProductLocation(rs.getString("nombre"));
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
-				product.setProductLocation(rs.getString("productLocation"));
 				product.setExpiryDate(rs.getDate("expiryDate").toLocalDate());
 			}
 		} catch (SQLException e) {
@@ -111,6 +113,20 @@ public class ProductsDao implements ProductDaoInterface {
 			e.printStackTrace();
 		}
 		return presentations;
+	}
+
+	public List<String> readLocation() {
+		List<String> locations = new ArrayList<>();
+		String sql = "SELECT * FROM location";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				locations.add(rs.getString("nombre"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return locations;
 	}
 
 	///////////////////
@@ -174,15 +190,12 @@ public class ProductsDao implements ProductDaoInterface {
 		ps.setBoolean(8, product.isAvilable());
 		ps.setString(9, product.getImage());
 		ps.setDate(10, Date.valueOf(product.getRegisterDate()));
-		ps.setString(11, product.getProductLocation());
-		ps.setDate(12, Date.valueOf(product.getExpiryDate()));
+		ps.setDate(11, Date.valueOf(product.getExpiryDate()));
 
-		System.out.println("CATEGORÍA: " + getIdByName("category", "idCategory", "category", product.getCategory()));
-		System.out.println("PRESENTACION" + getIdByName("presentation", "idPresentation", "presentation", product.getPresentation()));
-		System.out.println("MEASUREMENTUNIT" + getIdByName("measurementUnit", "idMeasurementUnit", "unit", product.getMeasurementUnit()));
-		ps.setInt(13, getIdByName("category", "idCategory", "category", product.getCategory()));
-		ps.setInt(14, getIdByName("presentation", "idPresentation", "presentation", product.getPresentation()));
-		ps.setInt(15, getIdByName("measurementUnit", "idMeasurementUnit", "unit", product.getMeasurementUnit()));
+		ps.setInt(12, getIdByName("category", "idCategory", "category", product.getCategory()));
+		ps.setInt(13, getIdByName("presentation", "idPresentation", "presentation", product.getPresentation()));
+		ps.setInt(14, getIdByName("measurementUnit", "idMeasurementUnit", "unit", product.getMeasurementUnit()));
+		ps.setInt(15, getIdByName("location", "idLocation", "nombre", product.getProductLocation()));
 	}
 
 	private int getIdByName(String table, String idColumn, String nameColumn, String nameValue) {

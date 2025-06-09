@@ -16,13 +16,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.example.apptienditasql.utils.fileChooserCreator.createFileChooser;
+import static org.example.apptienditasql.utils.UserMessage.message;
+import static org.example.apptienditasql.utils.createProductUtil.createFileChooser;
+import static org.example.apptienditasql.utils.createProductUtil.isFieldEmpty;
 
 public class CreateViewController {
 	///////////////
@@ -45,7 +45,7 @@ public class CreateViewController {
 		this.editableProduct = product;
 
 		if (editableProduct != null) {
-			insertProductValues(rootPane.lookupAll(".input-field"));
+			insertOnEditView(rootPane.lookupAll(".input-field"));
 		}
 	}
 
@@ -53,25 +53,53 @@ public class CreateViewController {
 	//////FXML ELEMENTS//////
 	/////////////////////////
 	@FXML
+	private Pane rootPane;
+	@FXML
 	private Button saveButton;
+
+
+	/////////////////////////
+	//////FORM ELEMENTS//////
+	/////////////////////////
+	@FXML
+	private Label imgLabel;
+	@FXML
+	private TextField nameField;
+	@FXML
+	private TextField brandField;
+	@FXML
+	private TextField contentField;
+	@FXML
+	private TextField barcodeField;
+	@FXML
+	private TextField minStockField;
+	@FXML
+	private TextField maxStockField;
 	@FXML
 	private Button chooseFileButton;
 	@FXML
-	private Pane rootPane;
+	private TextArea descriptionArea;
 	@FXML
-	private Label imgLabel;
+	private RadioButton availableRadio;
 	@FXML
 	private ChoiceBox<String> categoryCB;
 	@FXML
 	private ChoiceBox<String> unitCB;
 	@FXML
 	private ChoiceBox<String> presentationCB;
+	@FXML
+	private ChoiceBox<String> locationCB;
+	@FXML
+	private DatePicker registerDatePicker;
+	@FXML
+	private DatePicker expiryDatePicker;
 
 	////////////////////////
 	//////ClOSE WINDOW//////
 	////////////////////////
 	@FXML
 	private void closeButtonAction() {
+		editableProduct = null;
 		Stage stage = (Stage) saveButton.getScene().getWindow();
 		stage.close();
 	}
@@ -83,100 +111,137 @@ public class CreateViewController {
 		categoryCB.getItems().addAll(productsDao.readCategories());
 		unitCB.getItems().addAll(productsDao.readUnits());
 		presentationCB.getItems().addAll(productsDao.redPresentations());
+		locationCB.getItems().addAll(productsDao.readLocation());
 	}
 
 	private void imageChooseAction() {
-		System.out.println("imagefile? " + imageFile);
 		chooseFileButton.setOnAction(_ -> {
 			imageFile = createFileChooser().showOpenDialog(null);
 			imgLabel.setText(imageFile.getName());
 		});
 	}
 
-	private <T> void storeChanges() throws IOException {
-		List<T> inputValues = new ArrayList<>();
+	/////////////////////////////
+	//////UPDATE FIELD FILL//////
+	/////////////////////////////
+	private void insertOnEditView(Set<Node> nodes) {
+		if (editableProduct == null) return;
+		for (Node node : nodes) {
+			if (node instanceof TextField tf) {
+				switch (tf.getId()) {
+					case "barcodeField" -> tf.setText(editableProduct.getBarcode());
+					case "nameField" -> tf.setText(editableProduct.getName());
+					case "brandField" -> tf.setText(editableProduct.getBrand());
+					case "contentField" -> tf.setText(editableProduct.getContent());
+					case "minStockField" -> tf.setText(editableProduct.getMinStock());
+					case "maxStockField" -> tf.setText(editableProduct.getMaxStock());
+				}
+			} else if (node instanceof TextArea ta) {
+				if ("descriptionArea".equals(ta.getId())) {
+					ta.setText(editableProduct.getDescription());
+				}
+			} else if (node instanceof RadioButton rb) {
+				if ("availableRadio".equals(rb.getId())) {
+					rb.setSelected(editableProduct.isAvilable());
+				}
+			} else if (node instanceof ChoiceBox cb) {
+				switch (cb.getId()) {
+					case "categoryCB" -> cb.setValue(editableProduct.getCategory());
+					case "unitCB" -> cb.setValue(editableProduct.getMeasurementUnit());
+					case "presentationCB" -> cb.setValue(editableProduct.getPresentation());
+					case "locationCB" -> cb.setValue(editableProduct.getProductLocation());
+				}
+			} else if (node instanceof DatePicker dp) {
+				switch (dp.getId()) {
+					case "registerDatePicker" -> dp.setValue(editableProduct.getRegisterDate());
+					case "expiryDatePicker" -> dp.setValue(editableProduct.getExpiryDate());
+				}
+			} else if (node instanceof Label l && "imgLabel".equals(l.getId())) {
+				l.setText(editableProduct.getImage());
+			}
+		}
+	}
 
-
+	private void storeChanges() throws IOException {
+		Product newProduct = new Product();
 		String imageNameToUse = null;
 		boolean shouldDeleteOldImage = false;
 		String oldImageName = editableProduct != null ? editableProduct.getImage() : null;
-		/////////////////////
-		//////NODE LOOP//////
-		/////////////////////
-		for (Node node : rootPane.lookupAll(".input-field")) {
-			if (node instanceof TextField tf) {
-				inputValues.add((T) tf.getText());
-			} else if (node instanceof RadioButton rb) {
-				inputValues.add((T) rb.selectedProperty().getValue());
-			} else if (node instanceof ChoiceBox cb) {
-				inputValues.add((T) cb.getValue());
-			} else if (node instanceof TextArea ta) {
-				inputValues.add((T) ta.getText());
-			} else if (node instanceof DatePicker dp) {
-				inputValues.add((T) dp.getValue());
-			}
+		List<Control> requiredFields = List.of(imgLabel, nameField, brandField, contentField, barcodeField, minStockField, maxStockField, chooseFileButton, descriptionArea, availableRadio, categoryCB, unitCB, presentationCB, locationCB, registerDatePicker, expiryDatePicker);
 
-			if (node instanceof Label label && label.getId().equals("imgLabel")) {
-				if (editableProduct != null) {
-					// Editing mode
-					if (imageFile != null) {
-						// New file selected → generate new name and mark old image for deletion
-						String extension = "";
-						int i = imageFile.getName().lastIndexOf('.');
-						if (i > 0) {
-							extension = imageFile.getName().substring(i).toLowerCase();
-						}
-						imageNameToUse = UUID.randomUUID().toString().substring(0, 8) + extension;
-						shouldDeleteOldImage = true;
-					} else {
-						// No new file selected → keep old name
-						imageNameToUse = oldImageName;
-					}
-				} else {
-					// Creation mode
-					if (imageFile != null) {
-						String extension = "";
-						int i = imageFile.getName().lastIndexOf('.');
-						if (i > 0) {
-							extension = imageFile.getName().substring(i).toLowerCase();
-						}
-						imageNameToUse = UUID.randomUUID().toString().substring(0, 8) + extension;
-					}
-				}
-				inputValues.add((T) imageNameToUse);
+
+		/////////////////////////////////////
+		//////CHECKING BEFORE INSERTING//////
+		/////////////////////////////////////
+		for (Control requiredField : requiredFields) {
+			if(isFieldEmpty(requiredField)) {
+				requiredField.setStyle("-fx-border-color: red;");
+			}else{
+				requiredField.setStyle("-fx-border-color: none;");
+			}
+		}
+		for (Control requiredField : requiredFields) {
+			if (isFieldEmpty(requiredField)) {
+				message("Falta Información", "Debe llenar todos los campos", Alert.AlertType.WARNING);
+				return;
 			}
 		}
 
 		////////////////////////////////
+		//////CREATING NEW PRODUCT//////
+		////////////////////////////////
+		newProduct.setBarcode(barcodeField.getText());
+		newProduct.setName(nameField.getText());
+		newProduct.setDescription(descriptionArea.getText());
+		newProduct.setBrand(brandField.getText());
+		newProduct.setContent(contentField.getText());
+		newProduct.setMinStock(minStockField.getText());
+		newProduct.setMaxStock(maxStockField.getText());
+		newProduct.setAvilable(availableRadio.isSelected());
+		newProduct.setRegisterDate(registerDatePicker.getValue());
+		newProduct.setExpiryDate(expiryDatePicker.getValue());
+		newProduct.setCategory(categoryCB.getValue());
+		newProduct.setMeasurementUnit(unitCB.getValue());
+		newProduct.setPresentation(presentationCB.getValue());
+		newProduct.setProductLocation(locationCB.getValue());
+		newProduct.setImage(imgLabel.getText());
+
+		if (editableProduct != null) {
+			if (imageFile != null) {
+				String extension = "";
+				int i = imageFile.getName().lastIndexOf('.');
+				if (i > 0) {
+					extension = imageFile.getName().substring(i).toLowerCase();
+				}
+				imageNameToUse = UUID.randomUUID().toString().substring(0, 8) + extension;
+				shouldDeleteOldImage = true;
+			} else {
+				imageNameToUse = oldImageName;
+			}
+		} else {
+			if (imageFile != null) {
+				String extension = "";
+				int i = imageFile.getName().lastIndexOf('.');
+				if (i > 0) {
+					extension = imageFile.getName().substring(i).toLowerCase();
+				}
+				imageNameToUse = UUID.randomUUID().toString().substring(0, 8) + extension;
+			}
+		}
+		newProduct.setImage(imageNameToUse);
+
+		insertToDb(newProduct);
+
+		////////////////////////////////
 		//////UPDATE MAINVIEW LIST//////
 		////////////////////////////////
-		objectParse(inputValues);
 		closeButtonAction();
 	}
 
 	////////////////////////////////
 	//////FROM INPUT TO OBJECT//////
 	////////////////////////////////
-	private <T> void objectParse(List<T> inputValues) {
-		Product product = new Product();
-		product.setBarcode((String) inputValues.get(0));
-		product.setName((String) inputValues.get(1));
-		product.setBrand((String) inputValues.get(2));
-		product.setDescription((String) inputValues.get(3));
-		product.setContent((String) inputValues.get(4));
-		product.setAvilable((Boolean) inputValues.get(5));
-		product.setImage((String) inputValues.get(6));
-		product.setCategory((String) inputValues.get(7));
-		product.setMeasurementUnit((String) inputValues.get(8));
-		product.setPresentation((String) inputValues.get(9));
-		product.setMinStock((String) inputValues.get(10));
-		product.setMaxStock((String) inputValues.get(11));
-		product.setRegisterDate((LocalDate) inputValues.get(12));
-		product.setExpiryDate((LocalDate) inputValues.get(13));
-//		product.setProductLocation((String) inputValues.get(14));
-		product.setProductLocation("Estante 1");
-
-
+	private <T> void insertToDb(Product product) {
 		if (editableProduct != null) {
 			productsDao.update(product);
 			if (editableProduct != null) {
@@ -196,7 +261,7 @@ public class CreateViewController {
 			}
 		} else {
 			productsDao.create(product);
-			setImage(inputValues.get(6).toString());
+			setImage(product.getImage());
 		}
 
 		if (mainViewController != null) {
@@ -222,48 +287,6 @@ public class CreateViewController {
 			Files.copy(imageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
-		}
-	}
-
-	/////////////////////////////
-	//////UPDATE FIELD FILL//////
-	/////////////////////////////
-	private void insertProductValues(Set<Node> nodes) {
-		if (editableProduct == null) return;
-
-		System.out.println("editableProduct: " + editableProduct);
-		for (Node node : nodes) {
-			if (node instanceof TextField tf) {
-				switch (tf.getId()) {
-					case "barcodeField" -> tf.setText(editableProduct.getBarcode());
-					case "nameField" -> tf.setText(editableProduct.getName());
-					case "brandField" -> tf.setText(editableProduct.getBrand());
-					case "contentField" -> tf.setText(editableProduct.getContent());
-					case "minStockField" -> tf.setText(editableProduct.getMinStock());
-					case "maxStockField" -> tf.setText(editableProduct.getMaxStock());
-				}
-			} else if (node instanceof TextArea ta) {
-				if ("descriptionArea".equals(ta.getId())) {
-					ta.setText(editableProduct.getDescription());
-				}
-			} else if (node instanceof RadioButton rb) {
-				if ("availableRadio".equals(rb.getId())) {
-					rb.setSelected(editableProduct.isAvilable());
-				}
-			} else if (node instanceof ChoiceBox cb) {
-				switch (cb.getId()) {
-					case "categoryCB" -> cb.setValue(editableProduct.getCategory());
-					case "unitCB" -> cb.setValue(editableProduct.getMeasurementUnit());
-					case "presentationCB" -> cb.setValue(editableProduct.getPresentation());
-				}
-			} else if (node instanceof DatePicker dp) {
-				switch (dp.getId()) {
-					case "registerDatePicker" -> dp.setValue(editableProduct.getRegisterDate());
-					case "expiryDatePicker" -> dp.setValue(editableProduct.getExpiryDate());
-				}
-			} else if (node instanceof Label l && "imgLabel".equals(l.getId())) {
-				l.setText(editableProduct.getImage());
-			}
 		}
 	}
 

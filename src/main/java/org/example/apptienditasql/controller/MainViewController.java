@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.example.apptienditasql.utils.ProductData.parseProduct;
-
 public class MainViewController {
 	///////////////
 	//////DAO//////
@@ -102,7 +100,7 @@ public class MainViewController {
 			editar.setOnAction(_ -> {
 				try {
 					selectedProduct = productsDao.read(product.getBarcode());
-					addProductAction("Editar Producto");
+					addProductAction("Editar Producto", selectedProduct);
 				} catch (Exception ex) {
 					throw new RuntimeException(ex);
 				}
@@ -185,7 +183,7 @@ public class MainViewController {
 	//////////////////////////////////
 	//////ACCIÓN AÑADIR PRODUCTO//////
 	//////////////////////////////////
-	private void addProductAction(String title) throws Exception {
+	private void addProductAction(String title, Product selected) throws Exception {
 		/*___FXML___*/
 		FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("add-products.fxml"));
 
@@ -194,7 +192,8 @@ public class MainViewController {
 
 		CreateViewController controller = fxmlLoader.getController();
 		controller.setMainViewController(this);
-		controller.setEditableProduct(selectedProduct);
+//		controller.setEditableProduct(selectedProduct);
+		controller.setEditableProduct(selected);
 		newStage.setScene(scene);
 		newStage.setTitle(title);
 		newStage.setResizable(false);
@@ -205,7 +204,7 @@ public class MainViewController {
 	public void initialize() {
 		addProductButton.setOnAction(_ -> {
 			try {
-				addProductAction("Añadir Producto");
+				addProductAction("Añadir Producto", null);
 			} catch (Exception ex) {
 				throw new RuntimeException(ex);
 			}
