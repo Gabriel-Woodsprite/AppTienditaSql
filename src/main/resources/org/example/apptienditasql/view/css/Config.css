@@ -1,0 +1,65 @@
+.root {
+    -fx-violet-color: #191629;
+    -fx-ligthv-color: #413b6b;
+    -fx-darkblue-color: #5c65c0;
+    -fx-darkblueII-color: #9b9bbb;
+    -fx-white-color: #ffffff;
+    -fx-grey-color: #b7b7b7
+
+}
+/*____________________________________________________________________________________________________________________*/
+
+.btns {
+    -fx-border-color: -fx-violet-color;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-violet-color;
+    -fx-background-color: -fx-white-color;
+}
+
+.btns:hover {
+    -fx-border-color: -fx-white-color;
+    -fx-text-fill: -fx-white-color;
+    -fx-background-color: -fx-violet-color;
+}
+
+/*____________________________________________________________________________________________________________________*/
+
+.text-field {
+    -fx-background-color: -fx-darkblueII-color;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-border-color: -fx-ligthv-color;
+    -fx-border-width: 2px;
+    -fx-padding: 8px 15px;
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-violet-color;
+    -fx-prompt-text-fill: -fx-grey-color;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+/* Estilo cuando el TextField está enfocado */
+.text-field:focused {
+    -fx-border-color: -fx-darkblue-color;
+    -fx-effect: dropshadow(gaussian, rgba(92, 101, 192, 0.3), 10, 0, 0, 3);
+}
+
+/* Estilo para el texto dentro del TextField */
+.text-field .text {
+    -fx-font-weight: bold;
+}
+
+/* Estilo para el prompt text (placeholder) */
+.text-input {
+    -fx-prompt-text-fill: -fx-grey-color;
+}
+
+.tag_name {
+    -fx-text-fill: -fx-violet-color;
+    -fx-font-weight: bold;
+    -fx-background-color: none;
+    -fx-font-size: 20px;
+}
