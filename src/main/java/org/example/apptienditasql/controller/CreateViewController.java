@@ -1,5 +1,7 @@
 package org.example.apptienditasql.controller;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.model.Product;
 import org.example.apptienditasql.utils.DatabaseConnection;
@@ -9,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.example.apptienditasql.view.MainView;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -62,7 +66,7 @@ public class CreateViewController {
 	//////FORM ELEMENTS//////
 	/////////////////////////
 	@FXML
-	private Label imgLabel;
+	public Pane imagePane;
 	@FXML
 	private TextField nameField;
 	@FXML
@@ -117,15 +121,47 @@ public class CreateViewController {
 	private void imageChooseAction() {
 		chooseFileButton.setOnAction(_ -> {
 			imageFile = createFileChooser().showOpenDialog(null);
-			imgLabel.setText(imageFile.getName());
+			if (imageFile != null) {
+				showImageFromFile(imageFile);
+			}
 		});
 	}
+
+	private void showImageFromFile(File file) {
+		Image image = new Image(file.toURI().toString());
+		ImageView imageView = new ImageView(image);
+		imageView.getStyleClass().add("img");
+		imageView.setFitWidth(200);
+		imageView.setFitHeight(200);
+		imageView.setPreserveRatio(true);
+		imageView.setSmooth(true);
+
+		imagePane.getChildren().clear();
+		imagePane.getChildren().add(imageView);
+	}
+
 
 	/////////////////////////////
 	//////UPDATE FIELD FILL//////
 	/////////////////////////////
 	private void insertOnEditView(Set<Node> nodes) {
 		if (editableProduct == null) return;
+
+		if (editableProduct.getImage() != null && !editableProduct.getImage().isEmpty()) {
+			Path imagePath = Path.of("src/main/resources/org/example/apptienditasql/view/imgDirectory", editableProduct.getImage());
+			if (Files.exists(imagePath)) {
+				Image image = new Image(imagePath.toUri().toString());
+				ImageView imageView = new ImageView(image);
+				imageView.setFitWidth(200);
+				imageView.setFitHeight(200);
+				imageView.setPreserveRatio(true);
+				imageView.setSmooth(true);
+
+				imagePane.getChildren().clear();
+				imagePane.getChildren().add(imageView);
+			}
+		}
+
 		for (Node node : nodes) {
 			if (node instanceof TextField tf) {
 				switch (tf.getId()) {
@@ -167,16 +203,16 @@ public class CreateViewController {
 		String imageNameToUse = null;
 		boolean shouldDeleteOldImage = false;
 		String oldImageName = editableProduct != null ? editableProduct.getImage() : null;
-		List<Control> requiredFields = List.of(imgLabel, nameField, brandField, contentField, barcodeField, minStockField, maxStockField, chooseFileButton, descriptionArea, availableRadio, categoryCB, unitCB, presentationCB, locationCB, registerDatePicker, expiryDatePicker);
+		List<Control> requiredFields = List.of(nameField, brandField, contentField, barcodeField, minStockField, maxStockField, chooseFileButton, descriptionArea, availableRadio, categoryCB, unitCB, presentationCB, locationCB, registerDatePicker, expiryDatePicker);
 
 
 		/////////////////////////////////////
 		//////CHECKING BEFORE INSERTING//////
 		/////////////////////////////////////
 		for (Control requiredField : requiredFields) {
-			if(isFieldEmpty(requiredField)) {
+			if (isFieldEmpty(requiredField)) {
 				requiredField.setStyle("-fx-border-color: red;");
-			}else{
+			} else {
 				requiredField.setStyle("-fx-border-color: none;");
 			}
 		}
@@ -185,6 +221,10 @@ public class CreateViewController {
 				message("Falta Información", "Debe llenar todos los campos", Alert.AlertType.WARNING);
 				return;
 			}
+		}
+		if (imageFile == null && (editableProduct == null || editableProduct.getImage() == null)) {
+			message("Imagen faltante", "Debe seleccionar una imagen para el producto.", Alert.AlertType.WARNING);
+			return;
 		}
 
 		////////////////////////////////
@@ -204,7 +244,9 @@ public class CreateViewController {
 		newProduct.setMeasurementUnit(unitCB.getValue());
 		newProduct.setPresentation(presentationCB.getValue());
 		newProduct.setProductLocation(locationCB.getValue());
-		newProduct.setImage(imgLabel.getText());
+		if (imageFile != null) {
+			newProduct.setImage(imageFile.getName());
+		}
 
 		if (editableProduct != null) {
 			if (imageFile != null) {

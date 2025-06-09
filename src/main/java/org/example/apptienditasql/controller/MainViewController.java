@@ -151,6 +151,7 @@ public class MainViewController {
 			});
 			availableCheckbox.setSelected(product.isAvilable());
 			descriptionTextArea.setText(product.getDescription());
+			System.out.println("Descripcion_"+product.getDescription());
 
 
 			//////////////////////////////////////
