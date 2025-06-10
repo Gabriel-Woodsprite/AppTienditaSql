@@ -23,7 +23,7 @@
         <Label alignment="CENTER" layoutX="880.0" layoutY="394.0" prefHeight="42.0" prefWidth="511.0" styleClass="tag_name" text="Presentación:" />
         <Label alignment="CENTER" layoutX="878.0" layoutY="218.0" prefHeight="42.0" prefWidth="513.0" styleClass="tag_name" stylesheets="@css/Config.css" text="Ubicación De Productos:" />
         <TextField fx:id="ubicacion"  layoutX="877.0" layoutY="273.0" prefHeight="61.0" prefWidth="520.0" styleClass="input-field" stylesheets="@css/Style.css" />
-        <Button layoutX="73.0" layoutY="657.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="224.0" styleClass="btns" text="Guardar Modificaciones" />
+        <Button fx:id="saveButton" layoutX="73.0" layoutY="657.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="224.0" styleClass="btns" text="Guardar Modificaciones" />
         <Button layoutX="76.0" layoutY="586.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="221.0" styleClass="btns" text="Eliminar Modificaciones" />
     </children>
     <stylesheets>

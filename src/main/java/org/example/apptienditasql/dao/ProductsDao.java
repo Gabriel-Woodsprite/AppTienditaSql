@@ -29,6 +29,36 @@ public class ProductsDao implements ProductDaoInterface {
 		}
 	}
 
+	public void createUnit() {
+		String sql = "INSERT INTO units(unit) VALUES(?)";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createLocation() {
+		String sql = "INSERT INTO location(location) VALUES(?)";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createCategory() {
+		String sql = "INSERT INTO units(unit) VALUES(?)";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createPresentation() {
+	}
+
 	///////////////////
 	///////READ////////
 	///////////////////
