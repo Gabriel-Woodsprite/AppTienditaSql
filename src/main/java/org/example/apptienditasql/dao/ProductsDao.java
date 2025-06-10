@@ -19,7 +19,7 @@ public class ProductsDao implements ProductDaoInterface {
 	//////////////////
 	@Override
 	public void create(Product product) {
-		String sql = "INSERT INTO Catalogue(barcode,name,brand,content,minStock,maxStock,description,available,img,registerDate,expiryDate,Category_idCategory,Presentation_idPresentation,MeasurementUnit_idMeasurementUnit,Location_idLocation)" +
+		String sql = "INSERT INTO Catalogue(barcode,name,brand,content,minStock,maxStock,description,available,img,registerDate,expiryDate,Category_idCategory,Presentation_idPresentation,Units_idUnits,Location_idLocation)" +
 				"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			attributesSet(product, ps);
@@ -39,8 +39,8 @@ public class ProductsDao implements ProductDaoInterface {
 				SELECT * FROM catalogue
 				    INNER JOIN apptienditadb.category c
 				        ON catalogue.Category_idCategory = c.idCategory
-				    INNER JOIN apptienditadb.measurementunit mu
-				        ON catalogue.MeasurementUnit_idMeasurementUnit = mu.idMeasurementUnit
+				    INNER JOIN apptienditadb.Units mu
+				        ON catalogue.Units_idUnits = mu.idUnits
 				    INNER JOIN apptienditadb.presentation p
 				        ON catalogue.Presentation_idPresentation = p.idPresentation
 					 INNER JOIN apptienditadb.location l
@@ -55,7 +55,7 @@ public class ProductsDao implements ProductDaoInterface {
 				product.setBrand(rs.getString("brand"));
 				product.setCategory(rs.getString("category"));
 				product.setContent(rs.getString("content"));
-				product.setMeasurementUnit(rs.getString("unit"));
+				product.setUnits(rs.getString("unit"));
 				product.setMinStock(rs.getString("minStock"));
 				product.setMaxStock(rs.getString("maxStock"));
 				product.setPresentation(rs.getString("presentation"));
@@ -63,7 +63,7 @@ public class ProductsDao implements ProductDaoInterface {
 				product.setAvilable(rs.getBoolean("available"));
 				product.setImage(rs.getString("img"));
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
-				product.setProductLocation(rs.getString("nombre"));
+				product.setProductLocation(rs.getString("location"));
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
 				product.setExpiryDate(rs.getDate("expiryDate").toLocalDate());
 			}
@@ -89,7 +89,7 @@ public class ProductsDao implements ProductDaoInterface {
 
 	public List<String> readUnits() {
 		List<String> units = new ArrayList<>();
-		String sql = "SELECT * FROM measurementunit";
+		String sql = "SELECT * FROM Units";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -121,7 +121,7 @@ public class ProductsDao implements ProductDaoInterface {
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				locations.add(rs.getString("nombre"));
+				locations.add(rs.getString("location"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -153,7 +153,7 @@ public class ProductsDao implements ProductDaoInterface {
 	///////////////////
 	@Override
 	public void update(Product updatedProduct) {
-		String sql = "UPDATE Catalogue SET barCode = ?, name = ?, brand = ?, content = ?, minStock = ?, maxStock = ?, description = ?, available = ?, img = ?, registerDate = ?, productLocation = ?, expiryDate = ?, Category_idCategory = ?, Presentation_idPresentation = ?, MeasurementUnit_idMeasurementUnit = ? WHERE barcode = ?";
+		String sql = "UPDATE Catalogue SET barcode = ?,name =?,brand =?,content =?,minStock =?,maxStock =?,description =?,available = ?,img = ?,registerDate = ?,expiryDate = ?,Category_idCategory = ?,Presentation_idPresentation = ?,Units_idUnits = ?,Location_idLocation = ? WHERE barcode = ?";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			attributesSet(updatedProduct, ps);
 			ps.setString(16, updatedProduct.getBarcode());
@@ -194,8 +194,8 @@ public class ProductsDao implements ProductDaoInterface {
 
 		ps.setInt(12, getIdByName("category", "idCategory", "category", product.getCategory()));
 		ps.setInt(13, getIdByName("presentation", "idPresentation", "presentation", product.getPresentation()));
-		ps.setInt(14, getIdByName("measurementUnit", "idMeasurementUnit", "unit", product.getMeasurementUnit()));
-		ps.setInt(15, getIdByName("location", "idLocation", "nombre", product.getProductLocation()));
+		ps.setInt(14, getIdByName("Units", "idUnits", "unit", product.getUnits()));
+		ps.setInt(15, getIdByName("location", "idLocation", "location", product.getProductLocation()));
 	}
 
 	private int getIdByName(String table, String idColumn, String nameColumn, String nameValue) {

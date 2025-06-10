@@ -8,7 +8,7 @@ public class Product {
 	private String brand;
 	private String category;
 	private String content;
-	private String measurementUnit;
+	private String units;
 	private String minStock;
 	private String maxStock;
 	private String presentation;
@@ -47,8 +47,8 @@ public class Product {
 		return content;
 	}
 
-	public String getMeasurementUnit() {
-		return measurementUnit;
+	public String getUnits() {
+		return units;
 	}
 
 	public String getMinStock() {
@@ -110,8 +110,8 @@ public class Product {
 		this.content = content;
 	}
 
-	public void setMeasurementUnit(String measurementUnit) {
-		this.measurementUnit = measurementUnit;
+	public void setUnits(String units) {
+		this.units = units;
 	}
 
 	public void setMinStock(String minStock) {
@@ -162,7 +162,7 @@ public class Product {
 				", brand='" + brand + '\'' +
 				", category='" + category + '\'' +
 				", content='" + content + '\'' +
-				", measurementUnit='" + measurementUnit + '\'' +
+				", measurementUnit='" + units + '\'' +
 				", minStock='" + minStock + '\'' +
 				", maxStock='" + maxStock + '\'' +
 				", presentation='" + presentation + '\'' +

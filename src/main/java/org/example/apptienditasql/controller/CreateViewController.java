@@ -11,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.example.apptienditasql.view.MainView;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +19,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -38,11 +36,11 @@ public class CreateViewController {
 	///////////////////////////////
 	//////REFERENCE VARIABLES//////
 	///////////////////////////////
-	private MainViewController mainViewController;
+	private CatalogoController catalogoController;
 	private Product editableProduct = null;
 
-	public void setMainViewController(MainViewController mainViewController) {
-		this.mainViewController = mainViewController;
+	public void setCatalogoController(CatalogoController catalogoController) {
+		this.catalogoController = this.catalogoController;
 	}
 
 	public void setEditableProduct(Product product) {
@@ -182,8 +180,9 @@ public class CreateViewController {
 				}
 			} else if (node instanceof ChoiceBox cb) {
 				switch (cb.getId()) {
+
 					case "categoryCB" -> cb.setValue(editableProduct.getCategory());
-					case "unitCB" -> cb.setValue(editableProduct.getMeasurementUnit());
+					case "unitCB" -> cb.setValue(editableProduct.getUnits());
 					case "presentationCB" -> cb.setValue(editableProduct.getPresentation());
 					case "locationCB" -> cb.setValue(editableProduct.getProductLocation());
 				}
@@ -196,6 +195,10 @@ public class CreateViewController {
 				l.setText(editableProduct.getImage());
 			}
 		}
+		System.out.println("Setoneditview: cat" + categoryCB);
+		System.out.println("Setoneditview: meas" + unitCB);
+		System.out.println("Setoneditview: pres" + presentationCB);
+		System.out.println("Setoneditview: loc" + locationCB);
 	}
 
 	private void storeChanges() throws IOException {
@@ -241,9 +244,13 @@ public class CreateViewController {
 		newProduct.setRegisterDate(registerDatePicker.getValue());
 		newProduct.setExpiryDate(expiryDatePicker.getValue());
 		newProduct.setCategory(categoryCB.getValue());
-		newProduct.setMeasurementUnit(unitCB.getValue());
+		System.out.println("storeChanges: category" + categoryCB);
+		newProduct.setUnits(unitCB.getValue());
+		System.out.println("storeChanges: unit" + unitCB);
 		newProduct.setPresentation(presentationCB.getValue());
+		System.out.println("storeChanges: pres" + presentationCB);
 		newProduct.setProductLocation(locationCB.getValue());
+		System.out.println("storeChanges: loc" + locationCB);
 		if (imageFile != null) {
 			newProduct.setImage(imageFile.getName());
 		}
@@ -306,8 +313,8 @@ public class CreateViewController {
 			setImage(product.getImage());
 		}
 
-		if (mainViewController != null) {
-			mainViewController.insertProductList();
+		if (catalogoController != null) {
+			catalogoController.insertProductList();
 		}
 
 	}

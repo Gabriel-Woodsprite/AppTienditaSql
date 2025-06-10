@@ -52,7 +52,7 @@
                 <Label layoutX="370.0" layoutY="481.0" styleClass="tag" text="Unidad De Medida:" />
             <ChoiceBox fx:id="unitCB" layoutX="368.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" styleClass="input-field" />
                 <Label layoutX="530.0" layoutY="481.0" styleClass="tag" text="Ubicación De Productos:" />
-            <ChoiceBox fx:id="locationCB" layoutX="530.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" />
+            <ChoiceBox fx:id="locationCB" layoutX="530.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" styleClass="input-field" />
             </children>
         </Pane>
         <Button fx:id="saveButton" layoutX="40.0" layoutY="791.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" styleClass="btns" text="Guardar" />
