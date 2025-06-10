@@ -64,10 +64,10 @@
                                        styleClass="tag_left" text="Min-Stock"/>
                                 <Label layoutX="280.0" layoutY="121.0" prefHeight="43.0" prefWidth="75.0"
                                        styleClass="tag_right,descriptionLabels"/>
-                                <Label layoutY="164.0" prefHeight="43.0" prefWidth="170.0" styleClass="tag_left"
-                                       text="Fecha De Caducidad:"/>
-                                <Label layoutX="170.0" layoutY="164.0" prefHeight="43.0" prefWidth="185.0"
-                                       styleClass="tag_right,descriptionLabels"/>
+<!--                                <Label layoutY="164.0" prefHeight="43.0" prefWidth="170.0" styleClass="tag_left"-->
+<!--                                       text="Fecha De Caducidad:"/>-->
+<!--                                <Label layoutX="170.0" layoutY="164.0" prefHeight="43.0" prefWidth="185.0"-->
+<!--                                       styleClass="tag_right,descriptionLabels"/>-->
                                 <Pane layoutY="207.0" prefHeight="43.0" prefWidth="355.0" styleClass="panel_bottom">
                                     <children>
                                         <CheckBox fx:id="availableCheckbox" disable="true" layoutX="96.0" layoutY="10.0"

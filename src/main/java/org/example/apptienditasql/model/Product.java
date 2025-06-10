@@ -17,7 +17,6 @@ public class Product {
 	private String image;
 	private LocalDate registerDate;
 	private String productLocation;
-	private LocalDate expiryDate;
 
 
 	public Product() {
@@ -83,9 +82,6 @@ public class Product {
 		return productLocation;
 	}
 
-	public LocalDate getExpiryDate() {
-		return expiryDate;
-	}
 
 	///////////////////
 	//////SETTERS//////
@@ -146,9 +142,6 @@ public class Product {
 		this.productLocation = productLocation;
 	}
 
-	public void setExpiryDate(LocalDate expiryDate) {
-		this.expiryDate = expiryDate;
-	}
 
 	///////////////////
 	//////OVERRIDES////
@@ -171,7 +164,6 @@ public class Product {
 				", image='" + image + '\'' +
 				", registerDate=" + registerDate +
 				", productLocation='" + productLocation + '\'' +
-				", expiryDate=" + expiryDate +
 				'}';
 	}
 

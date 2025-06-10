@@ -142,7 +142,7 @@ public class CatalogoController {
 			descriptions.add(product.getContent());
 			descriptions.add(product.getMaxStock());
 			descriptions.add(product.getMinStock());
-			descriptions.add(product.getExpiryDate().toString());
+//			descriptions.add(product.getExpiryDate().toString());
 			descriptions.add(product.getName());
 
 			int[] i = new int[1];
@@ -152,7 +152,6 @@ public class CatalogoController {
 			});
 			availableCheckbox.setSelected(product.isAvilable());
 			descriptionTextArea.setText(product.getDescription());
-			System.out.println("Descripcion_"+product.getDescription());
 
 
 			//////////////////////////////////////

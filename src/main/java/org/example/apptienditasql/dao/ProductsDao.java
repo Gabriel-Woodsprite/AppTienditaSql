@@ -19,8 +19,8 @@ public class ProductsDao implements ProductDaoInterface {
 	//////////////////
 	@Override
 	public void create(Product product) {
-		String sql = "INSERT INTO Catalogue(barcode,name,brand,content,minStock,maxStock,description,available,img,registerDate,expiryDate,Category_idCategory,Presentation_idPresentation,Units_idUnits,Location_idLocation)" +
-				"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+		String sql = "INSERT INTO Catalogue(barcode,name,brand,content,minStock,maxStock,description,available,img,registerDate,Category_idCategory,Presentation_idPresentation,Units_idUnits,Location_idLocation)" +
+				"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			attributesSet(product, ps);
 			ps.executeUpdate();
@@ -65,7 +65,6 @@ public class ProductsDao implements ProductDaoInterface {
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
 				product.setProductLocation(rs.getString("location"));
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
-				product.setExpiryDate(rs.getDate("expiryDate").toLocalDate());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -153,10 +152,10 @@ public class ProductsDao implements ProductDaoInterface {
 	///////////////////
 	@Override
 	public void update(Product updatedProduct) {
-		String sql = "UPDATE Catalogue SET barcode = ?,name =?,brand =?,content =?,minStock =?,maxStock =?,description =?,available = ?,img = ?,registerDate = ?,expiryDate = ?,Category_idCategory = ?,Presentation_idPresentation = ?,Units_idUnits = ?,Location_idLocation = ? WHERE barcode = ?";
+		String sql = "UPDATE Catalogue SET barcode = ?,name =?,brand =?,content =?,minStock =?,maxStock =?,description =?,available = ?,img = ?,registerDate = ?,Category_idCategory = ?,Presentation_idPresentation = ?,Units_idUnits = ?,Location_idLocation = ? WHERE barcode = ?";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			attributesSet(updatedProduct, ps);
-			ps.setString(16, updatedProduct.getBarcode());
+			ps.setString(15, updatedProduct.getBarcode());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -190,12 +189,10 @@ public class ProductsDao implements ProductDaoInterface {
 		ps.setBoolean(8, product.isAvilable());
 		ps.setString(9, product.getImage());
 		ps.setDate(10, Date.valueOf(product.getRegisterDate()));
-		ps.setDate(11, Date.valueOf(product.getExpiryDate()));
-
-		ps.setInt(12, getIdByName("category", "idCategory", "category", product.getCategory()));
-		ps.setInt(13, getIdByName("presentation", "idPresentation", "presentation", product.getPresentation()));
-		ps.setInt(14, getIdByName("Units", "idUnits", "unit", product.getUnits()));
-		ps.setInt(15, getIdByName("location", "idLocation", "location", product.getProductLocation()));
+		ps.setInt(11, getIdByName("category", "idCategory", "category", product.getCategory()));
+		ps.setInt(12, getIdByName("presentation", "idPresentation", "presentation", product.getPresentation()));
+		ps.setInt(13, getIdByName("Units", "idUnits", "unit", product.getUnits()));
+		ps.setInt(14, getIdByName("location", "idLocation", "location", product.getProductLocation()));
 	}
 
 	private int getIdByName(String table, String idColumn, String nameColumn, String nameValue) {

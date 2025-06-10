@@ -40,7 +40,7 @@ public class CreateViewController {
 	private Product editableProduct = null;
 
 	public void setCatalogoController(CatalogoController catalogoController) {
-		this.catalogoController = this.catalogoController;
+		this.catalogoController = catalogoController;
 	}
 
 	public void setEditableProduct(Product product) {
@@ -93,8 +93,6 @@ public class CreateViewController {
 	private ChoiceBox<String> locationCB;
 	@FXML
 	private DatePicker registerDatePicker;
-	@FXML
-	private DatePicker expiryDatePicker;
 
 	////////////////////////
 	//////ClOSE WINDOW//////
@@ -189,16 +187,12 @@ public class CreateViewController {
 			} else if (node instanceof DatePicker dp) {
 				switch (dp.getId()) {
 					case "registerDatePicker" -> dp.setValue(editableProduct.getRegisterDate());
-					case "expiryDatePicker" -> dp.setValue(editableProduct.getExpiryDate());
+//					case "expiryDatePicker" -> dp.setValue(editableProduct.getExpiryDate());
 				}
 			} else if (node instanceof Label l && "imgLabel".equals(l.getId())) {
 				l.setText(editableProduct.getImage());
 			}
 		}
-		System.out.println("Setoneditview: cat" + categoryCB);
-		System.out.println("Setoneditview: meas" + unitCB);
-		System.out.println("Setoneditview: pres" + presentationCB);
-		System.out.println("Setoneditview: loc" + locationCB);
 	}
 
 	private void storeChanges() throws IOException {
@@ -206,7 +200,7 @@ public class CreateViewController {
 		String imageNameToUse = null;
 		boolean shouldDeleteOldImage = false;
 		String oldImageName = editableProduct != null ? editableProduct.getImage() : null;
-		List<Control> requiredFields = List.of(nameField, brandField, contentField, barcodeField, minStockField, maxStockField, chooseFileButton, descriptionArea, availableRadio, categoryCB, unitCB, presentationCB, locationCB, registerDatePicker, expiryDatePicker);
+		List<Control> requiredFields = List.of(nameField, brandField, contentField, barcodeField, minStockField, maxStockField, chooseFileButton, descriptionArea, availableRadio, categoryCB, unitCB, presentationCB, locationCB, registerDatePicker);
 
 
 		/////////////////////////////////////
@@ -242,7 +236,6 @@ public class CreateViewController {
 		newProduct.setMaxStock(maxStockField.getText());
 		newProduct.setAvilable(availableRadio.isSelected());
 		newProduct.setRegisterDate(registerDatePicker.getValue());
-		newProduct.setExpiryDate(expiryDatePicker.getValue());
 		newProduct.setCategory(categoryCB.getValue());
 		System.out.println("storeChanges: category" + categoryCB);
 		newProduct.setUnits(unitCB.getValue());
