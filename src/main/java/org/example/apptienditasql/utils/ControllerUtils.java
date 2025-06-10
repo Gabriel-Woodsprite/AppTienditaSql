@@ -3,7 +3,7 @@ package org.example.apptienditasql.utils;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
-public class createProductUtil {
+public class ControllerUtils {
 	public static FileChooser createFileChooser() {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");

@@ -25,7 +25,7 @@
         <Label alignment="CENTER" layoutX="427.0" layoutY="89.0" prefHeight="42.0" prefWidth="310.0" styleClass="tag_name" stylesheets="@css/Config.css" text="Ubicación De Productos:" />
         <TextField fx:id="ubicacion" layoutX="426.0" layoutY="138.0" prefHeight="54.0" prefWidth="310.0" styleClass="input-field" stylesheets="@css/Style.css" />
         <Button fx:id="saveButton" layoutX="73.0" layoutY="657.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="224.0" styleClass="btns" text="Guardar Modificaciones" />
-        <Button layoutX="76.0" layoutY="586.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="221.0" styleClass="btns" text="Eliminar Modificaciones" />
+        <Button fx:id="resetButton" layoutX="76.0" layoutY="586.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="221.0" styleClass="btns" text="Eliminar Modificaciones" />
       <TextField fx:id="margenPrecio" layoutX="778.0" layoutY="142.0" prefHeight="54.0" prefWidth="324.0" styleClass="input-field" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="777.0" layoutY="91.0" prefHeight="42.0" prefWidth="324.0" styleClass="tag_name" text="Añadir Nueva Margen De Precio:" />
     </children>

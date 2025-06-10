@@ -29,34 +29,42 @@ public class ProductsDao implements ProductDaoInterface {
 		}
 	}
 
-	public void createUnit() {
+	public void createUnit(String unit) {
 		String sql = "INSERT INTO units(unit) VALUES(?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, unit);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void createLocation() {
+	public void createLocation(String location) {
 		String sql = "INSERT INTO location(location) VALUES(?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, location);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void createCategory() {
-		String sql = "INSERT INTO units(unit) VALUES(?)";
+	public void createCategory(String category) {
+		String sql = "INSERT INTO category(category) VALUES(?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, category);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void createPresentation() {
+	public void createPresentation(String presentation) {
+		String sql = "INSERT INTO presentation(presentation) VALUES(?)";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, presentation);
+			ps.executeUpdate();
+		} catch (SQLException e) {}
 	}
 
 	///////////////////
@@ -202,6 +210,17 @@ public class ProductsDao implements ProductDaoInterface {
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, barcode);
 			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void resetConfig(){
+		try (Statement ps = connection.createStatement()) {
+			ps.executeUpdate("DELETE FROM category WHERE idCategory > 7;");
+			ps.executeUpdate("DELETE FROM location WHERE idLocation > 5;");
+			ps.executeUpdate("DELETE FROM presentation WHERE idPresentation > 7;");
+			ps.executeUpdate("DELETE FROM units WHERE idUnits > 5;");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

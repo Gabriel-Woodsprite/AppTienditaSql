@@ -23,8 +23,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.example.apptienditasql.utils.UserMessage.message;
-import static org.example.apptienditasql.utils.createProductUtil.createFileChooser;
-import static org.example.apptienditasql.utils.createProductUtil.isFieldEmpty;
+import static org.example.apptienditasql.utils.ControllerUtils.createFileChooser;
+import static org.example.apptienditasql.utils.ControllerUtils.isFieldEmpty;
 
 public class CreateViewController {
 	///////////////
