@@ -74,15 +74,20 @@ public class ProductsDao implements ProductDaoInterface {
 	public Product read(String barcode) {
 		Product product = null;
 		String sql = """
-				SELECT * FROM catalogue
-				    INNER JOIN apptienditadb.category c
-				        ON catalogue.Category_idCategory = c.idCategory
-				    INNER JOIN apptienditadb.Units mu
-				        ON catalogue.Units_idUnits = mu.idUnits
-				    INNER JOIN apptienditadb.presentation p
-				        ON catalogue.Presentation_idPresentation = p.idPresentation
-					 INNER JOIN apptienditadb.location l
-				        ON catalogue.Location_idLocation = l.idLocation WHERE barcode = ?""";
+				SELECT *
+				FROM catalogue
+				         INNER JOIN apptienditadb.category c
+				                    ON catalogue.Category_idCategory = c.idCategory
+				         INNER JOIN apptienditadb.Units mu
+				                    ON catalogue.Units_idUnits = mu.idUnits
+				         INNER JOIN apptienditadb.presentation p
+				                    ON catalogue.Presentation_idPresentation = p.idPresentation
+				         INNER JOIN apptienditadb.location l
+				                    ON catalogue.Location_idLocation = l.idLocation
+				         INNER JOIN apptienditadb.purchasedetails p2
+				                    ON catalogue.barCode = p2.Catalogue_barCode
+				WHERE barcode = ?;
+				""";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, barcode);
 			ResultSet rs = ps.executeQuery();
@@ -103,6 +108,8 @@ public class ProductsDao implements ProductDaoInterface {
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
 				product.setProductLocation(rs.getString("location"));
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
+				product.setPrice(rs.getString("unitPrice"));
+				product.setCantidad(rs.getString("quantity"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

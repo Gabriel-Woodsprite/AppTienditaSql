@@ -1,5 +1,8 @@
 package org.example.apptienditasql.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 import java.time.LocalDate;
 
 public class Product {
@@ -17,11 +20,24 @@ public class Product {
 	private String image;
 	private LocalDate registerDate;
 	private String productLocation;
+	private String price;
+	private String cantidad;
+	private LocalDate expirationDate;
+	private String subTotal;
+	private String pCantidad;
+
 
 
 	public Product() {
 	}
-	
+
+	public Product(String nombre, String cantidad, String precio, String subtotal) {
+		this.name = nombre;
+		this.cantidad = cantidad;
+		this.price = precio;
+		this.subTotal = subtotal;
+	}
+
 
 	///////////////////
 	//////GETTERS//////
@@ -82,6 +98,24 @@ public class Product {
 		return productLocation;
 	}
 
+	public String getPrice() {
+		return price;
+	}
+
+	public String getCantidad() {
+		return cantidad;
+	}
+
+	public String getpCantidad() {
+		return pCantidad;
+	}
+	public String getSubTotal() {
+		return "subTotal";
+	}
+
+	public LocalDate getExpirationDate() {
+		return expirationDate;
+	}
 
 	///////////////////
 	//////SETTERS//////
@@ -142,6 +176,19 @@ public class Product {
 		this.productLocation = productLocation;
 	}
 
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public void setExpirationDate(LocalDate expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+	public void setPurchaseQuantity(String cantidad) {
+		this.pCantidad = cantidad;
+	}
+	public void setCantidad(String cantidad){
+		this.cantidad = cantidad;
+	}
 
 	///////////////////
 	//////OVERRIDES////
