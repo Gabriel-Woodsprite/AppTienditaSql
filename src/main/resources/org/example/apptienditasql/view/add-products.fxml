@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="864.0" prefWidth="776.0" styleClass="add_pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.CreateViewController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="807.0" prefWidth="776.0" styleClass="add_pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.CreateViewController">
     <children>
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" prefHeight="57.0" prefWidth="777.0" styleClass="title" stylesheets="@css/Add.css" text="AÑADIR PRODUCTO" textAlignment="CENTER" />
-        <Pane layoutY="57.0" prefHeight="729.0" prefWidth="778.0">
+        <Pane layoutY="57.0" prefHeight="750.0" prefWidth="778.0">
             <children>
             <Pane layoutX="590.0" prefHeight="184.0" prefWidth="186.0" styleClass="decoration" stylesheets="@css/Style.css" />
                 <Label layoutX="10.0" layoutY="10.0" prefHeight="21.0" prefWidth="57.0" styleClass="tag" text="Código:" />
@@ -39,12 +39,12 @@
                 <TextField fx:id="maxStockField" layoutX="671.0" layoutY="319.0" prefHeight="25.0" prefWidth="71.0" styleClass="input-field" />
                 <Label layoutX="14.0" layoutY="332.0" styleClass="tag" text="Disponible:" />
                 <RadioButton fx:id="availableRadio" layoutX="107.0" layoutY="330.0" mnemonicParsing="false" styleClass="input-field" />
-                <Label layoutX="12.0" layoutY="383.0" styleClass="tag" text="Fecha De Registro:" />
-                <DatePicker fx:id="registerDatePicker" layoutX="11.0" layoutY="415.0" prefHeight="56.0" prefWidth="132.0" styleClass="input-field" />
+                <Label alignment="CENTER" layoutX="426.0" layoutY="371.0" prefHeight="21.0" prefWidth="340.0" styleClass="tag" text="Fecha De Registro:" />
+                <DatePicker fx:id="registerDatePicker" layoutX="426.0" layoutY="403.0" prefHeight="21.0" prefWidth="340.0" styleClass="input-field" />
 <!--                <Label layoutX="170.0" layoutY="384.0" styleClass="tag" text="Fecha De Caducidad:" />-->
 <!--                <DatePicker fx:id="expiryDatePicker" layoutX="170.0" layoutY="414.0" prefHeight="56.0" prefWidth="144.0" styleClass="input-field" />-->
-                <Label layoutX="371.0" layoutY="382.0" styleClass="tag" text="Descripción:" />
-                <TextArea fx:id="descriptionArea" layoutX="369.0" layoutY="416.0" prefHeight="53.0" prefWidth="383.0" styleClass="input-field" />
+                <Label alignment="CENTER" layoutX="9.0" layoutY="378.0" prefHeight="21.0" prefWidth="340.0" styleClass="tag" text="Descripción:" />
+                <TextArea fx:id="descriptionArea" layoutX="10.0" layoutY="412.0" prefHeight="56.0" prefWidth="340.0" styleClass="input-field" />
                 <Label layoutX="13.0" layoutY="476.0" styleClass="tag" text="Categoría:" />
             <ChoiceBox fx:id="categoryCB" layoutX="12.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" styleClass="input-field" />
                 <Label layoutX="171.0" layoutY="481.0" styleClass="tag" text="Presentación:" />
@@ -53,11 +53,10 @@
             <ChoiceBox fx:id="unitCB" layoutX="368.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" styleClass="input-field" />
                 <Label layoutX="530.0" layoutY="481.0" styleClass="tag" text="Ubicación De Productos:" />
             <ChoiceBox fx:id="locationCB" layoutX="530.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" styleClass="input-field" />
+              <Button layoutX="125.0" layoutY="703.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" styleClass="btns" text="limpiar" />
+              <Button fx:id="saveButton" layoutX="11.0" layoutY="701.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" styleClass="btns" text="Guardar" />
             </children>
         </Pane>
-        <Button fx:id="saveButton" layoutX="40.0" layoutY="791.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" styleClass="btns" text="Guardar" />
-        <Button layoutX="168.0" layoutY="791.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" styleClass="btns" text="limpiar" />
-        <Pane layoutX="625.0" layoutY="476.0" prefHeight="50.0" prefWidth="172.0" />
     </children>
    <stylesheets>
       <URL value="@css" />
