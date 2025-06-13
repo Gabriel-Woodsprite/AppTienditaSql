@@ -3,6 +3,8 @@ package org.example.apptienditasql.utils;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
+import java.util.List;
+
 public class ControllerUtils {
 	public static FileChooser createFileChooser() {
 		FileChooser fileChooser = new FileChooser();
@@ -24,6 +26,16 @@ public class ControllerUtils {
 			return label.getText().isBlank();
 		}
 		return false;
+	}
+
+	public static boolean isAllEmpty(List<TextField> inputs) {
+		int c = 0;
+		for (TextField inputField : inputs) {
+			if (inputField.getText().isBlank()) {
+				c++;
+			}
+		}
+		return c == inputs.size();
 	}
 
 }

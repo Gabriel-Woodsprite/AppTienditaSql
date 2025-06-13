@@ -17,22 +17,22 @@
     <children>
         <Pane layoutX="1314.0" layoutY="80.0" prefHeight="184.0" prefWidth="186.0" styleClass="decoration" stylesheets="@css/Style.css" />
         <HBox prefHeight="80.0" prefWidth="1500.0" styleClass="header" stylesheets="@css/Style.css" />
-        <TextField fx:id="unidadMedida" layoutX="14.0" layoutY="131.0" prefHeight="40.0" prefWidth="366.0" promptText="Agregar Nueva Unidad" styleClass="input-field" />
-        <TextField fx:id="categoria" layoutX="777.0" layoutY="454.0" prefHeight="54.0" prefWidth="366.0" promptText="Agregar Nueva Categoria" styleClass="input-field" />
-        <TextField fx:id="presentacion" layoutX="425.0" layoutY="454.0" prefHeight="54.0" prefWidth="310.0" promptText="Agregar Nueva Presentacion" styleClass="input-field" />
+        <TextField fx:id="unitsTxt" layoutX="14.0" layoutY="131.0" prefHeight="40.0" prefWidth="366.0" promptText="Agregar Nueva Unidad" styleClass="input-field" />
+        <TextField fx:id="categoryTxt" layoutX="777.0" layoutY="454.0" prefHeight="54.0" prefWidth="366.0" promptText="Agregar Nueva Categoria" styleClass="input-field" />
+        <TextField fx:id="presentationTxt" layoutX="425.0" layoutY="454.0" prefHeight="54.0" prefWidth="310.0" promptText="Agregar Nueva Presentacion" styleClass="input-field" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="89.0" prefHeight="42.0" prefWidth="366.0" styleClass="tag_name" text="Unidad De Medida:" />
         <Label alignment="CENTER" layoutX="781.0" layoutY="401.0" prefHeight="42.0" prefWidth="366.0" styleClass="tag_name" text="Añadir Nueva Categoría:" />
         <Label alignment="CENTER" layoutX="427.0" layoutY="400.0" prefHeight="42.0" prefWidth="310.0" styleClass="tag_name" text="Presentación:" />
         <Label alignment="CENTER" layoutX="427.0" layoutY="89.0" prefHeight="42.0" prefWidth="310.0" styleClass="tag_name" stylesheets="@css/Config.css" text="Ubicación De Productos:" />
-        <TextField fx:id="ubicacion" layoutX="426.0" layoutY="131.0" prefHeight="0.0" prefWidth="310.0" promptText="Agregar Nueva Ubicacion" styleClass="input-field" stylesheets="@css/Style.css" />
+        <TextField fx:id="locationTxt" layoutX="426.0" layoutY="131.0" prefHeight="0.0" prefWidth="310.0" promptText="Agregar Nueva Ubicacion" styleClass="input-field" stylesheets="@css/Style.css" />
         <Button fx:id="saveButton" layoutX="73.0" layoutY="657.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="224.0" styleClass="btns" text="Guardar Modificaciones" />
         <Button fx:id="resetButton" layoutX="76.0" layoutY="586.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="221.0" styleClass="btns" text="Eliminar Modificaciones" />
-      <TextField fx:id="margenPrecio" layoutX="778.0" layoutY="131.0" prefHeight="29.0" prefWidth="324.0" promptText="Agregar Nuevo Margen De Precio" styleClass="input-field" />
+      <TextField fx:id="margenPrecioTxt" layoutX="778.0" layoutY="131.0" prefHeight="29.0" prefWidth="324.0" promptText="Agregar Nuevo Margen De Precio" styleClass="input-field" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="777.0" layoutY="91.0" prefHeight="42.0" prefWidth="324.0" styleClass="tag_name" text="Añadir Nueva Margen De Precio:" />
-      <ListView layoutX="11.0" layoutY="181.0" prefHeight="200.0" prefWidth="355.0" />
-      <ListView layoutX="417.0" layoutY="181.0" prefHeight="200.0" prefWidth="310.0" />
-      <ListView layoutX="784.0" layoutY="181.0" prefHeight="200.0" prefWidth="310.0" />
-      <ListView layoutX="427.0" layoutY="529.0" prefHeight="200.0" prefWidth="310.0" />
+      <ListView fx:id="unitsList" layoutX="11.0" layoutY="181.0" prefHeight="200.0" prefWidth="355.0" />
+      <ListView fx:id="locationList" layoutX="417.0" layoutY="181.0" prefHeight="200.0" prefWidth="310.0" />
+      <ListView fx:id="categoryList" layoutX="784.0" layoutY="181.0" prefHeight="200.0" prefWidth="310.0" />
+      <ListView fx:id="presentationList" layoutX="427.0" layoutY="529.0" prefHeight="200.0" prefWidth="310.0" />
     </children>
     <stylesheets>
         <URL value="@css/Style.css" />

@@ -1,75 +1,194 @@
 package org.example.apptienditasql.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.utils.DatabaseConnection;
 
 import java.sql.SQLException;
 import java.util.List;
 
+import static org.example.apptienditasql.utils.ControllerUtils.isAllEmpty;
 import static org.example.apptienditasql.utils.ControllerUtils.isFieldEmpty;
 import static org.example.apptienditasql.utils.UserMessage.message;
 
 public class ConfigurationViewController {
 	ProductsDao productsDao = null;
+	ObservableList<HBox> observableUnitList = FXCollections.observableArrayList();
+	ObservableList<HBox> observableCategoryList = FXCollections.observableArrayList();
+	ObservableList<HBox> observablePresentationList = FXCollections.observableArrayList();
+	ObservableList<HBox> observableLocationList = FXCollections.observableArrayList();
 	@FXML
-	private TextField unidadMedida;
+	private TextField unitsTxt;
 	@FXML
-	private TextField categoria;
+	private TextField categoryTxt;
 	@FXML
-	private TextField presentacion;
+	private TextField presentationTxt;
 	@FXML
-	private TextField ubicacion;
+	private TextField locationTxt;
 	@FXML
-	private TextField margenPrecio;
+	private TextField margenPrecioTxt;
 	@FXML
 	private Button saveButton;
 	@FXML
 	private Button resetButton;
+	@FXML
+	private ListView<HBox> unitsList;
+	@FXML
+	private ListView<HBox> locationList;
+	@FXML
+	private ListView<HBox> categoryList;
+	@FXML
+	private ListView<HBox> presentationList;
+
+	private void insertToList() {
+		List<String> categories = productsDao.readCategories();
+		List<String> locations = productsDao.readLocation();
+		List<String> presentations = productsDao.readPresentations();
+		List<String> units = productsDao.readUnits();
+
+		unitsList.getItems().clear();
+		locationList.getItems().clear();
+		categoryList.getItems().clear();
+		presentationList.getItems().clear();
+
+		for (String category : categories) {
+			HBox hbox = new HBox();
+			Label label = new Label(category);
+			Button delete = new Button("Eliminar");
+			delete.setOnAction(_ -> {
+				if (!productsDao.deleteOptions("category", "idCategory", "category", label.getText())) {
+					message("Error", "Esta Categoría está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
+				}
+				insertToList();
+			});
+
+			hbox.getChildren().addAll(new Pane(label), new Pane(delete));
+			observableCategoryList.add(hbox);
+		}
+		for (String location : locations) {
+			HBox hbox = new HBox();
+			Label label = new Label(location);
+			Button delete = new Button("Eliminar");
+			delete.setOnAction(_ -> {
+				if (!productsDao.deleteOptions("location", "idLocation", "location", label.getText())) {
+					message("Error", "Esta Ubicación está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
+				}
+				insertToList();
+			});
+
+			hbox.getChildren().addAll(new Pane(label), new Pane(delete));
+			observableLocationList.add(hbox);
+		}
+		for (String presentation : presentations) {
+			HBox hbox = new HBox();
+			Label label = new Label(presentation);
+			Button delete = new Button("Eliminar");
+			delete.setOnAction(_ -> {
+				if (!productsDao.deleteOptions("presentation", "idPresentation", "presentation", label.getText())) {
+					message("Error", "Esta Presentación está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
+				}
+				insertToList();
+			});
+
+			hbox.getChildren().addAll(new Pane(label), new Pane(delete));
+			observablePresentationList.add(hbox);
+		}
+		for (String unit : units) {
+			HBox hbox = new HBox();
+			Label optionLabel = new Label(unit);
+			Button delete = new Button("Eliminar");
+
+			delete.setOnAction(_ -> {
+				if (!productsDao.deleteOptions("units", "idUnits", "unit", optionLabel.getText())) {
+					message("Error", "Esta unidad está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
+				}
+				insertToList();
+			});
+
+			hbox.getChildren().addAll(new Pane(optionLabel), new Pane(delete));
+			observableUnitList.add(hbox);
+		}
+
+		unitsList.setItems(observableUnitList);
+		locationList.setItems(observableLocationList);
+		categoryList.setItems(observableCategoryList);
+		presentationList.setItems(observablePresentationList);
+
+		unitsTxt.clear();
+		locationTxt.clear();
+		margenPrecioTxt.clear();
+		presentationTxt.clear();
+	}
 
 	private void saveConfig() {
-		List<Control> required = List.of(unidadMedida, categoria, presentacion, ubicacion);
-		for (Control requiredField : required) {
-			TextField textField = (TextField) requiredField;
-			String text = textField.getText();
-			if (!isFieldEmpty(requiredField)) {
+		List<TextField> required = List.of(unitsTxt, categoryTxt, presentationTxt, locationTxt);
+		System.out.println("IS ALL EMPTY CONFIGURATION 131" + isAllEmpty(required));
+		if (!isAllEmpty(required)) {
+			for (TextField requiredField : required) {
+				String text = requiredField.getText();
 				switch (requiredField.getId()) {
-					case "unidadMedida" -> productsDao.createUnit(text);
-					case "categoria" -> productsDao.createCategory(text);
-					case "presentacion" -> productsDao.createPresentation(text);
-					case "ubicacion" -> productsDao.createLocation(text);
+					case "unitsTxt" -> {
+						if (!productsDao.readUnits().contains(text)) {
+							if (!text.isBlank()) {
+								productsDao.createOptions("units", text);
+							}
+						} else {
+							message("Info", "Esta Unidad ya existe", Alert.AlertType.INFORMATION);
+						}
+					}
+
+					case "categoryTxt" -> {
+						if (!productsDao.readCategories().contains(text)) {
+							if (!text.isBlank()) {
+								productsDao.createOptions("category", text);
+							}
+						} else {
+							message("Info", "Esta categoría ya existe", Alert.AlertType.INFORMATION);
+						}
+					}
+					case "presentationTxt" -> {
+						if (!productsDao.readPresentations().contains(text)) {
+							if (!text.isBlank()) {
+								productsDao.createOptions("presentation", text);
+							}
+						} else {
+							message("Info", "Esta presentation ya existe", Alert.AlertType.INFORMATION);
+						}
+					}
+					case "locationTxt" -> {
+						if (!productsDao.readLocation().contains(text)) {
+							if (!text.isBlank()) {
+								productsDao.createOptions("location", text);
+							}
+						} else {
+							message("Info", "Esta ubicación ya existe", Alert.AlertType.INFORMATION);
+						}
+					}
+					default ->
+							message("Info", "Debes agregar información para guardar cambios", Alert.AlertType.INFORMATION);
 				}
-				message("Exito", "Se actualizaron las opciones", Alert.AlertType.INFORMATION);
-			}else{
-				message("No hay información", "Si desea agregar o cambiar configuraciónes, llene algun campo", Alert.AlertType.INFORMATION);
-				break;
 			}
+			insertToList();
+		} else {
+			message("Info", "Debes agregar información para guardar cambios", Alert.AlertType.INFORMATION);
 		}
 	}
+
 	private void resetConfig() {
 		productsDao.resetConfig();
-		message("Exito", "Se reiniciaron los valores correctamente", Alert.AlertType.CONFIRMATION);
-	}
-
-	@FXML
-	private void closeWindow() {
-		Stage stage = (Stage) saveButton.getScene().getWindow();
-		stage.close();
+		insertToList();
 	}
 
 	@FXML
 	public void initialize() throws SQLException {
 		productsDao = new ProductsDao(DatabaseConnection.getConnection());
-		saveButton.setOnAction(_ -> {
-			saveConfig();
-		});
-		resetButton.setOnAction(_ -> {
-			resetConfig();
-		});
+		insertToList();
+		saveButton.setOnAction(_ -> saveConfig());
+		resetButton.setOnAction(_ -> resetConfig());
 	}
 }

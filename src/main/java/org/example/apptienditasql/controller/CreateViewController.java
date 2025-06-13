@@ -110,7 +110,7 @@ public class CreateViewController {
 	private void choiceBoxValues() {
 		categoryCB.getItems().addAll(productsDao.readCategories());
 		unitCB.getItems().addAll(productsDao.readUnits());
-		presentationCB.getItems().addAll(productsDao.redPresentations());
+		presentationCB.getItems().addAll(productsDao.readPresentations());
 		locationCB.getItems().addAll(productsDao.readLocation());
 	}
 

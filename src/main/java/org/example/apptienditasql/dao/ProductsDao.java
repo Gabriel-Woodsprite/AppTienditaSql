@@ -6,8 +6,12 @@ import org.example.apptienditasql.model.Product;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProductsDao implements ProductDaoInterface {
+	private final static Logger logger = Logger.getLogger(ProductsDao.class.getName());
+
 	private final Connection connection;
 
 	public ProductsDao(Connection connection) {
@@ -25,47 +29,66 @@ public class ProductsDao implements ProductDaoInterface {
 			attributesSet(product, ps);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al insertar el producto: " + product.getName(), e);
 		}
 	}
 
-	public void createUnit(String unit) {
-		String sql = "INSERT INTO units(unit) VALUES(?)";
+	public void createOptions(String table, String optionValue) {
+		String sql;
+		sql = switch (table) {
+			case "category" -> "INSERT INTO category(category) VALUES(?)";
+			case "location" -> "INSERT INTO location(location) VALUES(?)";
+			case "presentation" -> "INSERT INTO presentation(presentation) VALUES(?)";
+			case "units" -> "INSERT INTO units(unit) VALUES(?)";
+			default -> null;
+		};
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setString(1, unit);
+			ps.setString(1, optionValue);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al crear opción: " + table, e);
 		}
 	}
 
-	public void createLocation(String location) {
-		String sql = "INSERT INTO location(location) VALUES(?)";
-		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setString(1, location);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void createUnit(String unit) {
+//		String sql = "INSERT INTO units(unit) VALUES(?)";
+//		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+//			ps.setString(1, unit);
+//			ps.executeUpdate();
+//		} catch (SQLException e) {
+//			logger.log(Level.SEVERE, "Error al crear Unidades", e);
+//		}
+//	}
 
-	public void createCategory(String category) {
-		String sql = "INSERT INTO category(category) VALUES(?)";
-		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setString(1, category);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void createLocation(String location) {
+//		String sql = "INSERT INTO location(location) VALUES(?)";
+//		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+//			ps.setString(1, location);
+//			ps.executeUpdate();
+//		} catch (SQLException e) {
+//			logger.log(Level.SEVERE, "Error al crear Ubicación", e);
+//		}
+//	}
 
-	public void createPresentation(String presentation) {
-		String sql = "INSERT INTO presentation(presentation) VALUES(?)";
-		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setString(1, presentation);
-			ps.executeUpdate();
-		} catch (SQLException e) {}
-	}
+//	public void createCategory(String category) {
+//		String sql = "INSERT INTO category(category) VALUES(?)";
+//		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+//			ps.setString(1, category);
+//			ps.executeUpdate();
+//		} catch (SQLException e) {
+//			logger.log(Level.SEVERE, "Error al crear Categorias", e);
+//		}
+//	}
+
+//	public void createPresentation(String presentation) {
+//		String sql = "INSERT INTO presentation(presentation) VALUES(?)";
+//		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+//			ps.setString(1, presentation);
+//			ps.executeUpdate();
+//		} catch (SQLException e) {
+//			logger.log(Level.SEVERE, "Error al crear Presentaciones", e);
+//		}
+//	}
 
 	///////////////////
 	///////READ////////
@@ -112,63 +135,63 @@ public class ProductsDao implements ProductDaoInterface {
 				product.setCantidad(rs.getString("quantity"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al obtener el producto.", e);
 		}
 		return product;
 	}
 
 	public List<String> readCategories() {
 		List<String> categories = new ArrayList<>();
-		String sql = "SELECT * FROM category";
+		String sql = "SELECT * FROM category ORDER BY category";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				categories.add(rs.getString("category"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al obtener el Categorias.", e);
 		}
 		return categories;
 	}
 
 	public List<String> readUnits() {
 		List<String> units = new ArrayList<>();
-		String sql = "SELECT * FROM Units";
+		String sql = "SELECT * FROM Units ORDER BY unit";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				units.add(rs.getString("unit"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al obtener el Unidades.", e);
 		}
 		return units;
 	}
 
-	public List<String> redPresentations() {
+	public List<String> readPresentations() {
 		List<String> presentations = new ArrayList<>();
-		String sql = "SELECT * FROM presentation";
+		String sql = "SELECT * FROM presentation ORDER BY presentation";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				presentations.add(rs.getString("presentation"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al obtener el Presentaciones.", e);
 		}
 		return presentations;
 	}
 
 	public List<String> readLocation() {
 		List<String> locations = new ArrayList<>();
-		String sql = "SELECT * FROM location";
+		String sql = "SELECT * FROM location ORDER BY location";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				locations.add(rs.getString("location"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al obtener el ubicaciones.", e);
 		}
 		return locations;
 	}
@@ -186,7 +209,7 @@ public class ProductsDao implements ProductDaoInterface {
 				products.add(read(rs.getString("barCode")));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al obtener el productos.", e);
 		}
 
 		return products;
@@ -204,7 +227,7 @@ public class ProductsDao implements ProductDaoInterface {
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al actualizar el producto.", e);
 		}
 	}
 
@@ -218,18 +241,38 @@ public class ProductsDao implements ProductDaoInterface {
 			ps.setString(1, barcode);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al eliminar el producto.", e);
 		}
 	}
 
-	public void resetConfig(){
+	public boolean deleteOptions(String table, String idColumn, String nameColumn, String optionName) {
+		int id = getIdByName(table, idColumn, nameColumn, optionName);
+		System.out.println("PRODUCTSDAO 250 id: " + id);
+		String sql = switch (table) {
+			case "category" -> "DELETE FROM category WHERE idCategory = ?";
+			case "location" -> "DELETE FROM location WHERE  idLocation = ?";
+			case "presentation" -> "DELETE FROM presentation WHERE idPresentation = ?";
+			case "units" -> "DELETE FROM units WHERE  idUnits = ?";
+			default -> null;
+		};
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, String.valueOf(id));
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, "Error al eliminar Opciones", e);
+		}
+		return false;
+	}
+
+	public void resetConfig() {
 		try (Statement ps = connection.createStatement()) {
 			ps.executeUpdate("DELETE FROM category WHERE idCategory > 7;");
 			ps.executeUpdate("DELETE FROM location WHERE idLocation > 5;");
 			ps.executeUpdate("DELETE FROM presentation WHERE idPresentation > 7;");
 			ps.executeUpdate("DELETE FROM units WHERE idUnits > 5;");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "No se pudo completar resetConfig()", e);
 		}
 	}
 
@@ -253,6 +296,7 @@ public class ProductsDao implements ProductDaoInterface {
 
 	private int getIdByName(String table, String idColumn, String nameColumn, String nameValue) {
 		String sql = "SELECT " + idColumn + " FROM " + table + " WHERE " + nameColumn + " = ?";
+		System.out.println("QUERY: 299 " + nameValue + ", " + sql);
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, nameValue);
 			ResultSet rs = ps.executeQuery();
@@ -260,7 +304,7 @@ public class ProductsDao implements ProductDaoInterface {
 				return rs.getInt(idColumn);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error al obtener el id de opciones", e);
 		}
 		return -1;
 	}
