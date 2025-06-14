@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import org.example.apptienditasql.dao.ProductsDao;
 import org.example.apptienditasql.utils.DatabaseConnection;
 
@@ -59,7 +61,9 @@ public class ConfigurationViewController {
 		for (String category : categories) {
 			HBox hbox = new HBox();
 			Label label = new Label(category);
-			Button delete = new Button("Eliminar");
+			Region spacer = new Region();
+			HBox.setHgrow(spacer, Priority.ALWAYS);
+			Button delete = new Button("×");
 			delete.setOnAction(_ -> {
 				if (!productsDao.deleteOptions("category", "idCategory", "category", label.getText())) {
 					message("Error", "Esta Categoría está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
@@ -67,13 +71,19 @@ public class ConfigurationViewController {
 				insertToList();
 			});
 
-			hbox.getChildren().addAll(new Pane(label), new Pane(delete));
+			hbox.getStyleClass().add("hbox");
+			label.getStyleClass().add("label");
+			delete.getStyleClass().add("btns");
+
+			hbox.getChildren().addAll(label, spacer, delete);
 			observableCategoryList.add(hbox);
 		}
 		for (String location : locations) {
 			HBox hbox = new HBox();
 			Label label = new Label(location);
-			Button delete = new Button("Eliminar");
+			Region spacer = new Region();
+			HBox.setHgrow(spacer, Priority.ALWAYS);
+			Button delete = new Button("×");
 			delete.setOnAction(_ -> {
 				if (!productsDao.deleteOptions("location", "idLocation", "location", label.getText())) {
 					message("Error", "Esta Ubicación está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
@@ -81,13 +91,19 @@ public class ConfigurationViewController {
 				insertToList();
 			});
 
-			hbox.getChildren().addAll(new Pane(label), new Pane(delete));
+			hbox.getStyleClass().add("hbox");
+			label.getStyleClass().add("label");
+			delete.getStyleClass().add("btns");
+
+			hbox.getChildren().addAll(label,spacer, delete);
 			observableLocationList.add(hbox);
 		}
 		for (String presentation : presentations) {
 			HBox hbox = new HBox();
 			Label label = new Label(presentation);
-			Button delete = new Button("Eliminar");
+			Region spacer = new Region();
+			HBox.setHgrow(spacer, Priority.ALWAYS);
+			Button delete = new Button("×");
 			delete.setOnAction(_ -> {
 				if (!productsDao.deleteOptions("presentation", "idPresentation", "presentation", label.getText())) {
 					message("Error", "Esta Presentación está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
@@ -95,13 +111,19 @@ public class ConfigurationViewController {
 				insertToList();
 			});
 
-			hbox.getChildren().addAll(new Pane(label), new Pane(delete));
+			hbox.getStyleClass().add("hbox");
+			label.getStyleClass().add("label");
+			delete.getStyleClass().add("btns");
+
+			hbox.getChildren().addAll(label,spacer, delete);
 			observablePresentationList.add(hbox);
 		}
 		for (String unit : units) {
 			HBox hbox = new HBox();
 			Label optionLabel = new Label(unit);
-			Button delete = new Button("Eliminar");
+			Region spacer = new Region();
+			HBox.setHgrow(spacer, Priority.ALWAYS);
+			Button delete = new Button("×");
 
 			delete.setOnAction(_ -> {
 				if (!productsDao.deleteOptions("units", "idUnits", "unit", optionLabel.getText())) {
@@ -110,7 +132,10 @@ public class ConfigurationViewController {
 				insertToList();
 			});
 
-			hbox.getChildren().addAll(new Pane(optionLabel), new Pane(delete));
+			hbox.getStyleClass().add("hbox");
+			optionLabel.getStyleClass().add("label");
+			delete.getStyleClass().add("btns");
+			hbox.getChildren().addAll(optionLabel,spacer, delete);
 			observableUnitList.add(hbox);
 		}
 

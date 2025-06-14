@@ -4,10 +4,37 @@
     -fx-darkblue-color: #5c65c0;
     -fx-darkblueII-color: #9b9bbb;
     -fx-white-color: #ffffff;
-    -fx-grey-color: #b7b7b7
-
+    -fx-grey-color: #b7b7b7;
 }
+
 /*____________________________________________________________________________________________________________________*/
+/*Main*/
+.main {
+    -fx-background-color: linear-gradient(to bottom right, -fx-violet-color, -fx-darkblue-color);
+}
+
+.config_container {
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-grey-color;
+}
+
+.listlabel {
+    -fx-text-fill: -fx-white-color;
+}
+
+.label {
+    -fx-text-fill: -fx-white-color;
+}
+
+.hbox {
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+
+/*____________________________________________________________________________________________________________________*/
+/* Botones */
 
 .btns {
     -fx-border-color: -fx-violet-color;
@@ -18,6 +45,7 @@
     -fx-font-weight: bold;
     -fx-text-fill: -fx-violet-color;
     -fx-background-color: -fx-white-color;
+    -fx-cursor: hand;
 }
 
 .btns:hover {
@@ -27,9 +55,10 @@
 }
 
 /*____________________________________________________________________________________________________________________*/
+/* Campos de texto */
 
-.text-field {
-    -fx-background-color: -fx-darkblueII-color;
+.input-field, .text-field {
+    -fx-background-color: -fx-ligthv-color;
     -fx-background-radius: 15px;
     -fx-border-radius: 15px;
     -fx-border-color: -fx-ligthv-color;
@@ -39,27 +68,103 @@
     -fx-text-fill: -fx-violet-color;
     -fx-prompt-text-fill: -fx-grey-color;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-font-weight: bold;
 }
 
-/* Estilo cuando el TextField está enfocado */
-.text-field:focused {
+.input-field:focused, .text-field:focused {
     -fx-border-color: -fx-darkblue-color;
     -fx-effect: dropshadow(gaussian, rgba(92, 101, 192, 0.3), 10, 0, 0, 3);
 }
 
-/* Estilo para el texto dentro del TextField */
 .text-field .text {
     -fx-font-weight: bold;
 }
 
-/* Estilo para el prompt text (placeholder) */
 .text-input {
     -fx-prompt-text-fill: -fx-grey-color;
 }
 
+/*____________________________________________________________________________________________________________________*/
+/* Etiquetas */
+
 .tag_name {
-    -fx-text-fill: -fx-violet-color;
+    -fx-text-fill: -fx-white-color;
     -fx-font-weight: bold;
-    -fx-background-color: none;
+    -fx-background-color: transparent;
     -fx-font-size: 20px;
 }
+
+/*____________________________________________________________________________________________________________________*/
+/* Listas */
+
+.list-view {
+    -fx-background-color: -fx-violet-color;
+    -fx-border-color: -fx-ligthv-color;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 5, 0, 0, 2);
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-violet-color;
+}
+
+.list-cell {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-violet-color;
+}
+
+.list-cell:filled:hover {
+    /*arriba derecha abajo izquierda*/
+    -fx-background-color: linear-gradient(to bottom right, -fx-violet-color, -fx-darkblue-color);
+    -fx-text-fill: -fx-white-color;
+    -fx-border-radius: 10px 0px 0px 10px;
+    -fx-background-radius: 10px 0px 0px 10px;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: -fx-ligthv-color;
+    -fx-text-fill: -fx-white-color;
+    -fx-border-radius: 10px 0px 0px 10px;
+    -fx-background-radius: 10px 0px 0px 10px;
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: -fx-ligthv-color;
+    -fx-background-radius: 10px;
+    -fx-opacity: 0.5;
+}
+
+.list-view .scroll-bar:vertical .thumb:hover {
+    -fx-opacity: 0.8;
+}
+
+.list-view .scroll-bar .increment-arrow,
+.list-view .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+/*____________________________________________________________________________________________________________________*/
+/* Contenedores */
+
+.vbox, .hbox {
+    -fx-spacing: 10px;
+    -fx-padding: 10px;
+}
+
+.header {
+    -fx-background-color: -fx-violet-color;
+}
+
+/*____________________________________________________________________________________________________________________*/
+/* Decoración */
+
+/*.decoration {
+    -fx-background-color: linear-gradient(to bottom right, -fx-violet-color, -fx-darkblue-color);
+    -fx-background-radius: 25px;
+}*/

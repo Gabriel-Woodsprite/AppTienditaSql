@@ -5,35 +5,83 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.ConfigurationViewController">
-    <opaqueInsets>
-        <Insets />
-    </opaqueInsets>
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1500.0" styleClass="main" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.ConfigurationViewController">
+
     <children>
-        <Pane layoutX="1314.0" layoutY="80.0" prefHeight="184.0" prefWidth="186.0" styleClass="decoration" stylesheets="@css/Style.css" />
+        <!-- Decoración superior -->
         <HBox prefHeight="80.0" prefWidth="1500.0" styleClass="header" stylesheets="@css/Style.css" />
-        <TextField fx:id="unitsTxt" layoutX="14.0" layoutY="131.0" prefHeight="40.0" prefWidth="366.0" promptText="Agregar Nueva Unidad" styleClass="input-field" />
-        <TextField fx:id="categoryTxt" layoutX="777.0" layoutY="454.0" prefHeight="54.0" prefWidth="366.0" promptText="Agregar Nueva Categoria" styleClass="input-field" />
-        <TextField fx:id="presentationTxt" layoutX="425.0" layoutY="454.0" prefHeight="54.0" prefWidth="310.0" promptText="Agregar Nueva Presentacion" styleClass="input-field" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="89.0" prefHeight="42.0" prefWidth="366.0" styleClass="tag_name" text="Unidad De Medida:" />
-        <Label alignment="CENTER" layoutX="781.0" layoutY="401.0" prefHeight="42.0" prefWidth="366.0" styleClass="tag_name" text="Añadir Nueva Categoría:" />
-        <Label alignment="CENTER" layoutX="427.0" layoutY="400.0" prefHeight="42.0" prefWidth="310.0" styleClass="tag_name" text="Presentación:" />
-        <Label alignment="CENTER" layoutX="427.0" layoutY="89.0" prefHeight="42.0" prefWidth="310.0" styleClass="tag_name" stylesheets="@css/Config.css" text="Ubicación De Productos:" />
-        <TextField fx:id="locationTxt" layoutX="426.0" layoutY="131.0" prefHeight="0.0" prefWidth="310.0" promptText="Agregar Nueva Ubicacion" styleClass="input-field" stylesheets="@css/Style.css" />
-        <Button fx:id="saveButton" layoutX="73.0" layoutY="657.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="224.0" styleClass="btns" text="Guardar Modificaciones" />
-        <Button fx:id="resetButton" layoutX="76.0" layoutY="586.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="221.0" styleClass="btns" text="Eliminar Modificaciones" />
-      <TextField fx:id="margenPrecioTxt" layoutX="778.0" layoutY="131.0" prefHeight="29.0" prefWidth="324.0" promptText="Agregar Nuevo Margen De Precio" styleClass="input-field" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="777.0" layoutY="91.0" prefHeight="42.0" prefWidth="324.0" styleClass="tag_name" text="Añadir Nueva Margen De Precio:" />
-      <ListView fx:id="unitsList" layoutX="11.0" layoutY="181.0" prefHeight="200.0" prefWidth="355.0" />
-      <ListView fx:id="locationList" layoutX="417.0" layoutY="181.0" prefHeight="200.0" prefWidth="310.0" />
-      <ListView fx:id="categoryList" layoutX="784.0" layoutY="181.0" prefHeight="200.0" prefWidth="310.0" />
-      <ListView fx:id="presentationList" layoutX="427.0" layoutY="529.0" prefHeight="200.0" prefWidth="310.0" />
+
+        <!-- Grupo: Unidad de medida -->
+        <VBox layoutX="44.0" layoutY="89.0" prefHeight="335.0" prefWidth="463.0" spacing="10" styleClass="config_container">
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="463.0" styleClass="tag_name" text="Unidad De Medida:" />
+            <TextField fx:id="unitsTxt" prefHeight="30.0" prefWidth="366.0" promptText="Agregar Nueva Unidad" styleClass="input-field" />
+         <Label prefHeight="17.0" prefWidth="464.0" styleClass="listlabel" text="Unidades Registradas" />
+            <ListView fx:id="unitsList" prefHeight="200.0" prefWidth="366.0" />
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+        </VBox>
+
+        <!-- Grupo: Ubicación de productos -->
+        <VBox layoutX="44.0" layoutY="435.0" prefHeight="335.0" prefWidth="463.0" spacing="10" styleClass="config_container">
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="445.0" styleClass="tag_name" stylesheets="@css/Config.css" text="Ubicación De Productos:" />
+            <TextField fx:id="locationTxt" prefHeight="30.0" prefWidth="310.0" promptText="Agregar Nueva Ubicacion" styleClass="input-field" stylesheets="@css/Style.css" />
+         <Label prefHeight="17.0" prefWidth="464.0" styleClass="listlabel" text="Ubicaciones Registradas" />
+            <ListView fx:id="locationList" prefHeight="200.0" prefWidth="310.0" />
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+        </VBox>
+
+        <!-- Grupo: Margen de precio -->
+        <VBox layoutX="992.0" layoutY="89.0" prefHeight="335.0" prefWidth="463.0" spacing="10" styleClass="config_container">
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="440.0" styleClass="tag_name" text="Añadir Nueva Margen De Precio:" />
+            <TextField fx:id="margenPrecioTxt" prefHeight="40.0" prefWidth="379.0" promptText="Agregar Nuevo Margen De Precio" styleClass="input-field" />
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+        </VBox>
+
+        <!-- Grupo: Presentación y Categoría -->
+        <HBox layoutX="420.0" layoutY="297.0" spacing="40" />
+
+         <!-- Categoría -->
+         <VBox layoutX="517.0" layoutY="435.0" prefHeight="335.0" prefWidth="463.0" spacing="10" styleClass="config_container">
+             <Label alignment="CENTER" prefHeight="30.0" prefWidth="448.0" styleClass="tag_name" text="Añadir Nueva Categoría:" />
+             <TextField fx:id="categoryTxt" prefHeight="37.0" prefWidth="366.0" promptText="Agregar Nueva Categoria" styleClass="input-field" />
+         <Label prefHeight="17.0" prefWidth="464.0" styleClass="listlabel" text="Categorías Registradas" />
+             <ListView fx:id="categoryList" prefHeight="200.0" prefWidth="310.0" />
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         </VBox>
+         <!-- Presentación -->
+         <VBox layoutX="517.0" layoutY="90.0" prefHeight="335.0" prefWidth="463.0" spacing="10" styleClass="config_container">
+             <Label alignment="CENTER" prefHeight="30.0" prefWidth="436.0" styleClass="tag_name" text="Presentación:" />
+             <TextField fx:id="presentationTxt" prefHeight="31.0" prefWidth="310.0" promptText="Agregar Nueva Presentación" styleClass="input-field" />
+         <Label prefHeight="17.0" prefWidth="464.0" styleClass="listlabel" text="Presentaciones Registradas" />
+             <ListView fx:id="presentationList" prefHeight="200.0" prefWidth="310.0" />
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         </VBox>
+      <HBox layoutX="994.0" layoutY="731.0" prefHeight="35.0" prefWidth="463.0">
+         <children>
+               <Button fx:id="resetButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="271.0" styleClass="btns" text="Eliminar Modificaciones" />
+            <Separator prefHeight="40.0" prefWidth="139.0" />
+               <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="272.0" styleClass="btns" text="Guardar Modificaciones" />
+         </children>
+      </HBox>
+        <Pane layoutX="1314.0" layoutY="80.0" prefHeight="184.0" prefWidth="186.0" styleClass="decoration" stylesheets="@css/Style.css" />
     </children>
+
     <stylesheets>
         <URL value="@css/Style.css" />
         <URL value="@css/Config.css" />
