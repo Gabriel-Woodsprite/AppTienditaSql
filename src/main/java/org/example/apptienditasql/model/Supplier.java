@@ -1,6 +1,7 @@
 package org.example.apptienditasql.model;
 
 public class Supplier {
+	private int supplierId;
 	private String name;
 	private String address;
 	private String email;
@@ -8,6 +9,10 @@ public class Supplier {
 	private String type;
 	private String notes;
 	private String contactPerson;
+
+	public int getSupplierId() {
+		return supplierId;
+	}
 
 	public String getName() {
 		return name;
@@ -35,6 +40,10 @@ public class Supplier {
 
 	public String getContactPerson() {
 		return contactPerson;
+	}
+
+	public void setSupplierId(int supplierId) {
+		this.supplierId = supplierId;
 	}
 
 	public void setContactPerson(String contactPerson) {

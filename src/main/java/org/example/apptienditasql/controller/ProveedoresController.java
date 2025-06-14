@@ -1,8 +1,11 @@
 package org.example.apptienditasql.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.example.apptienditasql.dao.ProductsDao;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import org.example.apptienditasql.dao.SuppliersDao;
 import org.example.apptienditasql.model.Supplier;
 import org.example.apptienditasql.utils.DatabaseConnection;
@@ -15,6 +18,10 @@ import static org.example.apptienditasql.utils.UserMessage.message;
 
 public class ProveedoresController {
 	SuppliersDao supplierDao = null;
+	ObservableList<HBox> suppliersObsList = FXCollections.observableArrayList();
+
+	@FXML
+	private ListView<HBox> suppliersListView;
 	@FXML
 	private TextField nombre_razon;
 	@FXML
@@ -32,11 +39,51 @@ public class ProveedoresController {
 	@FXML
 	private Button saveButton;
 
+	private void insertToListView() {
+		List<Supplier> supplierList = supplierDao.readAll();
+		suppliersListView.getItems().clear();
+
+		for (Supplier supplier : supplierList) {
+			HBox hbox = new HBox();
+			Button delete = new Button("Eliminar");
+			Button edit = new Button("Editar");
+			edit.setDisable(true);
+
+			delete.setOnAction(_ -> {
+				supplierDao.delete(String.valueOf(supplier.getSupplierId()));
+				insertToListView();
+			});
+//			edit.setOnAction(e -> {
+//			});
+
+			hbox.setSpacing(30);
+			hbox.getChildren().addAll(new Pane(new Label(supplier.getName())), new Pane(delete), new Pane(edit));
+
+			suppliersObsList.add(hbox);
+		}
+
+		suppliersListView.setItems(suppliersObsList);
+	}
+
 	private void createSupplier() {
 		Supplier supplier = new Supplier();
 
 		List<Control> requiredFields = List.of(nombre_razon, contactPerson, tel, email, type, address, notes);
 
+		if (Validate(requiredFields)) return;
+		supplier.setName(nombre_razon.getText());
+		supplier.setContactPerson(contactPerson.getText());
+		supplier.setEmail(email.getText());
+		supplier.setAddress(address.getText());
+		supplier.setNotes(notes.getText());
+		supplier.setType(type.getValue());
+		supplier.setTel(tel.getText());
+		supplierDao.create(supplier);
+
+		insertToListView();
+	}
+
+	static boolean Validate(List<Control> requiredFields) {
 		for (Control requiredField : requiredFields) {
 			if (isFieldEmpty(requiredField)) {
 				requiredField.setStyle("-fx-border-color: red;");
@@ -47,27 +94,16 @@ public class ProveedoresController {
 		for (Control requiredField : requiredFields) {
 			if (isFieldEmpty(requiredField)) {
 				message("Falta Información", "Debe llenar todos los campos", Alert.AlertType.WARNING);
-				return;
+				return true;
 			}
 		}
-		supplier.setName(nombre_razon.getText());
-		supplier.setContactPerson(contactPerson.getText());
-		supplier.setEmail(email.getText());
-		supplier.setAddress(address.getText());
-		supplier.setNotes(notes.getText());
-		supplier.setType(type.getValue());
-		supplier.setTel(tel.getText());
-
-		if(supplierDao.create(supplier)){
-			message("Exito", "Proveedor creado", Alert.AlertType.INFORMATION);
-		}else{
-			message("Error", "Hubo un error", Alert.AlertType.ERROR);
-		}
+		return false;
 	}
 
 	@FXML
 	public void initialize() throws SQLException {
 		supplierDao = new SuppliersDao(DatabaseConnection.getConnection());
+		insertToListView();
 		type.setValue("Super Mercado");
 		saveButton.setOnAction(e -> {
 			createSupplier();

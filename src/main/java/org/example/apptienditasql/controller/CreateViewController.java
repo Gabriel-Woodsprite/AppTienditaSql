@@ -207,19 +207,7 @@ public class CreateViewController {
 		/////////////////////////////////////
 		//////CHECKING BEFORE INSERTING//////
 		/////////////////////////////////////
-		for (Control requiredField : requiredFields) {
-			if (isFieldEmpty(requiredField)) {
-				requiredField.setStyle("-fx-border-color: red;");
-			} else {
-				requiredField.setStyle("-fx-border-color: none;");
-			}
-		}
-		for (Control requiredField : requiredFields) {
-			if (isFieldEmpty(requiredField)) {
-				message("Falta Información", "Debe llenar todos los campos", Alert.AlertType.WARNING);
-				return;
-			}
-		}
+		if (ProveedoresController.Validate(requiredFields)) return;
 		if (imageFile == null && (editableProduct == null || editableProduct.getImage() == null)) {
 			message("Imagen faltante", "Debe seleccionar una imagen para el producto.", Alert.AlertType.WARNING);
 			return;
