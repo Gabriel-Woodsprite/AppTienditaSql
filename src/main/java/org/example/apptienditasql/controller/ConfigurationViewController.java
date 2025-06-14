@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.example.apptienditasql.utils.ControllerUtils.isAllEmpty;
-import static org.example.apptienditasql.utils.ControllerUtils.isFieldEmpty;
 import static org.example.apptienditasql.utils.UserMessage.message;
 
 public class ConfigurationViewController {
@@ -169,8 +168,6 @@ public class ConfigurationViewController {
 							message("Info", "Esta ubicación ya existe", Alert.AlertType.INFORMATION);
 						}
 					}
-					default ->
-							message("Info", "Debes agregar información para guardar cambios", Alert.AlertType.INFORMATION);
 				}
 			}
 			insertToList();

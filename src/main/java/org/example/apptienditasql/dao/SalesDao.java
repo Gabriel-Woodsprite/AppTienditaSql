@@ -1,32 +1,44 @@
-//package org.example.apptienditatxt.dao;
-//
-//import org.example.apptienditatxt.interfaces.DaoInterface;
-//
-//import java.util.List;
-//
-//public class SalesDao<Item, ID> implements DaoInterface<Item, ID> {
-//	@Override
-//	public void createItem() {
-//
-//	}
-//
-//	@Override
-//	public Item readItem(int itemId) {
-//		return null;
-//	}
-//
-//	@Override
-//	public List<Item> readAllItems() {
-//		return List.of();
-//	}
-//
-//	@Override
-//	public void updateItem() {
-//
-//	}
-//
-//	@Override
-//	public void deleteItem() {
-//
-//	}
-//}
+package org.example.apptienditasql.dao;
+
+
+import org.example.apptienditasql.interfaces.DaoInterface;
+import org.example.apptienditasql.model.Sale;
+
+import java.sql.Connection;
+import java.util.List;
+import java.util.logging.Logger;
+
+public class SalesDao implements DaoInterface<Sale, String> {
+	Logger logger = Logger.getLogger(SalesDao.class.getName());
+
+	private final Connection connection;
+
+	public SalesDao(Connection connection) {
+		this.connection = connection;
+	}
+
+	@Override
+	public void create(Sale entity) {
+
+	}
+
+	@Override
+	public Sale read(String key) {
+		return null;
+	}
+
+	@Override
+	public List<Sale> readAll() {
+		return List.of();
+	}
+
+	@Override
+	public void update(Sale updatedEntity) {
+
+	}
+
+	@Override
+	public void delete(String key) {
+
+	}
+}

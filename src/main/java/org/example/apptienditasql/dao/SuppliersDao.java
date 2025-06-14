@@ -5,9 +5,11 @@ import org.example.apptienditasql.model.Supplier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SuppliersDao {
+	Logger logger = Logger.getLogger(SuppliersDao.class.getName());
 	private final Connection connection;
 
 	public SuppliersDao(Connection connection) {
@@ -21,7 +23,7 @@ public class SuppliersDao {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, e.getMessage(), e);
 		}
 		return false;
 	}

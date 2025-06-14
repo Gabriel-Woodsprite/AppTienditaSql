@@ -57,30 +57,6 @@ public class VentasController {
 	Product product;
 
 	private void agregarProducto() {
-		int subtotal = 0;
-		if (!txtBuscarProducto.getText().isBlank()) {
-			if (!txtCantidad.getText().isBlank()) {
-				product = productsDao.read(txtBuscarProducto.getText());
-				product.setPurchaseQuantity(txtCantidad.getText());
-
-				if (product != null) {
-					System.out.println("Txt Cant: " + txtCantidad.getText() + " productCant: " + product.getCantidad());
-					if (Integer.parseInt(txtCantidad.getText()) <= Integer.parseInt(product.getCantidad())) {
-						lblFecha.setText(LocalDate.now().toString());
-						subtotal += Integer.parseInt(product.getPrice());
-						lblSubtotal.setText(subtotal+"");
-						lblIVA.setText(subtotal*0.16+"");
-						lista.add(product);
-					} else {
-						message("Error", "No hay tantos productos", Alert.AlertType.ERROR);
-					}
-				} else {
-					message("Error", "No se encontró el producto", Alert.AlertType.ERROR);
-				}
-			}
-		} else {
-			message("Error", "Datos incorrectos o incompletos", Alert.AlertType.ERROR);
-		}
 	}
 
 	private void cancelarVenta() {
@@ -97,10 +73,6 @@ public class VentasController {
 	@FXML
 	public void initialize() throws SQLException {
 		productsDao = new ProductsDao(DatabaseConnection.getConnection());
-		colProducto.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getName()));
-		colCantidad.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getpCantidad()));
-		colPrecio.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPrice()));
-		colSubtotal.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getSubTotal()));
 
 		tablaVenta.setItems(lista);
 

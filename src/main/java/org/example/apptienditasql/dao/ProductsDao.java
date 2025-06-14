@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ProductsDao implements ProductDaoInterface {
+public class ProductsDao implements DaoInterface<Product, String> {
 	private final static Logger logger = Logger.getLogger(ProductsDao.class.getName());
 
 	private final Connection connection;
@@ -50,67 +50,25 @@ public class ProductsDao implements ProductDaoInterface {
 		}
 	}
 
-//	public void createUnit(String unit) {
-//		String sql = "INSERT INTO units(unit) VALUES(?)";
-//		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-//			ps.setString(1, unit);
-//			ps.executeUpdate();
-//		} catch (SQLException e) {
-//			logger.log(Level.SEVERE, "Error al crear Unidades", e);
-//		}
-//	}
-
-//	public void createLocation(String location) {
-//		String sql = "INSERT INTO location(location) VALUES(?)";
-//		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-//			ps.setString(1, location);
-//			ps.executeUpdate();
-//		} catch (SQLException e) {
-//			logger.log(Level.SEVERE, "Error al crear Ubicación", e);
-//		}
-//	}
-
-//	public void createCategory(String category) {
-//		String sql = "INSERT INTO category(category) VALUES(?)";
-//		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-//			ps.setString(1, category);
-//			ps.executeUpdate();
-//		} catch (SQLException e) {
-//			logger.log(Level.SEVERE, "Error al crear Categorias", e);
-//		}
-//	}
-
-//	public void createPresentation(String presentation) {
-//		String sql = "INSERT INTO presentation(presentation) VALUES(?)";
-//		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-//			ps.setString(1, presentation);
-//			ps.executeUpdate();
-//		} catch (SQLException e) {
-//			logger.log(Level.SEVERE, "Error al crear Presentaciones", e);
-//		}
-//	}
-
 	///////////////////
 	///////READ////////
 	///////////////////
 	@Override
 	public Product read(String barcode) {
 		Product product = null;
+
 		String sql = """
-				SELECT *
-				FROM catalogue
-				         INNER JOIN apptienditadb.category c
-				                    ON catalogue.Category_idCategory = c.idCategory
-				         INNER JOIN apptienditadb.Units mu
-				                    ON catalogue.Units_idUnits = mu.idUnits
-				         INNER JOIN apptienditadb.presentation p
-				                    ON catalogue.Presentation_idPresentation = p.idPresentation
-				         INNER JOIN apptienditadb.location l
-				                    ON catalogue.Location_idLocation = l.idLocation
-				         INNER JOIN apptienditadb.purchasedetails p2
-				                    ON catalogue.barCode = p2.Catalogue_barCode
-				WHERE barcode = ?;
-				""";
+				SELECT * FROM catalogue
+				    INNER JOIN apptienditadb.category c
+				        ON catalogue.Category_idCategory = c.idCategory
+				    INNER JOIN apptienditadb.units mu
+				        ON catalogue.Units_idUnits = mu.idUnits
+				    INNER JOIN apptienditadb.presentation p
+				        ON catalogue.Presentation_idPresentation = p.idPresentation
+					 INNER JOIN apptienditadb.location l
+				        ON catalogue.Location_idLocation = l.idLocation
+				WHERE barcode = ?""";
+
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, barcode);
 			ResultSet rs = ps.executeQuery();
@@ -131,8 +89,6 @@ public class ProductsDao implements ProductDaoInterface {
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
 				product.setProductLocation(rs.getString("location"));
 				product.setRegisterDate(rs.getDate("registerDate").toLocalDate());
-				product.setPrice(rs.getString("unitPrice"));
-				product.setCantidad(rs.getString("quantity"));
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Error al obtener el producto.", e);
