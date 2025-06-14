@@ -1,33 +1,16 @@
 package org.example.apptienditasql.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import org.example.apptienditasql.dao.ProductsDao;
-import org.example.apptienditasql.model.Product;
-import org.example.apptienditasql.utils.DatabaseConnection;
-import org.example.apptienditasql.view.MainView;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainViewController {
+	Logger logger = Logger.getLogger(MainViewController.class.getName());
 	@FXML
 	private TabPane mainTabPane;
 
@@ -47,8 +30,8 @@ public class MainViewController {
 			loadTabContent(mainTabPane.getTabs().get(4), "/org/example/apptienditasql/view/tab-proveedores.fxml");
 //			loadTabContent(mainTabPane.getTabs().get(5), "/org/example/apptienditasql/view/tab-reportes.fxml");
 			loadTabContent(mainTabPane.getTabs().get(6), "/org/example/apptienditasql/view/tab-configuracion.fxml");
-		}catch (IOException e){
-			e.printStackTrace();
+		} catch (IOException e) {
+			logger.log(Level.WARNING, e.getMessage(), e);
 		}
 	}
 }

@@ -21,12 +21,15 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.example.apptienditasql.utils.UserMessage.message;
 import static org.example.apptienditasql.utils.ControllerUtils.createFileChooser;
 import static org.example.apptienditasql.utils.ControllerUtils.isFieldEmpty;
 
 public class CreateViewController {
+	Logger logger = Logger.getLogger(CreateViewController.class.getName());
 	///////////////
 	//////DAO//////
 	///////////////
@@ -185,10 +188,8 @@ public class CreateViewController {
 					case "locationCB" -> cb.setValue(editableProduct.getProductLocation());
 				}
 			} else if (node instanceof DatePicker dp) {
-				switch (dp.getId()) {
-					case "registerDatePicker" -> dp.setValue(editableProduct.getRegisterDate());
+				dp.setValue(editableProduct.getRegisterDate());
 //					case "expiryDatePicker" -> dp.setValue(editableProduct.getExpiryDate());
-				}
 			} else if (node instanceof Label l && "imgLabel".equals(l.getId())) {
 				l.setText(editableProduct.getImage());
 			}
@@ -206,19 +207,7 @@ public class CreateViewController {
 		/////////////////////////////////////
 		//////CHECKING BEFORE INSERTING//////
 		/////////////////////////////////////
-		for (Control requiredField : requiredFields) {
-			if (isFieldEmpty(requiredField)) {
-				requiredField.setStyle("-fx-border-color: red;");
-			} else {
-				requiredField.setStyle("-fx-border-color: none;");
-			}
-		}
-		for (Control requiredField : requiredFields) {
-			if (isFieldEmpty(requiredField)) {
-				message("Falta Información", "Debe llenar todos los campos", Alert.AlertType.WARNING);
-				return;
-			}
-		}
+		if (ProveedoresController.Validate(requiredFields)) return;
 		if (imageFile == null && (editableProduct == null || editableProduct.getImage() == null)) {
 			message("Imagen faltante", "Debe seleccionar una imagen para el producto.", Alert.AlertType.WARNING);
 			return;
@@ -319,7 +308,7 @@ public class CreateViewController {
 			Files.deleteIfExists(oldImagePath);
 		} catch (IOException e) {
 			System.err.println("Failed to delete old image: " + imageName);
-			e.printStackTrace();
+			logger.log(Level.WARNING, e.getMessage(), e);
 		}
 	}
 
