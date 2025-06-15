@@ -101,13 +101,13 @@ public class ProductsDao implements DaoInterface<Product, String> {
 
 	public String getProductByBarcode(String barcode) {
 		String sql = "SELECT name FROM catalogue where barcode = ?";
-		try(PreparedStatement ps = connection.prepareStatement(sql)){
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, barcode);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				return rs.getString("name");
 			}
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Error al obtener el producto.", e);
 		}
 		return null;
@@ -232,11 +232,11 @@ public class ProductsDao implements DaoInterface<Product, String> {
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, String.valueOf(id));
 			ps.executeUpdate();
-			return true;
+			return false;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Error al eliminar Opciones", e);
 		}
-		return false;
+		return true;
 	}
 
 	public void resetConfig() {
@@ -269,17 +269,18 @@ public class ProductsDao implements DaoInterface<Product, String> {
 	}
 
 	private int getIdByName(String table, String idColumn, String nameColumn, String nameValue) {
+		int id = -1;
 		String sql = "SELECT " + idColumn + " FROM " + table + " WHERE " + nameColumn + " = ?";
 		System.out.println("QUERY: 299 " + nameValue + ", " + sql);
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, nameValue);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				return rs.getInt(idColumn);
+				id = rs.getInt(idColumn);
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Error al obtener el id de opciones", e);
 		}
-		return -1;
+		return id;
 	}
 }

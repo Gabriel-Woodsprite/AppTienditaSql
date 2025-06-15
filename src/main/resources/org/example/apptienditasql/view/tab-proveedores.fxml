@@ -44,7 +44,7 @@
       <Button fx:id="saveButton" layoutX="87.0" layoutY="649.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" styleClass="btns" text="Guardar" />
       <Button layoutX="208.0" layoutY="650.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" styleClass="btns" text="Limpiar" />
       <ListView fx:id="suppliersListView" layoutX="787.0" layoutY="100.0" prefHeight="540.0" prefWidth="637.0" styleClass="mi-lista" stylesheets="@css/Style.css" />
-      <Button layoutX="327.0" layoutY="650.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="199.0" styleClass="btns" text="Historial Provedores" />
+      <Button fx:id="historialBtn" layoutX="327.0" layoutY="650.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="199.0" styleClass="btns" text="Historial Provedores" />
    </children>
    <stylesheets>
       <URL value="@css/Style.css" />
