@@ -76,22 +76,21 @@ public class CatalogoController {
 			Button eliminar = new Button("");
 
 
-
 			editar.getStyleClass().add("edit_button");
 			editar.setPrefSize(25, 25);
 			editar.setMinSize(25, 25);
 
 			eliminar.getStyleClass().add("delete_button");
 			eliminar.setPrefSize(25, 25);
-			eliminar.setMinSize(25,25);
+			eliminar.setMinSize(25, 25);
 			eliminar.setId(product.getBarcode());
 
 			/// BOTÓN ELIMINAR
 			eliminar.setOnAction(_ -> {
 				try {
+					removeProductAction(product.getBarcode());
 					File img = new File("src/main/resources/org/example/apptienditasql/view/imgDirectory/" + product.getImage());
 					Files.delete(img.toPath());
-					removeProductAction(product.getBarcode());
 				} catch (Exception ex) {
 					throw new RuntimeException(ex);
 				}
@@ -121,7 +120,7 @@ public class CatalogoController {
 	//////FUCIONALIDAD PANEL DERECHO//////
 	//////////////////////////////////////
 	@FXML
-	private void infoCardAction(){
+	private void infoCardAction() {
 		interactiveElements.forEach(e -> e.setOnMouseClicked(_ -> {
 			/////////////////////////////////
 			//////VALORES INICIALIZADOS//////

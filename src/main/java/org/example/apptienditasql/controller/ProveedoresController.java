@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.example.apptienditasql.utils.ControllerUtils.isFieldEmpty;
+import static org.example.apptienditasql.utils.ControllerUtils.validate;
 import static org.example.apptienditasql.utils.UserMessage.message;
 
 public class ProveedoresController {
@@ -70,7 +71,7 @@ public class ProveedoresController {
 
 		List<Control> requiredFields = List.of(nombre_razon, contactPerson, tel, email, type, address, notes);
 
-		if (Validate(requiredFields)) return;
+		if (validate(requiredFields)) return;
 		supplier.setName(nombre_razon.getText());
 		supplier.setContactPerson(contactPerson.getText());
 		supplier.setEmail(email.getText());
@@ -83,31 +84,13 @@ public class ProveedoresController {
 		insertToListView();
 	}
 
-	static boolean Validate(List<Control> requiredFields) {
-		for (Control requiredField : requiredFields) {
-			if (isFieldEmpty(requiredField)) {
-				requiredField.setStyle("-fx-border-color: red;");
-			} else {
-				requiredField.setStyle("-fx-border-color: none;");
-			}
-		}
-		for (Control requiredField : requiredFields) {
-			if (isFieldEmpty(requiredField)) {
-				message("Falta Información", "Debe llenar todos los campos", Alert.AlertType.WARNING);
-				return true;
-			}
-		}
-		return false;
-	}
 
 	@FXML
 	public void initialize() throws SQLException {
 		supplierDao = new SuppliersDao(DatabaseConnection.getConnection());
 		insertToListView();
 		type.setValue("Super Mercado");
-		saveButton.setOnAction(e -> {
-			createSupplier();
-		});
+		saveButton.setOnAction(_ -> createSupplier());
 	}
 
 }
