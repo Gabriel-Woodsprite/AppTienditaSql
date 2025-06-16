@@ -18,6 +18,7 @@
     -fx-border-radius: 20px;
 }
 
+
 .header_form {
     -fx-background-color: #9b9bbb;
     -fx-border-radius: 20px 0px 20px 0px;
@@ -51,4 +52,29 @@
     -fx-background-color: -fx-ligthv-color; /* Fondo interno */
     -fx-background-insets: 0;
     -fx-padding: 10px;
+}
+
+
+.text-field {
+    -fx-background-color: -fx-darkblueII-color;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: -fx-ligthv-color;
+    -fx-border-width: 2;
+    -fx-padding: 8 15;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: -fx-grey-color;
+}
+
+.text-field:focused {
+    -fx-border-color: -fx-darkblue-color;
+}
+
+.text-field .text {
+    -fx-font-weight: bold;
+}
+
+.text-input {
+    -fx-prompt-text-fill: -fx-grey-color;
 }

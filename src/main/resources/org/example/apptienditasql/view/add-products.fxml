@@ -2,24 +2,20 @@
 
 <?import java.lang.String?>
 <?import java.net.URL?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:id="rootPane"
-            prefHeight="807.0" prefWidth="776.0"
-            styleClass="add_pane"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.apptienditasql.controller.CreateViewController">
+<AnchorPane fx:id="rootPane" prefHeight="807.0" prefWidth="776.0" styleClass="add_pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.CreateViewController">
 
     <children>
-        <Label alignment="CENTER"
-               contentDisplay="CENTER"
-               layoutX="-1.0"
-               prefHeight="57.0" prefWidth="777.0"
-               styleClass="title"
-               text="AÑADIR PRODUCTO"
-               textAlignment="CENTER" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" prefHeight="57.0" prefWidth="777.0" styleClass="title" text="AÑADIR PRODUCTO" textAlignment="CENTER" />
 
         <Pane layoutY="57.0" prefHeight="750.0" prefWidth="778.0">
             <children>
@@ -36,8 +32,8 @@
 
                 <Button fx:id="chooseFileButton" layoutX="555.0" layoutY="216.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Seleccionar Imagen">
                     <styleClass>
-                        <String fx:value="btns"/>
-                        <String fx:value="mas_mini"/>
+                        <String fx:value="btns" />
+                        <String fx:value="mas_mini" />
                     </styleClass>
                 </Button>
 
@@ -52,26 +48,26 @@
                 <Label layoutX="554.0" layoutY="328.0" styleClass="tag" text="Stock Máximo:" />
                 <TextField fx:id="maxStockField" layoutX="671.0" layoutY="319.0" prefHeight="25.0" prefWidth="71.0" styleClass="text-field" />
 
-                <Label layoutX="14.0" layoutY="332.0" styleClass="tag" text="Disponible:" />
+                <Label layoutX="14.0" layoutY="341.0" styleClass="tag" text="Disponible:" />
                 <RadioButton fx:id="availableRadio" layoutX="107.0" layoutY="330.0" mnemonicParsing="false" styleClass="text-field" />
 
-                <Label alignment="CENTER" layoutX="426.0" layoutY="371.0" prefHeight="21.0" prefWidth="340.0" styleClass="tag" text="Fecha De Registro:" />
-                <DatePicker fx:id="registerDatePicker" layoutX="426.0" layoutY="403.0" prefHeight="21.0" prefWidth="340.0" styleClass="text-field" />
+                <Label alignment="CENTER" layoutX="426.0" layoutY="382.0" prefHeight="21.0" prefWidth="340.0" styleClass="tag" text="Fecha De Registro:" />
+                <DatePicker fx:id="registerDatePicker" layoutX="426.0" layoutY="412.0" prefHeight="21.0" prefWidth="340.0" styleClass="text-field" />
 
-                <Label alignment="CENTER" layoutX="9.0" layoutY="378.0" prefHeight="21.0" prefWidth="340.0" styleClass="tag" text="Descripción:" />
+                <Label alignment="CENTER" layoutX="9.0" layoutY="382.0" prefHeight="21.0" prefWidth="340.0" styleClass="tag" text="Descripción:" />
                 <TextArea fx:id="descriptionArea" layoutX="10.0" layoutY="412.0" prefHeight="56.0" prefWidth="340.0" styleClass="text-field" />
 
-                <Label layoutX="13.0" layoutY="476.0" styleClass="tag" text="Categoría:" />
-                <ChoiceBox fx:id="categoryCB" layoutX="12.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" styleClass="text-field" />
+                <Label layoutX="421.0" layoutY="591.0" prefHeight="20.0" prefWidth="340.0" styleClass="tag" text="Categoría:" />
+                <ChoiceBox fx:id="categoryCB" layoutX="419.0" layoutY="621.0" prefHeight="50.0" prefWidth="340.0" styleClass="text-field" />
 
-                <Label layoutX="171.0" layoutY="481.0" styleClass="tag" text="Presentación:" />
-                <ChoiceBox fx:id="presentationCB" layoutX="171.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" styleClass="text-field" />
+                <Label layoutX="11.0" layoutY="495.0" prefHeight="20.0" prefWidth="340.0" styleClass="tag" text="Presentación:" />
+                <ChoiceBox fx:id="presentationCB" layoutX="11.0" layoutY="520.0" prefHeight="50.0" prefWidth="340.0" styleClass="text-field" />
 
-                <Label layoutX="370.0" layoutY="481.0" styleClass="tag" text="Unidad De Medida:" />
-                <ChoiceBox fx:id="unitCB" layoutX="368.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" styleClass="text-field" />
+                <Label layoutX="10.0" layoutY="593.0" prefHeight="20.0" prefWidth="340.0" styleClass="tag" text="Unidad De Medida:" />
+                <ChoiceBox fx:id="unitCB" layoutX="8.0" layoutY="622.0" prefHeight="50.0" prefWidth="340.0" styleClass="text-field" />
 
-                <Label layoutX="530.0" layoutY="481.0" styleClass="tag" text="Ubicación De Productos:" />
-                <ChoiceBox fx:id="locationCB" layoutX="530.0" layoutY="506.0" prefHeight="35.0" prefWidth="140.0" styleClass="text-field" />
+                <Label layoutX="422.0" layoutY="494.0" prefHeight="20.0" prefWidth="340.0" styleClass="tag" text="Ubicación De Productos:" />
+                <ChoiceBox fx:id="locationCB" layoutX="420.0" layoutY="519.0" prefHeight="50.0" prefWidth="340.0" styleClass="text-field" />
 
                 <Button layoutX="125.0" layoutY="703.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" styleClass="btns" text="limpiar" />
                 <Button fx:id="saveButton" layoutX="11.0" layoutY="701.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" styleClass="btns" text="Guardar" />
