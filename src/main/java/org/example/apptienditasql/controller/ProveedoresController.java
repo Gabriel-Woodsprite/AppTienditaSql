@@ -3,17 +3,22 @@ package org.example.apptienditasql.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import org.example.apptienditasql.dao.SuppliersDao;
 import org.example.apptienditasql.model.Supplier;
 import org.example.apptienditasql.utils.DatabaseConnection;
+import org.example.apptienditasql.view.MainView;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import static org.example.apptienditasql.utils.ControllerUtils.isFieldEmpty;
+import static org.example.apptienditasql.utils.ControllerUtils.validate;
 import static org.example.apptienditasql.utils.UserMessage.message;
 
 public class ProveedoresController {
@@ -38,6 +43,8 @@ public class ProveedoresController {
 	private TextArea notes;
 	@FXML
 	private Button saveButton;
+	@FXML
+	private Button historialBtn;
 
 	private void insertToListView() {
 		List<Supplier> supplierList = supplierDao.readAll();
@@ -70,7 +77,7 @@ public class ProveedoresController {
 
 		List<Control> requiredFields = List.of(nombre_razon, contactPerson, tel, email, type, address, notes);
 
-		if (Validate(requiredFields)) return;
+		if (validate(requiredFields)) return;
 		supplier.setName(nombre_razon.getText());
 		supplier.setContactPerson(contactPerson.getText());
 		supplier.setEmail(email.getText());
@@ -83,30 +90,32 @@ public class ProveedoresController {
 		insertToListView();
 	}
 
-	static boolean Validate(List<Control> requiredFields) {
-		for (Control requiredField : requiredFields) {
-			if (isFieldEmpty(requiredField)) {
-				requiredField.setStyle("-fx-border-color: red;");
-			} else {
-				requiredField.setStyle("-fx-border-color: none;");
-			}
-		}
-		for (Control requiredField : requiredFields) {
-			if (isFieldEmpty(requiredField)) {
-				message("Falta Información", "Debe llenar todos los campos", Alert.AlertType.WARNING);
-				return true;
-			}
-		}
-		return false;
+	private void openHistoryView() throws Exception {
+		/*___FXML___*/
+		FXMLLoader fxmlLoader = new FXMLLoader(MainView.class.getResource("history-view.fxml"));
+
+		Scene scene = new Scene(fxmlLoader.load()/*, 1200, 864*/);
+		Stage newStage = new Stage();
+
+		newStage.setScene(scene);
+		newStage.setTitle("Historial de Compras a Proveedores");
+		newStage.setResizable(false);
+		newStage.show();
 	}
+
 
 	@FXML
 	public void initialize() throws SQLException {
 		supplierDao = new SuppliersDao(DatabaseConnection.getConnection());
 		insertToListView();
 		type.setValue("Super Mercado");
-		saveButton.setOnAction(e -> {
-			createSupplier();
+		saveButton.setOnAction(_ -> createSupplier());
+		historialBtn.setOnAction(_ -> {
+			try {
+				openHistoryView();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		});
 	}
 

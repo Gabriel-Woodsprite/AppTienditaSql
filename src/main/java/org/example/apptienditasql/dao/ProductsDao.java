@@ -1,5 +1,6 @@
 package org.example.apptienditasql.dao;
 
+import javafx.scene.control.Alert;
 import org.example.apptienditasql.interfaces.*;
 import org.example.apptienditasql.model.Product;
 
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static org.example.apptienditasql.utils.UserMessage.message;
 
 public class ProductsDao implements DaoInterface<Product, String> {
 	private final static Logger logger = Logger.getLogger(ProductsDao.class.getName());
@@ -94,6 +97,20 @@ public class ProductsDao implements DaoInterface<Product, String> {
 			logger.log(Level.SEVERE, "Error al obtener el producto.", e);
 		}
 		return product;
+	}
+
+	public String getProductByBarcode(String barcode) {
+		String sql = "SELECT name FROM catalogue where barcode = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, barcode);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getString("name");
+			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, "Error al obtener el producto.", e);
+		}
+		return null;
 	}
 
 	public List<String> readCategories() {
@@ -197,6 +214,7 @@ public class ProductsDao implements DaoInterface<Product, String> {
 			ps.setString(1, barcode);
 			ps.executeUpdate();
 		} catch (SQLException e) {
+			message("Error", "No puede eliminar este elemento porque tiene productos registrados", Alert.AlertType.ERROR);
 			logger.log(Level.SEVERE, "Error al eliminar el producto.", e);
 		}
 	}
@@ -214,11 +232,11 @@ public class ProductsDao implements DaoInterface<Product, String> {
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, String.valueOf(id));
 			ps.executeUpdate();
-			return true;
+			return false;
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Error al eliminar Opciones", e);
 		}
-		return false;
+		return true;
 	}
 
 	public void resetConfig() {
@@ -251,17 +269,18 @@ public class ProductsDao implements DaoInterface<Product, String> {
 	}
 
 	private int getIdByName(String table, String idColumn, String nameColumn, String nameValue) {
+		int id = -1;
 		String sql = "SELECT " + idColumn + " FROM " + table + " WHERE " + nameColumn + " = ?";
 		System.out.println("QUERY: 299 " + nameValue + ", " + sql);
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, nameValue);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				return rs.getInt(idColumn);
+				id = rs.getInt(idColumn);
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Error al obtener el id de opciones", e);
 		}
-		return -1;
+		return id;
 	}
 }

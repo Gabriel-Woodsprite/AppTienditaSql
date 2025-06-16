@@ -55,6 +55,21 @@ public class SuppliersDao implements DaoInterface<Supplier, String> {
 		return supplier;
 	}
 
+	public int getSupplierByName(String supplierName) {
+		String sql = "SELECT idProveedores FROM suppliers WHERE supplierName = ? ";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, supplierName);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt("idProveedores");
+			}
+		} catch (SQLException e) {
+			logger.log(Level.WARNING, e.getMessage(), e);
+		}
+
+		return -1;
+	}
+
 	@Override
 	public List<Supplier> readAll() {
 		String sql = "SELECT * FROM suppliers";

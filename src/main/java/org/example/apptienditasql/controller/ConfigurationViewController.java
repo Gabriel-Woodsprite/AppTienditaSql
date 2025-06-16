@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import org.example.apptienditasql.dao.ProductsDao;
@@ -64,7 +63,7 @@ public class ConfigurationViewController {
 			HBox.setHgrow(spacer, Priority.ALWAYS);
 			Button delete = new Button("×");
 			delete.setOnAction(_ -> {
-				if (!productsDao.deleteOptions("category", "idCategory", "category", label.getText())) {
+				if (productsDao.deleteOptions("category", "idCategory", "category", label.getText())) {
 					message("Error", "Esta Categoría está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
 				}
 				insertToList();
@@ -84,7 +83,7 @@ public class ConfigurationViewController {
 			HBox.setHgrow(spacer, Priority.ALWAYS);
 			Button delete = new Button("×");
 			delete.setOnAction(_ -> {
-				if (!productsDao.deleteOptions("location", "idLocation", "location", label.getText())) {
+				if (productsDao.deleteOptions("location", "idLocation", "location", label.getText())) {
 					message("Error", "Esta Ubicación está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
 				}
 				insertToList();
@@ -104,7 +103,7 @@ public class ConfigurationViewController {
 			HBox.setHgrow(spacer, Priority.ALWAYS);
 			Button delete = new Button("×");
 			delete.setOnAction(_ -> {
-				if (!productsDao.deleteOptions("presentation", "idPresentation", "presentation", label.getText())) {
+				if (productsDao.deleteOptions("presentation", "idPresentation", "presentation", label.getText())) {
 					message("Error", "Esta Presentación está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
 				}
 				insertToList();
@@ -125,7 +124,7 @@ public class ConfigurationViewController {
 			Button delete = new Button("×");
 
 			delete.setOnAction(_ -> {
-				if (!productsDao.deleteOptions("units", "idUnits", "unit", optionLabel.getText())) {
+				if (productsDao.deleteOptions("units", "idUnits", "unit", optionLabel.getText())) {
 					message("Error", "Esta unidad está relacionada con un producto\nNo es posible eliminar", Alert.AlertType.ERROR);
 				}
 				insertToList();

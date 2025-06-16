@@ -24,9 +24,8 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static org.example.apptienditasql.utils.ControllerUtils.*;
 import static org.example.apptienditasql.utils.UserMessage.message;
-import static org.example.apptienditasql.utils.ControllerUtils.createFileChooser;
-import static org.example.apptienditasql.utils.ControllerUtils.isFieldEmpty;
 
 public class CreateViewController {
 	Logger logger = Logger.getLogger(CreateViewController.class.getName());
@@ -207,7 +206,7 @@ public class CreateViewController {
 		/////////////////////////////////////
 		//////CHECKING BEFORE INSERTING//////
 		/////////////////////////////////////
-		if (ProveedoresController.Validate(requiredFields)) return;
+		if (validate(requiredFields)) return;
 		if (imageFile == null && (editableProduct == null || editableProduct.getImage() == null)) {
 			message("Imagen faltante", "Debe seleccionar una imagen para el producto.", Alert.AlertType.WARNING);
 			return;
