@@ -78,3 +78,25 @@
 .text-input {
     -fx-prompt-text-fill: -fx-grey-color;
 }
+
+.btns {
+    -fx-border-color: -fx-violet-color;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-violet-color;
+    -fx-background-color: -fx-white-color;
+    -fx-cursor: hand;
+}
+
+.btns:hover{
+    -fx-border-color: -fx-white-color;
+    -fx-text-fill: -fx-white-color;
+    -fx-background-color: -fx-violet-color;
+}
+
+.table {
+    -fx-background-color: linear-gradient(to bottom right, -fx-violet-color, -fx-darkblue-color);
+}

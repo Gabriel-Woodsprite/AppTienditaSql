@@ -1,0 +1,75 @@
+.root {
+    -fx-violet-color: #191629;
+    -fx-lightv-color: #413b6b;
+    -fx-darkblue-color: #99a1ef;
+    -fx-darkblueII-color: #7f89dc;
+    -fx-white-color: #ffffff;
+    -fx-grey-color: #b7b7b7;
+}
+
+.main {
+    -fx-background-color: -fx-violet-color;
+}
+
+.stoyloco {
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-background-color: linear-gradient(to bottom right, -fx-violet-color, -fx-darkblue-color);
+}
+
+.label_info,.zzz, .titulochido{
+    -fx-text-fill: white;
+}
+.titulochido {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-color: -fx-violet-color;
+}
+
+.label_info {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.text-field {
+    -fx-background-color: -fx-darkblue-color;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: -fx-lightv-color;
+    -fx-border-width: 2;
+    -fx-padding: 8 15;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-prompt-text-fill: -fx-grey-color;
+}
+
+.text-field:focused {
+    -fx-background-color: linear-gradient(to bottom right, -fx-violet-color, -fx-darkblue-color);
+    -fx-border-color: -fx-violet-color;
+}
+
+.text-field .text {
+    -fx-font-weight: bold;
+}
+
+/* BOTONES */
+.btns {
+    -fx-border-color: -fx-violet-color;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-violet-color;
+    -fx-background-color: -fx-white-color;
+    -fx-cursor: hand;
+}
+
+.btns:hover{
+    -fx-border-color: -fx-white-color;
+    -fx-text-fill: -fx-white-color;
+    -fx-background-color: -fx-violet-color;
+}
