@@ -63,22 +63,23 @@ public class InventoryDao implements DaoInterface<Purchase, String> {
 			ps.setInt(6, entity.getBarcode());
 			ps.executeUpdate();
 
-			createInventory(Integer.parseInt(entity.getQuantity()), entity.getBarcode());
+			createInventory(Integer.parseInt(entity.getQuantity()), entity.getUnitPrice(), entity.getBarcode());
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 
-	private void createInventory(int quantity, int productBarcode) {
+	private void createInventory(int quantity, String price, int productBarcode) {
 		int currentQuantity = selectInventoryQuantity(productBarcode);
 		if (currentQuantity == -1) {
 			String insert = """
-					INSERT INTO inventory(quantity, Catalogue_barCode)
-					VALUES(?,?)
+					INSERT INTO inventory(quantity, price, Catalogue_barCode)
+					VALUES(?,?,?)
 					""";
 			try (PreparedStatement ps = connection.prepareStatement(insert)) {
 				ps.setInt(1, quantity);
-				ps.setInt(2, productBarcode);
+				ps.setString(2, price);
+				ps.setInt(3, productBarcode);
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				logger.log(Level.WARNING, e.getMessage());
@@ -95,6 +96,22 @@ public class InventoryDao implements DaoInterface<Purchase, String> {
 				logger.log(Level.WARNING, e.getMessage());
 			}
 		}
+	}
+
+	public double selectProductPrice(int barcode) {
+		String sql = """
+				SELECT price FROM inventory WHERE Catalogue_barCode = ?;
+				""";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, barcode);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getDouble(1);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.WARNING, e.getMessage());
+		}
+		return -1;
 	}
 
 	public int selectInventoryQuantity(int barcode) {
@@ -128,6 +145,20 @@ public class InventoryDao implements DaoInterface<Purchase, String> {
 	public void update(Purchase updatedEntity) {
 
 	}
+
+	public void decreaseQuantity(String catalogueBarcode, int quantityToSubtract)
+	{
+		String sql = "UPDATE Inventory SET quantity = quantity - ? WHERE Catalogue_barCode = ?";
+
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, quantityToSubtract);
+			ps.setString(2, catalogueBarcode);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			logger.log(Level.WARNING, e.getMessage());
+		}
+	}
+
 
 	@Override
 	public void delete(String key) {

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import org.example.apptienditasql.dao.ProductsDao;
@@ -33,6 +34,8 @@ public class ConfigurationViewController {
 	@FXML
 	private TextField margenPrecioTxt;
 	@FXML
+	private Pane margenList;
+	@FXML
 	private Button saveButton;
 	@FXML
 	private Button resetButton;
@@ -55,6 +58,7 @@ public class ConfigurationViewController {
 		locationList.getItems().clear();
 		categoryList.getItems().clear();
 		presentationList.getItems().clear();
+		margenList.getChildren().clear();
 
 		for (String category : categories) {
 			HBox hbox = new HBox();
@@ -93,7 +97,7 @@ public class ConfigurationViewController {
 			label.getStyleClass().add("label");
 			delete.getStyleClass().add("btns");
 
-			hbox.getChildren().addAll(label,spacer, delete);
+			hbox.getChildren().addAll(label, spacer, delete);
 			observableLocationList.add(hbox);
 		}
 		for (String presentation : presentations) {
@@ -113,7 +117,7 @@ public class ConfigurationViewController {
 			label.getStyleClass().add("label");
 			delete.getStyleClass().add("btns");
 
-			hbox.getChildren().addAll(label,spacer, delete);
+			hbox.getChildren().addAll(label, spacer, delete);
 			observablePresentationList.add(hbox);
 		}
 		for (String unit : units) {
@@ -133,8 +137,14 @@ public class ConfigurationViewController {
 			hbox.getStyleClass().add("hbox");
 			optionLabel.getStyleClass().add("label");
 			delete.getStyleClass().add("btns");
-			hbox.getChildren().addAll(optionLabel,spacer, delete);
+			hbox.getChildren().addAll(optionLabel, spacer, delete);
 			observableUnitList.add(hbox);
+		}
+
+		if (productsDao.readPriceMargin() == null) {
+			margenList.getChildren().add(new HBox(new Label("0"), new Label("%")));
+		} else {
+			margenList.getChildren().add(new HBox(new Label(productsDao.readPriceMargin()), new Label("%")));
 		}
 
 		unitsList.setItems(observableUnitList);
@@ -149,7 +159,7 @@ public class ConfigurationViewController {
 	}
 
 	private void saveConfig() {
-		List<TextField> required = List.of(unitsTxt, categoryTxt, presentationTxt, locationTxt);
+		List<TextField> required = List.of(unitsTxt, categoryTxt, presentationTxt, locationTxt, margenPrecioTxt);
 		System.out.println("IS ALL EMPTY CONFIGURATION 131" + isAllEmpty(required));
 		if (!isAllEmpty(required)) {
 			for (TextField requiredField : required) {
@@ -192,6 +202,7 @@ public class ConfigurationViewController {
 							message("Info", "Esta ubicación ya existe", Alert.AlertType.INFORMATION);
 						}
 					}
+					case "margenPrecioTxt" -> productsDao.updatePriceMargin(margenPrecioTxt.getText());
 				}
 			}
 			insertToList();

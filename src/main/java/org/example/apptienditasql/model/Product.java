@@ -22,6 +22,11 @@ public class Product {
 	private String units;
 
 
+	/// ATTRIBUTES FOR SALES
+	private int quantity;
+	private double price;
+	private double subTotal;
+
 	public Product() {
 	}
 
@@ -85,6 +90,19 @@ public class Product {
 		return productLocation;
 	}
 
+	/// SALES ATTRIBUTES GETTERS
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public double getSubtotal() {
+		return subTotal;
+	}
+
 	///////////////////
 	//////SETTERS//////
 	///////////////////
@@ -144,6 +162,18 @@ public class Product {
 		this.productLocation = productLocation;
 	}
 
+	/// SALES ATTRIBUTES SETTERS
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public void setSubtotal(double subTotal) {
+		this.subTotal = subTotal;
+	}
 
 	///////////////////
 	//////OVERRIDES////

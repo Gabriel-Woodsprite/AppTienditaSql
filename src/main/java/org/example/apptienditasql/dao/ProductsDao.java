@@ -113,6 +113,20 @@ public class ProductsDao implements DaoInterface<Product, String> {
 		return null;
 	}
 
+	public String getBarcodeByName(String name) {
+		String sql = "SELECT barcode FROM catalogue WHERE name = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, name);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getString("barcode");
+			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, "Error al obtener el producto.", e);
+		}
+		return null;
+	}
+
 	public List<String> readCategories() {
 		List<String> categories = new ArrayList<>();
 		String sql = "SELECT * FROM category ORDER BY category";
@@ -282,5 +296,28 @@ public class ProductsDao implements DaoInterface<Product, String> {
 			logger.log(Level.SEVERE, "Error al obtener el id de opciones", e);
 		}
 		return id;
+	}
+
+	public String readPriceMargin() {
+		String sql = "SELECT marginPercent FROM priceMargin";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getString("marginPercent");
+			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, "Error al obtener el valor de margin", e);
+		}
+		return null;
+	}
+
+	public void updatePriceMargin(String priceMargin) {
+		String sql = "UPDATE priceMargin SET marginPercent = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, priceMargin);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, "Error al obtener el valor de margin", e);
+		}
 	}
 }

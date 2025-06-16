@@ -3,12 +3,13 @@ package org.example.apptienditasql.model;
 import java.math.BigDecimal;
 
 public class SaleDetail {
-	int saleFolio;
-	String catalogueBarcode;
+	/// PA LA BASE DE DATOS
 	String quantity;
 	BigDecimal price;
 	BigDecimal subTotal;
 	BigDecimal total;
+	int saleFolio;
+	String catalogueBarcode;
 
 	///////////////////
 	//////GETTERS//////
