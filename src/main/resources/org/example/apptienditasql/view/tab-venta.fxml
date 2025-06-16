@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -15,101 +16,121 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="791.0" prefWidth="1505.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.VentasController">
+<AnchorPane prefHeight="791.0" prefWidth="1505.0" styleClass="main" stylesheets="@css/Venta.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apptienditasql.controller.VentasController">
 
-    <!-- Contenedor principal -->
-    <HBox prefWidth="1517.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
+    <!-- Panel Izquierdo: Agregar Productos -->
+    <VBox layoutX="170.0" layoutY="20.0" prefHeight="710.0" prefWidth="556.0" spacing="10.0" styleClass="container">
 
-        <!-- Panel Izquierdo: Agregar Productos -->
-        <VBox prefHeight="771.0" prefWidth="531.0" spacing="10.0">
+        <!-- Búsqueda de producto -->
+        <HBox spacing="10.0">
+            <TextField fx:id="txtBuscarProducto" prefHeight="40.0" prefWidth="314.0" promptText="Buscar producto..." styleClass="text-field" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="txtCantidad" prefHeight="40.0" prefWidth="161.0" promptText="Cant." styleClass="text-field" />
+            <Button fx:id="btnAgregar" prefHeight="42.0" prefWidth="104.0" styleClass="btns" text="Agregar" />
+        </HBox>
 
-            <!-- Búsqueda de producto -->
-            <HBox spacing="10.0">
-                <TextField fx:id="txtBuscarProducto" prefHeight="40.0" prefWidth="314.0" promptText="Buscar producto..." HBox.hgrow="ALWAYS" />
-                <TextField fx:id="txtCantidad" prefHeight="40.0" prefWidth="161.0" promptText="Cant." />
-                <Button fx:id="btnAgregar" prefHeight="42.0" prefWidth="104.0" styleClass="add_button" text="Agregar" />
-            </HBox>
+        <!-- Tabla de productos -->
+        <TableView fx:id="tablaVenta" prefHeight="631.0" prefWidth="510.0" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colProducto" prefWidth="180.0" text="Producto" />
+                <TableColumn fx:id="colCantidad" text="Cantidad" />
+                <TableColumn fx:id="colPrecio" prefWidth="120.0" text="Precio Unitario" />
+                <TableColumn fx:id="colSubtotal" prefWidth="100.0" text="Subtotal" />
+                <TableColumn fx:id="colEliminar" prefWidth="40.0" text="❌" />
+            </columns>
+        </TableView>
 
-            <!-- Tabla de productos -->
-            <TableView fx:id="tablaVenta" prefHeight="510.0" prefWidth="523.0" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="colProducto" prefWidth="180.0" text="Producto" />
-                    <TableColumn fx:id="colCantidad" prefWidth="80.0" text="Cantidad" />
-                    <TableColumn fx:id="colPrecio" prefWidth="120.0" text="Precio Unitario" />
-                    <TableColumn fx:id="colSubtotal" prefWidth="100.0" text="Subtotal" />
-                    <TableColumn fx:id="colEliminar" prefWidth="40.0" text="❌" />
-                </columns>
-            </TableView>
+        <!-- Botón cancelar venta -->
+        <Button fx:id="btnCancelarVenta" styleClass="btns" text="Cancelar Venta" />
+      <padding>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </padding>
+    </VBox>
 
-            <!-- Botón cancelar venta -->
-            <Button fx:id="btnCancelarVenta" style="-fx-background-color: #d94f8d; -fx-text-fill: white;" text="Cancelar Venta" />
+    <!-- Panel Derecho: Finalización -->
+    <VBox alignment="TOP_LEFT" layoutX="736.0" layoutY="21.0" prefHeight="710.0" prefWidth="600.0" spacing="15.0" styleClass="container2">
 
-        </VBox>
+        <!-- Título -->
+        <Label alignment="CENTER" prefHeight="17.0" prefWidth="579.0" styleClass="titulochido" text="Resumen de Venta" />
 
-        <!-- Panel Derecho: Finalización -->
-        <VBox alignment="TOP_LEFT" prefHeight="748.0" prefWidth="420.0" spacing="15.0" style="-fx-padding: 10; -fx-background-color: #f5f5f5; -fx-border-color: #ddd; -fx-border-width: 1;" styleClass="ticket_group">
+        <!-- Folio y Fecha -->
+        <GridPane hgap="10" vgap="10">
+            <Label styleClass="label_info" text="Folio:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label fx:id="lblFolio" styleClass="zzz" text="0001" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-            <!-- Título -->
-            <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Resumen de Venta" />
+            <Label styleClass="label_info" text="Fecha:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label fx:id="lblFecha" styleClass="zzz" text="2025-06-10 14:30" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <!-- Folio y Fecha -->
-            <GridPane hgap="10" vgap="10">
-                <Label text="Folio:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <Label fx:id="lblFolio" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-                <Label text="Fecha:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Label fx:id="lblFecha" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <columnConstraints>
-               <ColumnConstraints />
-               <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints />
-               <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
             </rowConstraints>
-            </GridPane>
+        </GridPane>
 
-            <!-- Separador -->
-            <Separator prefWidth="300" />
+        <!-- Separador -->
+        <Separator prefWidth="300" />
 
-            <!-- Totales -->
-            <GridPane hgap="10" vgap="10">
-                <Label text="Subtotal:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <Label fx:id="lblSubtotal" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <!-- Totales -->
+        <GridPane hgap="10" vgap="10">
+            <Label styleClass="label_info" text="Subtotal:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label fx:id="lblSubtotal" styleClass="zzz" text="1" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                <Label text="IVA (16%):" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Label fx:id="lblIVA" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label styleClass="label_info" text="IVA (16%):" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label fx:id="lblIVA" styleClass="zzz" text="1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                <Label style="-fx-font-weight: bold;" text="Total:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <Label fx:id="lblTotal" style="-fx-font-weight: bold; -fx-font-size: 16px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label styleClass="label_info" text="Total:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label fx:id="lblTotal" styleClass="zzz" text="1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
             <columnConstraints>
-               <ColumnConstraints />
-               <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
             </rowConstraints>
-            </GridPane>
+        </GridPane>
 
-            <!-- Botón Finalizar Venta -->
-            <Button fx:id="btnFinalizarVenta" maxWidth="Infinity" style="-fx-background-color: #8bf68b; -fx-text-fill: white; -fx-font-size: 14px;" text="Finalizar Venta" />
+        <!-- Botón Finalizar Venta -->
+        <Button fx:id="btnFinalizarVenta" maxWidth="Infinity" styleClass="btns" text="Finalizar Venta" />
 
-            <!-- Panel para previsualización del ticket -->
-            <TextArea fx:id="txtAreaTicket" editable="false" prefHeight="200.0" style="-fx-font-family: 'Monospaced'; -fx-font-size: 12px;" styleClass="description_area" stylesheets="@css/Add.css" />
-         <stylesheets>
-            <URL value="@css/Proveedores.css" />
-            <URL value="@css/Venta.css" />
-         </stylesheets>
+        <!-- Panel de Reportes y Estadísticas -->
+        <TitledPane expanded="false" text="Reportes y Estadísticas">
+         <content>
+               <VBox spacing="10.0" styleClass="container3">
+                  <!-- <padding>
+                       <Insets top="10.0" right="10.0" bottom="10.0" left="10.0" />
+                            </padding>-->
 
-        </VBox>
+                         <!-- Alerta resurtido -->
+                   <Button fx:id="btnAlertaResurtido" styleClass="btns" text="Ver productos por resurtir" />
 
-    </HBox>
-   <stylesheets>
-      <URL value="@css/Style.css" />
-      <URL value="@css/Add.css" />
-      <URL value="@css/Venta.css" />
-   </stylesheets>
+                         <!-- Reporte por producto, categoría o fecha -->
+                   <HBox spacing="5.0">
+                       <TextField fx:id="txtBuscarReporte" prefHeight="40.0" prefWidth="186.0" promptText="Producto / Categoría" styleClass="text-field" />
+                       <DatePicker fx:id="dpFechaInicio" prefHeight="40.0" prefWidth="133.0" />
+                       <DatePicker fx:id="dpFechaFin" prefHeight="40.0" prefWidth="130.0" />
+                       <Button fx:id="btnBuscarReporte" prefHeight="35.0" prefWidth="79.0" styleClass="btns" text="Buscar" />
+                   </HBox>
+
+                         <!-- Estadísticas -->
+                   <Label fx:id="lblProductoMasVendido" styleClass="zzz" text="Producto más vendido: -" />
+                   <Label fx:id="lblVentasDia" styleClass="zzz" text="Ventas del día: $0.00" />
+                   <Label fx:id="lblVentasSemana" styleClass="zzz" text="Ventas de la semana: $0.00" />
+                   <Label fx:id="lblVentasMes" styleClass="zzz" text="Ventas del mes: $0.00" />
+                   <Label fx:id="lblVentasAnio" styleClass="zzz" text="Ventas del año: $0.00" />
+                   <Label fx:id="lblVentasAcumuladasMes" styleClass="zzz" text="Ventas acumuladas del mes: $0.00" />
+               </VBox>
+         </content>
+        </TitledPane>
+      <padding>
+         <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+      </padding>
+
+    </VBox>
 
 </AnchorPane>

@@ -11,7 +11,28 @@
     -fx-background-color: -fx-violet-color;
 }
 
-/* INPUTS */
+.stoyloco {
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-background-color: linear-gradient(to bottom right, -fx-violet-color, -fx-darkblue-color);
+}
+
+.label_info,.zzz, .titulochido{
+    -fx-text-fill: white;
+}
+.titulochido {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-color: -fx-violet-color;
+}
+
+.label_info {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
 .text-field {
     -fx-background-color: -fx-darkblue-color;
     -fx-background-radius: 15;
@@ -51,33 +72,4 @@
     -fx-border-color: -fx-white-color;
     -fx-text-fill: -fx-white-color;
     -fx-background-color: -fx-violet-color;
-}
-
-.container, .container2 {
-    -fx-background-color: linear-gradient(to bottom right, -fx-violet-color, -fx-darkblue-color);
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-color: -fx-white-color;
-    -fx-border-width:2px;
-}
-
-.container2 {
-    -fx-background-color: linear-gradient(to bottom right, -fx-violet-color, -fx-darkblue-color);
-}
-
-.container3 {
-    -fx-background-color: black;
-}
-
-.label_info, .zzz , .titulochido{
-    -fx-text-fill: white;
-}
-.titulochido {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-}
-
-.label_info {
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
 }
