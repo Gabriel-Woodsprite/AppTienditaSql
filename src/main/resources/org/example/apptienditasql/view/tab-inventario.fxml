@@ -29,7 +29,7 @@
             <Label styleClass="label_info" text="Fecha:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
             <DatePicker fx:id="datePickerFecha" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-            <Label styleClass="label_info" text="Proveedor:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label styleClass="label_info" text="Proveedor:" GridPane.rowIndex="1" />
             <ComboBox fx:id="comboProveedor" prefWidth="200" promptText="Seleccionar proveedor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          <columnConstraints>
             <ColumnConstraints />
@@ -71,6 +71,7 @@
             <Label styleClass="label_info" text="Total Compra:" />
             <Label fx:id="lblTotalCompra" styleClass="zzz" text="pesos" />
             <Region HBox.hgrow="ALWAYS" />
+         <Button fx:id="btnAgregarProducto1" prefHeight="35.0" prefWidth="171.0" styleClass="btns" text="Inventario Actual" />
             <Button fx:id="btnGuardarCompra" styleClass="btns" text="Guardar Compra" />
             <Button fx:id="btnCancelarCompra" styleClass="btns" text="Cancelar" />
         </HBox>
