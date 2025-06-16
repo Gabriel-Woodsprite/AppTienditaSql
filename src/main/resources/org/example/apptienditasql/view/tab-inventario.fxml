@@ -2,9 +2,6 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -14,7 +11,7 @@
     <VBox spacing="10.0" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
 
         <!-- Título -->
-        <Label text="Registrar Compra" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <Label text="Registrar Compra"/>
 
         <!-- Datos generales de la compra -->
         <GridPane hgap="15" vgap="10">
@@ -53,11 +50,11 @@
 
         <!-- Total y botones finales -->
         <HBox spacing="20" alignment="CENTER_RIGHT">
-            <Label text="Total Compra:" style="-fx-font-weight: bold;"/>
-            <Label fx:id="lblTotalCompra" text="pesos" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <Label text="Total Compra:"/>
+            <Label fx:id="lblTotalCompra" text="pesos"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button fx:id="btnGuardarCompra" text="Guardar Compra" style="-fx-background-color: #5cb85c; -fx-text-fill: white;"/>
-            <Button fx:id="btnCancelarCompra" text="Cancelar" style="-fx-background-color: #d9534f; -fx-text-fill: white;"/>
+            <Button fx:id="btnGuardarCompra" text="Guardar Compra"/>
+            <Button fx:id="btnCancelarCompra" text="Cancelar"/>
         </HBox>
 
     </VBox>

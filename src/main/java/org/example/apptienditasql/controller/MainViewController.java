@@ -23,8 +23,8 @@ public class MainViewController {
 	@FXML
 	public void initialize() {
 		try {
-			loadTabContent(mainTabPane.getTabs().get(1), "/org/example/apptienditasql/view/tab-catalogo.fxml");
 			loadTabContent(mainTabPane.getTabs().get(0), "/org/example/apptienditasql/view/tab-venta.fxml");
+			loadTabContent(mainTabPane.getTabs().get(1), "/org/example/apptienditasql/view/tab-catalogo.fxml");
 			loadTabContent(mainTabPane.getTabs().get(2), "/org/example/apptienditasql/view/tab-inventario.fxml");
 //			loadTabContent(mainTabPane.getTabs().get(3), "/org/example/apptienditasql/view/tab-clientes.fxml");
 			loadTabContent(mainTabPane.getTabs().get(4), "/org/example/apptienditasql/view/tab-proveedores.fxml");
